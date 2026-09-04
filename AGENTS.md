@@ -1,68 +1,54 @@
 # AGENTS.md
 
-Humans start at [README.md](README.md) and
-[examples/top-ranking-demo/](examples/top-ranking-demo/). This file is for
-contributor automation, not the operator guide. Keep operator-specific
-goal quirks out of this file.
+人从 [README.md](README.md) 和
+[examples/top-ranking-demo/](examples/top-ranking-demo/) 开始。本文件给贡献者自动化用，不是操作手册。操作者的目标细节不要写进这里。
 
-## Intent
+## 意图
 
-Help another person follow the README and finish the TOP-ranking demo.
-Do not lead with every `project_kind` or optional plugin.
+帮另一个人按 README 走完 TOP 榜教学项目。不要一上来铺开所有 `project_kind` 或可选插件。
 
-The teaching project is `examples/top-ranking-demo/` (N→1). Other shapes
-are documented in `docs/beyond-the-demo.md` after first success.
+教学项目是 `examples/top-ranking-demo/`（N→1）。其他形态写在 `docs/beyond-the-demo.md`，等第一次跑通再看。
 
-## Layout
+## 目录
 
-- `tools/tts/` — doctor, resolve, narrate, verify
-- `tools/video/` — cookies, yt-dlp wrapper, vfill, gates, countdown planner
-- `examples/top-ranking-demo/` — teaching TOP project
-- `examples/cookies/` — Netscape format template (fake values only)
-- `docs/` — secondary material after first success
-- `tools/delivery/baidu/` — optional; not part of first success
+- `tools/tts/` — 体检、选声、配音、校验
+- `tools/video/` — Cookie、yt-dlp 封装、vfill、门禁、倒数计划
+- `examples/top-ranking-demo/` — TOP 教学项目
+- `examples/cookies/` — Netscape 格式模板（只有假值）
+- `docs/` — 第一次跑通之后的次要材料
+- `tools/delivery/baidu/` — 可选；不属于第一次跑通
 
-## Start of a video task
+## 接到视频任务时
 
-1. Read `README.md` and `examples/top-ranking-demo/README.md`. Then
-   `CONVENTIONS.md` if you need a red-line.
-2. Run `python3 tools/tts/doctor.py` (structure-only PASS is OK until voices exist).
-3. Resolve **one** `voice-selection.json` from the original brief. Only
-   re-run this if the brief changed; the demo already has a selection.
-4. A Netscape jar at repo-root `all_cookies.txt` (`0600`) is **required**
-   before any real download. Copy `examples/cookies/all_cookies.example.txt`,
-   replace placeholder values with a filtered browser export, then
-   `python3 tools/video/check_yt_cookie.py`. The only allowed yt-dlp
-   consumer is `yt_dlp_readonly.py` (temp snapshot outside the repo). Never
-   rewrite `all_cookies.txt`. Missing or placeholder cookies → stop the
-   download step; structure-only gates may continue.
-5. Fill `project-manifest.json` (schema v2) **before** writing master/HTML.
-6. `verify_project.py` must print `PROJECT CONTRACT: PASS`.
-7. After mux, write `publishing/xiaohongshu.md` and run `verify_publishing.py`.
-8. Run `prepare_final_qa.py`. v1 writes a pending skeleton; do not claim a
-   finished machine picture/ASR audit, and do not forge human review.
+1. 先读 `README.md` 和 `examples/top-ranking-demo/README.md`。需要红线再读
+   `CONVENTIONS.md`。
+2. 跑 `python3 tools/tts/doctor.py`（在配音齐备之前，只验结构的 PASS 可以接受）。
+3. 根据原始简报解析**一份** `voice-selection.json`。简报没改就不要重跑；教学项目已经有选择。
+4. 真下载之前，仓库根目录必须有 Netscape jar：`all_cookies.txt`（`0600`）。
+   从 `examples/cookies/all_cookies.example.txt` 拷一份，用筛选过的浏览器导出替换占位值，再跑
+   `python3 tools/video/check_yt_cookie.py`。唯一允许的 yt-dlp 入口是
+   `yt_dlp_readonly.py`（仓库外的临时快照）。永远不要改写 `all_cookies.txt`。
+   缺 Cookie 或还是占位符 → 停下载这一步；只验结构的门禁可以继续。
+5. 写 master / HTML **之前**，先填好 `project-manifest.json`（schema v2）。
+6. `verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
+7. mux 之后写 `publishing/xiaohongshu.md`，再跑 `verify_publishing.py`。
+8. 跑 `prepare_final_qa.py`。v1 只写待审骨架；不要声称已经做完机器画面 / ASR 审核，也不要伪造人工复核。
 
-## Recovery
+## 恢复
 
-A failed step stops that step, not the whole task. Diagnose → fix upstream →
-rerun affected gates. Do not relax mechanical red lines. Do not invent
-`reviewer_kind=human`.
+某一步失败就停这一步，不要整条任务一起扔。诊断 → 修上游 → 重跑受影响的门禁。不要放松机械红线。不要发明 `reviewer_kind=human`。
 
-Pause only when the user asked for a preview, a required user-only file is
-missing, safe alternatives are exhausted, or continuing would change the
-core brief (setlist, ranks, version, platform exclusion, hard duration).
+只在这些情况暂停：用户要求预览、缺用户自备文件、安全替代方案已经用尽，或继续会改核心简报（歌单、名次、版本、平台排除、硬时长）。
 
-## Resources
+## 资源
 
-Use `tools/video/resource_budget.py`. No global lock across jobs. Env overrides
-are `AMRH_ASR_THREADS`, `AMRH_FFMPEG_THREADS`, `AMRH_HYPERFRAMES_WORKERS` (1–4).
+用 `tools/video/resource_budget.py`。任务之间没有全局锁。环境变量覆盖是
+`AMRH_ASR_THREADS`、`AMRH_FFMPEG_THREADS`、`AMRH_HYPERFRAMES_WORKERS`（1–4）。
 
-## Secrets
+## 密钥
 
-Never commit the runtime jar (`all_cookies.txt`), Baidu tokens, `.env`, or
-voice masters you do not intend to publish. The committed cookie example is
-fake format only. The Baidu module is optional.
+永远不要提交运行时 jar（`all_cookies.txt`）、百度 token、`.env`，或你不打算公开的配音母带。仓库里的 Cookie 示例只有假格式。百度模块是可选的。
 
 ## HyperFrames
 
-`npx --yes hyperframes@0.6.69 ...` only. Render `--sdr`. Fonts offline.
+只用 `npx --yes hyperframes@0.6.69 ...`。渲染加 `--sdr`。字体离线。

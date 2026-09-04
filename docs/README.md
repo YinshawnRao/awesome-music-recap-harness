@@ -1,15 +1,14 @@
-# Secondary docs
+# 次要文档
 
-Start at the root [README](../README.md) and
-[examples/top-ranking-demo/](../examples/top-ranking-demo/). Come here after
-first success.
+先看仓库根目录 [README](../README.md) 和
+[examples/top-ranking-demo/](../examples/top-ranking-demo/)。第一次跑通之后再来这里。
 
-| Doc | When to open it |
+| 文档 | 什么时候打开 |
 | --- | --- |
-| [mac-setup.md](mac-setup.md) | Extra Mac / TTS install detail |
-| [runbook.md](runbook.md) | Your own ranking short after the demo |
-| [architecture.md](architecture.md) | Why the pipeline is layered this way |
-| [beyond-the-demo.md](beyond-the-demo.md) | Other `project_kind`s, Baidu, hard media gates |
-| [../examples/cookies/README.md](../examples/cookies/README.md) | Cookie export / wrapper rules |
-| [../CONVENTIONS.md](../CONVENTIONS.md) | Production red lines |
-| [../AGENTS.md](../AGENTS.md) | Automation notes (not the operator guide) |
+| [mac-setup.md](mac-setup.md) | Mac / TTS 的额外安装细节 |
+| [runbook.md](runbook.md) | 教学项目之后，自己做下一期盘点 |
+| [architecture.md](architecture.md) | 流水线为什么这样分层 |
+| [beyond-the-demo.md](beyond-the-demo.md) | 其他 `project_kind`、百度网盘、硬素材门禁 |
+| [../examples/cookies/README.md](../examples/cookies/README.md) | Cookie 导出 / 封装规则 |
+| [../CONVENTIONS.md](../CONVENTIONS.md) | 制作红线 |
+| [../AGENTS.md](../AGENTS.md) | 自动化备注（不是操作手册） |

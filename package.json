@@ -1,7 +1,7 @@
 {
   "name": "awesome-music-recap-harness",
   "private": true,
-  "description": "HyperFrames pin and scripts for music recap projects. New compositions must use hyperframes@0.6.69.",
+  "description": "音乐盘点项目的 HyperFrames 版本锁定与脚本。新成片必须使用 hyperframes@0.6.69。",
   "engines": {
     "node": ">=22"
   },

@@ -1,25 +1,24 @@
 # Netscape HTTP Cookie File
-# This is a PLACEHOLDER demo jar for awesome-music-recap-harness.
-# It is valid Netscape format. Every value is fake. It cannot log anyone in.
+# 这是 awesome-music-recap-harness 的占位演示 jar。
+# 格式合法。每个值都是假的。不能登录任何人。
 #
-# Install (you do this; tools never write the canonical file):
+# 安装（你自己做；工具从不写这份规范文件）：
 #   cp examples/cookies/all_cookies.example.txt all_cookies.txt
 #   chmod 0600 all_cookies.txt
-# Then replace every PLACEHOLDER_* value with a real browser export, or
-# overwrite the file with a filtered candidate produced outside the repo.
+# 然后用真实浏览器导出替换每一个 PLACEHOLDER_*，
+# 或用仓库外筛好的候选文件整份覆盖。
 #
-# yt-dlp must consume the jar only via:
-#   python3 tools/video/yt_dlp_readonly.py -- <yt-dlp arguments>
-# The wrapper copies the file outside the repo so yt-dlp cannot rewrite
-# all_cookies.txt on exit.
+# yt-dlp 只能通过下面这条封装读取 jar：
+#   python3 tools/video/yt_dlp_readonly.py -- <yt-dlp 参数>
+# 封装会把文件拷到仓库外，避免 yt-dlp 退出时改写 all_cookies.txt。
 #
-# Columns (tab-separated): domain  includeSubdomains  path  secure  expiry  name  value
-# HttpOnly rows start with #HttpOnly_ immediately before the domain.
-# expiry 4102444800 = 2100-01-01 UTC (demo only; not a real session lifetime).
+# 列（制表符分隔）：domain  includeSubdomains  path  secure  expiry  name  value
+# HttpOnly 行以 #HttpOnly_ 紧挨域名开头。
+# expiry 4102444800 = 2100-01-01 UTC（仅演示；不是真实会话寿命）。
 #
-# ---- YouTube / Google login-state family ----
-# LOGIN_INFO + SID/HSID/SSID/SAPISID/APISID + __Secure-3PSID are the static
-# fields check_yt_cookie.py requires. Several of those live on .google.com.
+# ---- YouTube / Google 登录态字段 ----
+# LOGIN_INFO + SID/HSID/SSID/SAPISID/APISID + __Secure-3PSID
+# 是 check_yt_cookie.py 静态预检要求的字段。其中若干在 .google.com。
 #HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	LOGIN_INFO	PLACEHOLDER_NOT_A_SESSION_login_info
 #HttpOnly_.google.com	TRUE	/	TRUE	4102444800	SID	PLACEHOLDER_NOT_A_SESSION_sid
 #HttpOnly_.google.com	TRUE	/	TRUE	4102444800	HSID	PLACEHOLDER_NOT_A_SESSION_hsid
@@ -27,16 +26,16 @@
 .google.com	TRUE	/	TRUE	4102444800	SAPISID	PLACEHOLDER_NOT_A_SESSION_sapisid
 .google.com	TRUE	/	TRUE	4102444800	APISID	PLACEHOLDER_NOT_A_SESSION_apisid
 #HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-3PSID	PLACEHOLDER_NOT_A_SESSION_secure_3psid
-# Helpful extras (not required for the static preflight, but common in a real export):
+# 可选附加字段（静态预检不要求，真实导出里常见）：
 #HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-1PSID	PLACEHOLDER_NOT_A_SESSION_secure_1psid
 .youtube.com	TRUE	/	TRUE	4102444800	__Secure-1PAPISID	PLACEHOLDER_NOT_A_SESSION_secure_1papisid
 .youtube.com	TRUE	/	TRUE	4102444800	__Secure-3PAPISID	PLACEHOLDER_NOT_A_SESSION_secure_3papisid
 #HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-1PSIDTS	PLACEHOLDER_NOT_A_SESSION_secure_1psidts
 #HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-3PSIDTS	PLACEHOLDER_NOT_A_SESSION_secure_3psidts
 #
-# ---- Bilibili login-state family ----
-# SESSDATA / bili_jct / DedeUserID are what filter_cookie_jar.py expects.
-# Without a real jar, public Bilibili downloads are often capped at 720P.
+# ---- B 站登录态字段 ----
+# SESSDATA / bili_jct / DedeUserID 是 filter_cookie_jar.py 期望的字段。
+# 没有真实 jar 时，公开 B 站下载经常被压到 720P。
 #HttpOnly_.bilibili.com	TRUE	/	TRUE	4102444800	SESSDATA	PLACEHOLDER_NOT_A_SESSION_sessdata
 .bilibili.com	TRUE	/	FALSE	4102444800	bili_jct	PLACEHOLDER_NOT_A_SESSION_bili_jct
 .bilibili.com	TRUE	/	FALSE	4102444800	DedeUserID	PLACEHOLDER_EXAMPLE_USER_0

@@ -1,60 +1,39 @@
-# Architecture
+# 架构
 
-Start at the root [README](../README.md) and the
-[TOP demo](../examples/top-ranking-demo/). This page is the why, not the
-first-success path.
+先看根目录 [README](../README.md) 和 [TOP 教学项目](../examples/top-ranking-demo/)。本页讲「为什么」，不是第一次跑通路径。
 
-AMRH is a **music recap / 盘点 harness**. A recap is any structured short-form
-show built from sourced clips + narration + a composition layer. Ranking is
-one shape, not the only shape.
+AMRH 是一套**音乐盘点工作台**。盘点 = 用取材片段 + 旁白 + 合成层搭起来的结构化短视频。榜单只是其中一种形态。
 
-Other `project_kind` values and the optional Baidu plugin:
-[beyond-the-demo.md](beyond-the-demo.md).
+其他 `project_kind` 和可选的百度网盘插件：
+[beyond-the-demo.md](beyond-the-demo.md)。
 
 ## project_kind
 
 ```text
-top_ranking  ── flagship demo (N→1 countdown, suspense)
-narrative    ── timeline / essay / character documentary (script order, no rank)
-free_exploration ── music or visual experiment (rationale required)
+top_ranking  ── 旗舰示例（N→1 倒数揭晓，保悬念）
+narrative    ── 时间线 / 散文 / 人物纪录片（按脚本顺序，没有 rank）
+free_exploration ── 音乐或画面实验（必须写 rationale）
 ```
 
-The authoring contract (`tools/video/project-manifest.schema.json`) is shared.
-Gates branch on `project_kind` instead of hardcoding a single format into the
-tools. `examples/top-ranking-demo/` is the reference implementation for rank.
-A narrative project reuses the same voice, source, publishing, and mux rules
-and simply omits `rank`.
+写作契约（`tools/video/project-manifest.schema.json`）是共用的。门禁按 `project_kind` 分支，而不是把单一格式写死进工具。`examples/top-ranking-demo/` 是带名次的参考实现。叙事项目复用同一套配音、取材、发布、mux 规则，只是省略 `rank`。
 
-## Layers
+## 分层
 
-1. **Sourcing** — YouTube and Bilibili in parallel via `yt_dlp_readonly.py`
-   (the only allowed yt-dlp consumer of repo-root `all_cookies.txt`),
-   `bili_search.py`, and the documented `bili_dl.py` 412 fallback. The
-   Netscape jar is required for the full download pipeline; the wrapper
-   snapshots it outside the repo so yt-dlp cannot rewrite the canonical
-   file. Version identity first, official MV next, then cleanliness /
-   stereo / resolution.
-2. **Picture** — `vfill.sh` letterbox (full-width band). No aggressive
-   vertical punch-in unless the user asked and every frame is checked.
-3. **Voice** — parse once (`resolve_voice.py`), generate through `narrate.py`,
-   verify with `verify_voice_usage.py`. Mac Qwen/MLX is the documented path.
-4. **Plan** — `countdown_build.py` for TOP; narrative shows still fill schema
-   v2 narration roles (intro, per-item transition, work outro, fixed CTA)
-   unless they are a recorded free-exploration exception.
-5. **Compose** — HyperFrames **0.6.69**, `--sdr`, workers via
-   `resource_budget.py` (`4 → 3 → 2`).
-6. **Mux** — premixed `master.wav` replaces HyperFrames audio.
-7. **Publish** — `publishing/xiaohongshu.md` then FINAL skeleton.
+1. **取材** — YouTube 和 B 站并行，走 `yt_dlp_readonly.py`
+   （仓库根目录 `all_cookies.txt` 的唯一允许 yt-dlp 入口）、
+   `bili_search.py`，以及文档里的 `bili_dl.py` 412 回退。完整下载流水线必须有 Netscape jar；封装会把快照放到仓库外，避免 yt-dlp 改写原文件。先版本身份，再官方 MV，再干净度 / 立体声 / 分辨率。
+2. **画面** — `vfill.sh` 加黑边（裁切带铺满宽度）。除非用户要求、并且每一帧都看过，否则不要激进竖裁。
+3. **配音** — 解析一次（`resolve_voice.py`），用 `narrate.py` 生成，用 `verify_voice_usage.py` 校验。文档路径是 Mac 上的 Qwen/MLX。
+4. **计划** — TOP 用 `countdown_build.py`；叙事节目仍要填 schema v2 的旁白角色（开头、每条转场、作品 outro、固定 CTA），除非是已记录的自由探索例外。
+5. **合成** — HyperFrames **0.6.69**，`--sdr`，工人数走
+   `resource_budget.py`（`4 → 3 → 2`）。
+6. **混流** — 预混 `master.wav` 替换 HyperFrames 音频。
+7. **发布** — `publishing/xiaohongshu.md`，然后 FINAL 骨架。
 
-## Resource budget
+## 资源预算
 
-Heavy FFmpeg, ASR, and HyperFrames processes publish a PID marker under
-`/tmp/amrh-resource-v1-<uid>/` and immediately pick 4, 3, or 2 workers. No
-cross-job lock or queue. Override with `AMRH_FFMPEG_THREADS`,
-`AMRH_HYPERFRAMES_WORKERS`, or `AMRH_ASR_THREADS` (1–4 only).
+重的 FFmpeg、ASR、HyperFrames 进程会在 `/tmp/amrh-resource-v1-<uid>/` 下挂 PID 标记，立刻在 4、3、2 个工人里选一档。任务之间没有锁、也没有队列。用 `AMRH_FFMPEG_THREADS`、`AMRH_HYPERFRAMES_WORKERS` 或 `AMRH_ASR_THREADS` 覆盖（只能 1–4）。
 
-## Honesty boundary
+## 诚实边界
 
-Hashes, sidecars, and receipts prove **local consistency**. They are not a
-proof of voice provenance, official-channel identity, or human review.
-Never forge `reviewer_kind=human`.
+哈希、sidecar、回执只证明**本机一致**。它们不能证明配音来源、官方频道身份，或人工复核。永远不要伪造 `reviewer_kind=human`。

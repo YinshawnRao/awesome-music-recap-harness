@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "awesome-music-recap-harness"
 version = "0.1.0"
-description = "Open-source music recap / 盘点 harness: dual-platform sourcing, narration gates, HyperFrames countdown demo."
+description = "开源音乐盘点工作台：双平台取材、配音门禁、HyperFrames 倒数揭晓示例。"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"

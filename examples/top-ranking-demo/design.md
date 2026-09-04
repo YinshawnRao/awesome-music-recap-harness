@@ -1,27 +1,25 @@
-# Design — top-ranking-demo
+# 设计 — top-ranking-demo
 
-Canvas: **1080×1920 / 30fps**. HyperFrames pin: **0.6.69**.
+画幅：**1080×1920 / 30fps**。HyperFrames 版本钉：**0.6.69**。
 
-## Palette
+## 配色
 
-- Background: `#0a0a0d`
-- Accent: `#7ad1c4` (single accent, dark field)
-- Type: project-local WOFF2 only. Do not fetch Google Fonts at render time.
+- 底色：`#0a0a0d`
+- 强调色：`#7ad1c4`（深底上只用这一处强调）
+- 字体：只用项目本地 WOFF2。渲染时不要拉 Google Fonts。
 
-## Cover
+## 封面
 
-- First-played song is rank **5** (last place), not rank 1.
-- Dynamic footage from that clip, continuous into the first reveal.
-- Title: `北城` is the unique largest type. Theme line is smaller.
-- No song list, no `05→01`, no `N→1` mechanism text.
-- If the title already says “被低估”, do not also stamp `TOP 5` on the cover.
+- 最先播的是第 **5** 名（最后一名），不是第 1 名。
+- 动态画面来自那条片段，连续接到第一次揭晓。
+- 标题：`北城` 是最大且唯一的主字。主题行更小。
+- 不列歌单，不写 `05→01`，不写 `N→1` 机制字。
+- 标题已经写了「被低估」，封面就不要再盖 `TOP 5`。
 
-## Type safety
+## 安全排字
 
-Keep key copy inside `x=72–1008 / y=220–1420`. Do not dead-center over faces.
-No custom narration captions unless a future brief explicitly asks.
+关键文案放在 `x=72–1008 / y=220–1420`。不要死贴在人脸正中。除非以后的简报明确要求，不加自定义旁白字幕。
 
-## Motion
+## 动效
 
-Cover is visible at t=0 (no fade-in from opacity 0). Rank cards fade as a
-whole; do not stagger alpha on individual characters.
+封面在 t=0 就可见（不要从透明度 0 淡入）。名次卡片整块淡入淡出；不要让单个字错开透明度。

@@ -1,13 +1,10 @@
-# tools/tts — narration doctor / resolve / narrate / verify
+# tools/tts — 旁白体检 / 选声 / 配音 / 校验
 
-Operators start at the root [README](../../README.md). First success uses
-the demo’s existing sidecars; you do not need to generate speech yet.
+操作者从根目录 [README](../../README.md) 开始。第一次跑通用教学项目已有的 sidecar；现在还不必生成语音。
 
-Public-facing Chinese narration helpers. The Mac-first generation path is
-**Qwen3-TTS Base via MLX**. Model weights and proprietary reference WAVs are
-**not shipped**.
+面向中文口播的辅助工具。Mac 上的生成路径是 **Qwen3-TTS Base + MLX**。模型权重和专有参考 WAV **不随仓库分发**。
 
-## Commands
+## 命令
 
 ```bash
 python3 tools/tts/doctor.py
@@ -22,29 +19,25 @@ python3 tools/tts/verify_voice_usage.py \
   --selection voice-selection.json --project-root .
 ```
 
-`--dry-run` writes `.wav.tts.json` sidecars without audio. That is enough for
-the VOICE gate in structure-only mode. Real generation needs:
+`--dry-run` 只写 `.wav.tts.json` sidecar，不写音频。结构模式下的 VOICE 门禁够用。真生成需要：
 
-1. Apple Silicon + Metal (see `metal_preflight.py`)
-2. `AMRH_QWEN_PYTHON` pointing at an MLX-Audio 0.4.5 interpreter
-3. `AMRH_QWEN_BASE_MODEL` pointing at a legally obtained Qwen3-TTS Base tree
-4. A reference WAV for the resolved `CVxxx` (see `voices/README.md`)
+1. Apple Silicon + Metal（见 `metal_preflight.py`）
+2. `AMRH_QWEN_PYTHON` 指向 MLX-Audio 0.4.5 解释器
+3. `AMRH_QWEN_BASE_MODEL` 指向合法取得的 Qwen3-TTS Base 模型树
+4. 已解析 `CVxxx` 对应的参考 WAV（见 `voices/README.md`）
 
-Missing models fail closed. Do **not** silently fall back to Kokoro.
+模型缺失就失败退出。**不要**悄悄回退到 Kokoro。
 
-## Voice selection
+## 选声
 
-Parse once per project. Exact `配音：CV007` wins. Otherwise the contributor
-picks from the 10-voice decision pool using theme / emotion / narrative angle /
-pacing, and passes `--model-choice` plus a short reason. `low` confidence
-randomizes inside the same pool.
+每个项目只解析一次。简报里的精确写法 `配音：CV007` 优先。否则贡献者按主题 / 情绪 / 叙事角度 / 节奏，从 10 个声音决策池里选，并传入 `--model-choice` 和一句短理由。`low` 置信度会在同一池内随机。
 
-Do not pick voice gender from artist gender.
+不要按艺人性别选配音性别。
 
-## Legal / open alternatives
+## 合法 / 开放替代
 
-- Record your own reference clips.
-- Use openly licensed speech you have permission to condition on.
-- Kokoro-82M is documented as a Linux/future explicit-legacy engine only.
+- 录自己的参考片段。
+- 用你有权作为条件的开放授权语音。
+- Kokoro-82M 只作为 Linux / 将来的显式旧引擎写在文档里。
 
-HyperFrames built-in TTS is not used for Chinese.
+中文口播不用 HyperFrames 内置 TTS。
