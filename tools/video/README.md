@@ -1,21 +1,21 @@
 # tools/video — 命令附录
 
-操作者从根目录 [README](../../README.md) 和
+请从根目录 [README](../../README.md) 和
 [examples/top-ranking-demo/](../../examples/top-ranking-demo/) 开始。本页列额外命令。第一次跑通用不到其中大部分。
 
 ## 命令
 
 ```bash
-# Cookie 最短安装 + 公开下载烟雾 + 教学占位竖屏
+# Cookie 安装 + 公开下载连通性验证 + 教学占位竖屏
 bash tools/video/install_cookies.sh
 python3 tools/cli.py smoke-download
 python3 tools/video/make_placeholder_clips.py
 
-# 配音烟雾（缺权重会失败并打印中文下一步）
+# 配音试生成（缺权重会失败并打印中文下一步）
 python3 tools/tts/setup_check.py
 python3 tools/cli.py smoke-narrate
 
-# 成片烟雾（无 Chrome 会失败并打印中文下一步）
+# 成片连通性验证（无 Chrome 会失败并打印中文下一步）
 python3 tools/cli.py smoke-e2e
 python3 tools/cli.py smoke-e2e -- --structure-only
 python3 tools/cli.py mix-master -- --tone
@@ -40,7 +40,7 @@ python3 tools/video/verify_project.py --project examples/top-ranking-demo
 python3 tools/video/verify_publishing.py --project examples/top-ranking-demo
 python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 
-# 旗舰规划器
+# 榜单倒数规划器
 python3 tools/video/countdown_build.py --project examples/top-ranking-demo --plan-only
 
 # 自适应 HyperFrames 工人数（在项目目录里跑）

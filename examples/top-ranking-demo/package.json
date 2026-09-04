@@ -1,7 +1,7 @@
 {
   "name": "top-ranking-demo",
   "private": true,
-  "description": "旗舰 TOP 倒数揭晓示例。只锁 hyperframes@0.6.69。",
+  "description": "教学示例：榜单倒数揭晓。锁定 hyperframes@0.6.69。",
   "type": "module",
   "scripts": {
     "lint": "npx --yes hyperframes@0.6.69 lint",

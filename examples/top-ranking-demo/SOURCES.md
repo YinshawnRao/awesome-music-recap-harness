@@ -12,7 +12,7 @@ python3 tools/video/make_placeholder_clips.py
 
 写入 `footage/rank-0N.mp4` 和 `clips/vert_rank-0N.mp4`（均 gitignore）。清单里的 `clip` 路径已经对上。换成真实官方 URL 是后面的事，不是 P1。
 
-公开下载烟雾走另一条路径（YouTube 第一条上传《Me at the zoo》），见 [examples/smoke-download/](../smoke-download/README.md)。那条视频不是本榜歌单。
+公开下载连通性验证走另一条路径（YouTube 第一条上传《Me at the zoo》），见 [examples/smoke-download/](../smoke-download/README.md)。那条视频不是本榜歌单。
 
 ## 以后换成真实素材
 

@@ -4,9 +4,9 @@
 
 **不要下载下表的 `example.com`。** 那些 URL 不能取流，也不是版权歌单。
 
-本目录**不**生成占位竖屏，也没有 HyperFrames 合成。P4 只锁写作契约。要看本机色条 → 成片，用 [TOP 教学项目](../top-ranking-demo/SOURCES.md) 的 `make_placeholder_clips.py`。
+本目录**不**生成占位竖屏，也没有 HyperFrames 合成。P4 只锁写作契约。要看本机色条 → 成片，用 [TOP 教学示例](../top-ranking-demo/SOURCES.md) 的 `make_placeholder_clips.py`。
 
-公开下载烟雾走另一条路径（YouTube 第一条上传《Me at the zoo》），见 [examples/smoke-download/](../smoke-download/README.md)。那条视频不是本编年歌单。
+公开下载连通性验证走另一条路径（YouTube 第一条上传《Me at the zoo》），见 [examples/smoke-download/](../smoke-download/README.md)。那条视频不是本编年歌单。
 
 ## 以后换成真实素材
 

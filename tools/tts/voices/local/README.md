@@ -1,6 +1,6 @@
 # 本地参考 WAV（不进 git）
 
-教学项目默认声槽是 **CV007（低沉纪实）**。
+教学示例默认声槽是 **CV007（低沉纪实）**。
 
 仓库**不**附带任何人的声音。你自己录大约 10 秒，装到本目录之后才能真配音。
 
@@ -52,4 +52,4 @@ python3 tools/tts/setup_check.py
 python3 tools/cli.py smoke-narrate
 ```
 
-缺权重或 Metal 时，命令会用中文告诉你下一步。**不要改用 Kokoro。**
+缺权重或 Metal 时，命令会用中文说明下一步。**不要改用 Kokoro。**

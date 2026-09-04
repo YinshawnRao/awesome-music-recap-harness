@@ -1,13 +1,13 @@
-# 自己做下一期盘点
+# 制作下一期盘点
 
-先跑完 [TOP 教学项目](../examples/top-ranking-demo/) 和根目录 README 的第一次跑通命令，再看这篇。抄那个目录的形状，不要把 `tools/` 里每条脚本都搬过来。
+先跑完 [TOP 教学示例](../examples/top-ranking-demo/) 和根目录 README 的第一次跑通命令，再看这篇。沿用那个目录的形状，不要把 `tools/` 里每条脚本都搬过来。
 
-## 1. 按教学项目抄目录
+## 1. 参照教学示例建立目录
 
 ```text
 BRIEF.md
 SOURCES.md
-songs.json                 # 播放顺序 N→1
+songs.json                 # 榜单：按名次从低到高排列（末位先播）
 project-manifest.json      # schema v2
 voice-selection.json
 narration-request.json
@@ -15,7 +15,7 @@ publishing/xiaohongshu.md
 package.json               # hyperframes@0.6.69
 ```
 
-封面 / intro 不要出现完整歌单，也不要泄露 `#1`。
+封面 / intro 不要出现完整歌单，也不要泄露第一名。
 
 ## 2. 先 Cookie，再取材
 
@@ -25,7 +25,7 @@ YouTube **和** B 站都要搜。先锁定版本身份，再官方 MV，再干�
 
 ## 3. 配音，再过项目门禁
 
-整期只用一个声音。TTS 体检变绿之前，空跑旁白就够（`VOICE GATE: PASS mode=structure`）。真 WAV 走 P2：`setup_check.py` → `install_reference.py` → `smoke-narrate`（不要 `--dry-run`，不要改用 Kokoro）。写 `master.wav` 或成片 HTML **之前**，`verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
+整期只用一个声音。TTS 体检通过之前，空跑旁白就够（`VOICE GATE: PASS mode=structure`）。真 WAV 走 P2：`setup_check.py` → `install_reference.py` → `smoke-narrate`（不要 `--dry-run`，不要改用 Kokoro）。写 `master.wav` 或成片 HTML **之前**，`verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
 
 ```bash
 python3 tools/video/countdown_build.py --project <project> --plan-only
@@ -33,7 +33,7 @@ python3 tools/video/countdown_build.py --project <project> --plan-only
 
 ## 4. 画面、渲染、mux
 
-教学项目优先 `python3 tools/cli.py smoke-e2e`。自己做下一期时：用 `tools/video/vfill.sh` 加黑边（裁切带铺满宽度）。渲染用 **hyperframes@0.6.69** `--sdr`。把预混好的 `master.wav` 盖到画面上（HyperFrames 会压动态）：
+教学示例优先 `python3 tools/cli.py smoke-e2e`。制作下一期时：用 `tools/video/vfill.sh` 加黑边（裁切带铺满宽度）。渲染用 **hyperframes@0.6.69** `--sdr`。把预混好的 `master.wav` 盖到画面上（HyperFrames 会压动态）：
 
 ```bash
 ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \

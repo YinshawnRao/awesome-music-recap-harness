@@ -1,6 +1,6 @@
 # CONVENTIONS.md — 可复用的制作红线
 
-人从 [README.md](README.md) 开始。本文件是红线清单，不是「第一次跑通」指南。工具 README 里有额外命令。`AGENTS.md` 给自动化贡献者用。不要另起一套互相打架的规则。
+请从 [README.md](README.md) 开始。本文件是红线清单，不是「第一次跑通」指南。工具 README 里有额外命令。`AGENTS.md` 给自动化贡献者用。不要另起一套互相冲突的规则。
 
 ## Git 边界
 
@@ -10,7 +10,7 @@
 
 盘点不只等于 TOP 榜。必须显式写 `project_kind`：
 
-- `top_ranking` — 倒数揭晓，播放 N→1，封面 / intro 保悬念。
+- `top_ranking` — 榜单倒数揭晓：按名次从低到高播放（末位先播，首位最后），封面 / intro 保悬念。
 - `narrative` — 时间线或散文顺序；条目没有 `rank`。脚手架：`examples/narrative-eras-demo/`。
 - `free_exploration` — 实验；`rationale` 不能为空。
 
@@ -20,11 +20,11 @@
 
 除非简报指定某一条 URL 为必用，否则 YouTube **和** B 站都要搜。先锁定版本身份（翻唱 vs 原唱），再官方 MV，再干净度、立体声、分辨率。把选择写进 `SOURCES.md` 和 `project-manifest.json`。`example.com` 占位 URL 只给教学清单用。P1 教学画面用 `make_placeholder_clips.py` 本机生成，不要下载 `example.com`。
 
-## TOP 榜（旗舰形态）
+## TOP 榜（默认可复现形态）
 
-- 播放顺序 N→1。这个顺序是内部的（脚本、时间线、QA）。
+- 播放顺序按名次从低到高（末位先播，首位最后）。该顺序用于脚本、时间线与 QA；JSON 内部字段可为 `playback_order: "N→1"`。
 - 封面和 intro 不列完整歌单、不展示排序、不泄露第一名。
-- 画面上不要写 `05→01` / `N→1` / 「倒数开始」。
+- 画面上不要写 `05→01` / `N→1` / 「倒数开始」。这些记号只出现在内部数据与门禁报错里，不作为对外文案。
 - 封面标题已经用了中文极致词（「最难 / 最燃 / 被低估」），就不要再盖一个 `TOP N` 角标。
 - 封面素材用**最先播放**的那首（最后一名），并直接接到该名次揭晓。
 

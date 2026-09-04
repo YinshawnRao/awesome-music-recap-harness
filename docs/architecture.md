@@ -1,6 +1,6 @@
 # 架构
 
-先看根目录 [README](../README.md) 和 [TOP 教学项目](../examples/top-ranking-demo/)。本页讲「为什么」，不是第一次跑通路径。
+请先读根目录 [README](../README.md) 和 [TOP 教学示例](../examples/top-ranking-demo/)。本页说明分层理由，不是第一次跑通路径。
 
 AMRH 是一套**音乐盘点工作台**。盘点 = 用取材片段 + 旁白 + 合成层搭起来的结构化短视频。榜单只是其中一种形态。
 
@@ -10,7 +10,7 @@ AMRH 是一套**音乐盘点工作台**。盘点 = 用取材片段 + 旁白 + �
 ## project_kind
 
 ```text
-top_ranking  ── 旗舰示例（N→1 倒数揭晓，保悬念）
+top_ranking  ── 教学示例（榜单按名次从低到高揭晓，末位先播，首位最后，封面保悬念）
 narrative    ── 时间线 / 散文 / 人物纪录片（按脚本顺序，没有 rank）
 free_exploration ── 音乐或画面实验（必须写 rationale）
 ```
@@ -22,7 +22,7 @@ free_exploration ── 音乐或画面实验（必须写 rationale）
 1. **取材** — YouTube 和 B 站并行，走 `yt_dlp_readonly.py`
    （仓库根目录 `all_cookies.txt` 的唯一允许 yt-dlp 入口）、
    `bili_search.py`，以及文档里的 `bili_dl.py` 412 回退。完整下载流水线必须有 Netscape jar；封装会把快照放到仓库外，避免 yt-dlp 改写原文件。先版本身份，再官方 MV，再干净度 / 立体声 / 分辨率。
-2. **画面** — `vfill.sh` 加黑边（裁切带铺满宽度）。除非用户要求、并且每一帧都看过，否则不要激进竖裁。
+2. **画面** — `vfill.sh` 加黑边（裁切带铺满宽度）。除非明确要求、并且每一帧都看过，否则不要激进竖裁。
 3. **配音** — 解析一次（`resolve_voice.py`），用 `narrate.py` 生成，用 `verify_voice_usage.py` 校验。文档路径是 Mac 上的 Qwen/MLX。
 4. **计划** — TOP 用 `countdown_build.py`；叙事节目仍要填 schema v2 的旁白角色（开头、每条转场、作品 outro、固定 CTA），除非是已记录的自由探索例外。
 5. **合成** — HyperFrames **0.6.69**，`--sdr`，工人数走
