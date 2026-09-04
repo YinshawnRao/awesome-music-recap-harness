@@ -31,6 +31,16 @@ def test_model_decision_from_brief() -> None:
     assert selection["selection_mode"] == "model_decision"
 
 
+def test_local_reference_preferred_over_registry_slot(tmp_path, monkeypatch) -> None:
+    registry = VoiceRegistry.load()
+    voice = registry.by_id("CV007")
+    assert voice is not None
+    local = registry.local_reference_path_for(voice)
+    assert local.as_posix().endswith("voices/local/CV007/reference.wav")
+    assert not local.is_file()
+    assert registry.reference_path_for(voice) == registry.registry_reference_path_for(voice)
+
+
 def test_negative_clause_does_not_select() -> None:
     registry = VoiceRegistry.load()
     selection = resolve_task_prompt(

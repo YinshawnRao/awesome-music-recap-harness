@@ -1,1 +1,1 @@
-"""Narration doctor, voice resolution, and dry-run TTS helpers."""
+"""Narration doctor, voice resolution, dry-run sidecars, and fail-closed Qwen TTS."""

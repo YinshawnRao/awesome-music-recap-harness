@@ -24,6 +24,8 @@
 1. 先读 `README.md` 和 `examples/top-ranking-demo/README.md`。需要红线再读
    `CONVENTIONS.md`。
 2. 跑 `python3 tools/tts/doctor.py`（在配音齐备之前，只验结构的 PASS 可以接受）。
+   真 WAV 先 `python3 tools/tts/setup_check.py`，再 `python3 tools/cli.py smoke-narrate`。
+   缺权重就停这一步，打印中文下一步。不要改用 Kokoro。
 3. 根据原始简报解析**一份** `voice-selection.json`。简报没改就不要重跑；教学项目已经有选择。
 4. 真下载之前，仓库根目录必须有 Netscape jar：`all_cookies.txt`（`0600`）。
    先跑 `bash tools/video/install_cookies.sh`（只拷格式模板），用筛选过的浏览器导出替换占位值，再跑

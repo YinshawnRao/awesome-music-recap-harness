@@ -19,6 +19,11 @@
 默认是结构模式，这样教学项目不附带片段也能跑。P1 可用
 `python3 tools/video/make_placeholder_clips.py` 生成本地合法占位竖屏；那不是版权 MV，也不能代替 `--require-media` 要的真 WAV。
 
+VOICE 两种模式：
+
+- 结构：`verify_voice_usage.py` → `VOICE GATE: PASS mode=structure`（只要 sidecar）
+- 真 WAV：加 `--require-wav` → `PASS mode=wav`。P2 用 `smoke-narrate` 写出文件后再开这个开关。
+
 ```bash
 python3 tools/video/verify_project.py --project examples/top-ranking-demo --require-media
 python3 tools/tts/verify_voice_usage.py \
@@ -26,7 +31,7 @@ python3 tools/tts/verify_voice_usage.py \
   --project-root examples/top-ranking-demo --require-wav
 ```
 
-在真实 WAV / 片段齐备之前，这两个开关会失败。
+在真实 WAV / 片段齐备之前，这两个开关会失败。缺 Qwen 权重时不要改用 Kokoro。
 
 ## 可选：百度网盘上传
 

@@ -4,7 +4,7 @@
 
 这是一份**能跟着做完的指南**，不是内部实现说明书。先看本页和 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。协议：**MIT**。v1 **以 Mac 为主**。
 
-四期开箱即用：[ROADMAP.md](ROADMAP.md)。**本仓库现在是 P1：素材闭环能跑。**
+四期开箱即用：[ROADMAP.md](ROADMAP.md)。**本仓库现在是 P2：配音闭环能跑。** P1（Cookie / 下载烟雾 / 占位竖屏）已完成。
 
 ## 适合谁
 
@@ -69,7 +69,36 @@ python3 tools/video/make_placeholder_clips.py
 
 烟雾输出：`examples/smoke-download/out/`（gitignore）。占位片段：`examples/top-ranking-demo/footage/` 和 `clips/vert_rank-0N.mp4`。为什么用这条公开视频、Cookie 缺了会怎样：见 [examples/smoke-download/README.md](examples/smoke-download/README.md)。阶段边界：[ROADMAP.md](ROADMAP.md)。
 
-## 4. 第一次跑通 — TOP 教学项目
+## 4. P2 配音闭环（Apple Silicon + 自录参考）
+
+结构门禁不需要这一节。要**真的 WAV**，在 M 系列 Mac 上按顺序复制。权重和你的声音都不随仓库分发。
+
+```bash
+# 1）建独立 Qwen 解释器（不下载权重）
+bash tools/tts/bootstrap_mac.sh
+source tools/tts/runtime/env.sh
+
+# 2）合法下载 Qwen3-TTS Base 8-bit 到本机，再 export
+#    模型卡与钉 revision：docs/mac-setup.md
+export AMRH_QWEN_BASE_MODEL="$HOME/amrh-models/Qwen3-TTS-12Hz-0.6B-Base-8bit"
+
+# 3）自录约 10 秒单声道 WAV，装进教学声槽 CV007（gitignore）
+python3 tools/tts/install_reference.py ~/Desktop/reference.wav
+
+# 4）缺任何一项都会用中文告诉你下一步；不会改用 Kokoro
+python3 tools/tts/setup_check.py
+python3 tools/cli.py smoke-narrate
+```
+
+一句烟雾：`examples/top-ranking-demo/audio/smoke.wav`。整批教学旁白：
+
+```bash
+python3 tools/cli.py smoke-narrate -- --full
+```
+
+录音要点和路径：[tools/tts/voices/local/README.md](tools/tts/voices/local/README.md)。完整复制步骤：[docs/mac-setup.md](docs/mac-setup.md)。
+
+## 5. 第一次跑通 — TOP 教学项目
 
 在仓库根目录执行。教学项目已经带好选题简报、配音选择、清单、旁白 sidecar 和小红书文案。你现在要确认的是**结构能走通**：
 
@@ -87,7 +116,7 @@ python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 预期输出（工具原文就是英文）：
 
 ```text
-VOICE GATE: PASS
+VOICE GATE: PASS mode=structure
 PROJECT CONTRACT: PASS mode=structure
 PUBLISHING COPY: PASS
 FINAL VIDEO QA: PASS skeleton pending_machine_qa
@@ -95,11 +124,12 @@ FINAL VIDEO QA: PASS skeleton pending_machine_qa
 
 目录说明、选题简报、以及后面的下载 / 渲染步骤，见 [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md)。
 
-## 5. 「做完」长什么样
+## 6. 「做完」长什么样
 
 | 阶段 | 你手上有什么 | 门禁 |
 | --- | --- | --- |
-| **P1 今天** | Cookie 路径 + 公开下载烟雾 + 五条占位竖屏 + 结构门禁 | VOICE、PROJECT、PUBLISHING、FINAL 骨架全部 **PASS** |
+| **P1** | Cookie 路径 + 公开下载烟雾 + 五条占位竖屏 + 结构门禁 | VOICE `mode=structure`、PROJECT、PUBLISHING、FINAL 骨架全部 **PASS** |
+| **P2 今天** | 自录参考 + 合法 Qwen 权重 → 至少一句真旁白 WAV | `setup_check` / `smoke-narrate`；齐了之后 `VOICE GATE: PASS mode=wav` |
 | **真正的盘点成片** | `examples/top-ranking-demo/renders/top-ranking-demo.mp4` 和 `publishing/xiaohongshu.md` | 还是这四道门禁；mux 之后再过发布门禁 |
 
 真 mp4 需要：**你自己有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com`）、**真实** Cookie、旁白 WAV，以及一份 HyperFrames 成片。P1 先用占位片段，不要去下 `example.com`。
@@ -118,7 +148,7 @@ ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
 
 分目录的完整命令：见 [教学项目 README](examples/top-ranking-demo/README.md)。
 
-## 6. 常见问题（前 5 条）
+## 7. 常见问题（前 5 条）
 
 **Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自己跑 `yt-dlp --cookies`。
 
@@ -128,11 +158,11 @@ ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
 
 **HyperFrames 版本。** 只用 `npx --yes hyperframes@0.6.69 ...`。裸写 `npx hyperframes` 或 `@latest` 都不对。教学项目目录里的 `npm run lint` / `npm run render` 已经锁死 0.6.69。
 
-**TTS 体检不绿。** 结构门禁不需要生成 WAV。`--dry-run` / 已有的 `.wav.tts.json` sidecar 就够第一次跑通。真配音是 **P2**，需要 Apple Silicon、合法的 Qwen/MLX 安装，以及你自己的 `reference.wav`——见 [docs/mac-setup.md](docs/mac-setup.md)。不要悄悄改用 Kokoro。
+**TTS 体检不绿 / 真配音失败。** 结构门禁看 `VOICE GATE: PASS mode=structure`（sidecar 即可）。真 WAV 看 `python3 tools/tts/setup_check.py`：缺 Apple Silicon、缺 `AMRH_QWEN_PYTHON` / `AMRH_QWEN_BASE_MODEL`、缺自录参考，都会用中文写出下一步。不要改用 Kokoro。见 [docs/mac-setup.md](docs/mac-setup.md)。
 
 ## 第一次跑通之后
 
-不要从这里起步。P2–P4 见 [ROADMAP.md](ROADMAP.md)。
+不要从这里起步。P3–P4 见 [ROADMAP.md](ROADMAP.md)。
 
 | 你想做什么 | 看哪篇 |
 | --- | --- |
@@ -140,6 +170,7 @@ ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
 | 教学项目（简报 → 目录 → 成片） | [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md) |
 | Cookie 导出细节 | [examples/cookies/README.md](examples/cookies/README.md) |
 | 公开下载烟雾 | [examples/smoke-download/README.md](examples/smoke-download/README.md) |
+| 本地参考 WAV（gitignore） | [tools/tts/voices/local/README.md](tools/tts/voices/local/README.md) |
 | Mac TTS / 额外安装 | [docs/mac-setup.md](docs/mac-setup.md) |
 | 自己做下一期盘点 | [docs/runbook.md](docs/runbook.md) |
 | 流水线为什么这样分层 | [docs/architecture.md](docs/architecture.md) |

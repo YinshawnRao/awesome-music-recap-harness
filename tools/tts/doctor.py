@@ -3,50 +3,31 @@
 
 This scaffold ships registry stubs without proprietary reference WAVs. A
 structure-only PASS means config/registry are valid. A voice-ready PASS
-additionally finds the requested reference WAV. Qwen/MLX generation is
-documented as the Mac-first path and is fail-closed when models are missing.
+additionally finds the requested reference WAV plus the Qwen/MLX runtime.
+Missing models fail closed. Never fall back to Kokoro.
 """
 
 from __future__ import annotations
 
 import argparse
-import os
 import sys
 from pathlib import Path
 
+_SCRIPT_DIR = str(Path(__file__).resolve().parent)
+_REPO_ROOT = str(Path(_SCRIPT_DIR).parents[1])
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
+
 try:
-    from metal_preflight import default_metal_device_available
-    from voice_registry import VoiceRegistry
-except ImportError:
     from tools.tts.metal_preflight import default_metal_device_available
+    from tools.tts.qwen_env import KOKORO_BAN, inspect_setup, resolve_qwen_model, resolve_qwen_python
     from tools.tts.voice_registry import VoiceRegistry
-
-TTS_ROOT = Path(__file__).resolve().parent
-
-
-def _qwen_python() -> str | None:
-    env_name = VoiceRegistry.load().config["runtime"]["qwen_python_env"]
-    configured = os.environ.get(env_name)
-    if configured:
-        return configured
-    for candidate in VoiceRegistry.load().config["runtime"]["qwen_python_candidates"]:
-        path = TTS_ROOT / candidate
-        if path.is_file():
-            return str(path)
-    return None
-
-
-def _qwen_model() -> str | None:
-    registry = VoiceRegistry.load()
-    for env_name in registry.config["runtime"]["qwen_base_model_envs"]:
-        configured = os.environ.get(env_name)
-        if configured:
-            return configured
-    for candidate in registry.config["runtime"]["qwen_base_model_candidates"]:
-        path = TTS_ROOT / candidate
-        if path.exists():
-            return str(path)
-    return None
+except ImportError:
+    if _SCRIPT_DIR not in sys.path:
+        sys.path.insert(0, _SCRIPT_DIR)
+    from metal_preflight import default_metal_device_available
+    from qwen_env import KOKORO_BAN, inspect_setup, resolve_qwen_model, resolve_qwen_python
+    from voice_registry import VoiceRegistry
 
 
 def run_doctor(voice_id: str | None = None, *, require_reference: bool = False) -> tuple[int, list[str]]:
@@ -68,23 +49,41 @@ def run_doctor(voice_id: str | None = None, *, require_reference: bool = False) 
         notes.append(f"reference=STUB missing {reference.as_posix()}")
         voice_state = "STUB"
         if require_reference:
-            return 1, notes + ["reference WAV is required for this check"]
+            return 1, notes + [
+                "reference WAV is required for this check",
+                "缺参考：python3 tools/tts/install_reference.py ~/Desktop/reference.wav",
+                KOKORO_BAN,
+            ]
 
     if sys.platform == "darwin":
         metal = default_metal_device_available()
         notes.append("metal=PASS" if metal else "metal=FAIL")
         if not metal and require_reference:
-            return 1, notes + ["Metal device unavailable for Qwen/MLX"]
+            return 1, notes + ["Metal device unavailable for Qwen/MLX", KOKORO_BAN]
     else:
         notes.append("metal=SKIP (Linux/Kokoro is a documented future path)")
 
-    qwen_python = _qwen_python()
-    qwen_model = _qwen_model()
+    qwen_python = resolve_qwen_python(registry)
+    qwen_model = resolve_qwen_model(registry)
     notes.append("qwen_python=" + ("READY" if qwen_python else "UNSET"))
     notes.append("qwen_model=" + ("READY" if qwen_model else "UNSET"))
+
+    generation_ready = voice_state == "READY" and bool(qwen_python) and bool(qwen_model)
+    if require_reference:
+        report = inspect_setup(target_id, check_mlx_import=False)
+        if not report.ok or not generation_ready:
+            extra = [f"- {error}" for error in report.errors]
+            extra.append("真配音请跑：python3 tools/tts/setup_check.py")
+            extra.append(KOKORO_BAN)
+            notes.append(
+                "TTS DOCTOR: FAIL "
+                f"voice={target_id} state={voice_state}"
+            )
+            return 1, notes + extra
+
     notes.append(
         "TTS DOCTOR: "
-        + ("PASS" if voice_state == "READY" and qwen_python and qwen_model else "PASS structure-only")
+        + ("PASS" if generation_ready else "PASS structure-only")
         + f" voice={target_id} state={voice_state}"
     )
     return 0, notes

@@ -117,8 +117,17 @@ class VoiceRegistry:
     def reference_text_for(self, voice: dict) -> str:
         return voice.get("reference_text", self.registry["reference_text"])
 
-    def reference_path_for(self, voice: dict) -> Path:
+    def local_reference_path_for(self, voice: dict) -> Path:
+        return TTS_ROOT / "voices" / "local" / voice["id"] / "reference.wav"
+
+    def registry_reference_path_for(self, voice: dict) -> Path:
         return TTS_ROOT / "voices" / voice["reference_audio"]
+
+    def reference_path_for(self, voice: dict) -> Path:
+        local = self.local_reference_path_for(voice)
+        if local.is_file():
+            return local
+        return self.registry_reference_path_for(voice)
 
     def tokens_for(self, voice: dict) -> list[tuple[str, str]]:
         values = [

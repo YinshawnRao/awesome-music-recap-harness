@@ -26,7 +26,7 @@ def verify_voice_usage(
     project_root: Path,
     *,
     require_wav: bool = False,
-) -> list[str]:
+) -> tuple[list[str], str]:
     errors: list[str] = []
     registry = VoiceRegistry.load()
     try:
@@ -48,12 +48,15 @@ def verify_voice_usage(
         return errors
 
     seen_ids: set[str] = set()
+    wav_count = 0
+    readable = 0
     for sidecar_path in sidecars:
         try:
             sidecar = _load_json(sidecar_path)
         except (OSError, json.JSONDecodeError, ValueError) as exc:
             errors.append(f"{sidecar_path.name} is unreadable: {exc}")
             continue
+        readable += 1
         resolved = sidecar.get("resolved_voice_id")
         if resolved != voice_id:
             errors.append(f"{sidecar_path.name} resolved_voice_id {resolved!r} != selection {voice_id!r}")
@@ -61,12 +64,14 @@ def verify_voice_usage(
             seen_ids.add(str(resolved))
         wav = sidecar_path.with_name(sidecar_path.name.removesuffix(".tts.json"))
         if wav.is_file():
+            wav_count += 1
             continue
         if require_wav:
             errors.append(f"missing WAV for sidecar {sidecar_path.name}")
     if len(seen_ids) > 1:
         errors.append(f"multiple voice IDs in sidecars: {sorted(seen_ids)}")
-    return errors
+    mode = "wav" if readable and wav_count == readable else "structure"
+    return errors, mode
 
 
 def main() -> int:
@@ -76,16 +81,16 @@ def main() -> int:
     parser.add_argument(
         "--require-wav",
         action="store_true",
-        help="fail if sidecar WAV files are missing (default: accept dry-run sidecars)",
+        help="fail if sidecar WAV files are missing (default: accept dry-run sidecars / structure mode)",
     )
     args = parser.parse_args()
-    errors = verify_voice_usage(args.selection, args.project_root, require_wav=args.require_wav)
+    errors, mode = verify_voice_usage(args.selection, args.project_root, require_wav=args.require_wav)
     if errors:
         print("VOICE GATE: FAIL", file=sys.stderr)
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
-    print("VOICE GATE: PASS")
+    print(f"VOICE GATE: PASS mode={mode}")
     return 0
 
 

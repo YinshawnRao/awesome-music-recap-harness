@@ -18,6 +18,11 @@ def main() -> int:
     parser.add_argument("--project", required=True, type=Path)
     parser.add_argument("--request", type=Path, help="defaults to <project>/narration-request.json")
     parser.add_argument("--selection", type=Path, help="defaults to <project>/voice-selection.json")
+    parser.add_argument(
+        "--real",
+        action="store_true",
+        help="真生成 WAV（缺权重就失败，不改用 Kokoro）。默认仍是 --dry-run sidecar。",
+    )
     args = parser.parse_args()
     request = args.request or (args.project / "narration-request.json")
     selection = args.selection or (args.project / "voice-selection.json")
@@ -31,8 +36,9 @@ def main() -> int:
         str(request),
         "--selection-file",
         str(selection),
-        "--dry-run",
     ]
+    if not args.real:
+        command.append("--dry-run")
     completed = subprocess.run(command, check=False)
     return int(completed.returncode)
 
