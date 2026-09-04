@@ -1,84 +1,76 @@
-# tools/video — command appendix
+# tools/video — 命令附录
 
-Operators start at the root [README](../../README.md) and
-[examples/top-ranking-demo/](../../examples/top-ranking-demo/). This page
-lists extra commands. You do not need most of them for first success.
+操作者从根目录 [README](../../README.md) 和
+[examples/top-ranking-demo/](../../examples/top-ranking-demo/) 开始。本页列额外命令。第一次跑通用不到其中大部分。
 
-## Commands
+## 命令
 
 ```bash
-# Cookie-safe download (REQUIRED jar; only allowed yt-dlp consumer)
+# 安全下载（必须有 jar；唯一允许的 yt-dlp 入口）
 python3 tools/video/check_yt_cookie.py
 python3 tools/video/yt_dlp_readonly.py -- "<URL>" --skip-download --print id,title
 
-# Dual-platform search
+# 双平台搜索
 python3 tools/video/bili_search.py "PLACEHOLDER artist official MV" 5
 
-# Letterbox to 1080×1920 (full-width crop band)
+# 加黑边到 1080×1920（裁切带铺满宽度）
 bash tools/video/vfill.sh raw.mp4 clips/vert_item.mp4 1920:800:0:140
 
-# Gates
+# 门禁
 python3 tools/video/verify_project.py --project examples/top-ranking-demo
 python3 tools/video/verify_publishing.py --project examples/top-ranking-demo
 python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 
-# Flagship planner
+# 旗舰规划器
 python3 tools/video/countdown_build.py --project examples/top-ranking-demo --plan-only
 
-# Adaptive HyperFrames workers (from the project directory)
+# 自适应 HyperFrames 工人数（在项目目录里跑）
 python3 ../../tools/video/resource_budget.py hyperframes -- \
   npx --yes hyperframes@0.6.69 render --output renders/full.mp4 --sdr
 ```
 
-## Four gates (order is fixed)
+## 四道门禁（顺序固定）
 
 1. **VOICE** — `tools/tts/verify_voice_usage.py`
-2. **PROJECT** — `verify_project.py` (before writing master.wav / HTML)
-3. **PUBLISHING** — `verify_publishing.py` after mux, before FINAL
-4. **FINAL** — `prepare_final_qa.py` (v1 writes a pending skeleton)
+2. **PROJECT** — `verify_project.py`（写 master.wav / HTML 之前）
+3. **PUBLISHING** — mux 之后、FINAL 之前跑 `verify_publishing.py`
+4. **FINAL** — `prepare_final_qa.py`（v1 只写待审骨架）
 
-`--require-media` / `--require-wav` turn structure PASS into a media-hard gate.
+`--require-media` / `--require-wav` 会把结构 PASS 升级成硬素材门禁。
 
-## master.wav mux
+## master.wav 混流
 
-HyperFrames normalizes audio and flattens ducking. Always mux a premixed
-`master.wav` over the video:
+HyperFrames 会归一化音频并压掉闪避。一定要把预混好的 `master.wav` 盖到画面上：
 
 ```bash
 ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \
   -c:v copy -c:a aac -b:a 192k -shortest renders/<slug>.mp4
 ```
 
-## Cookies (required for the full pipeline)
+## Cookie（完整流水线必做）
 
-The dual-platform download flow **requires** a Netscape jar at repo-root
-`all_cookies.txt` (mode `0600`). Structure-only gates still run without it.
-Missing or placeholder jars are a hard stop for `yt_dlp_readonly.py` and
-`check_yt_cookie.py`.
+双平台下载流程**必须**有仓库根目录的 Netscape jar：`all_cookies.txt`（权限 `0600`）。只验结构的门禁没有它也能跑。缺 jar 或还是占位符时，`yt_dlp_readonly.py` 和 `check_yt_cookie.py` 会硬停。
 
-1. Copy the committed format template, or overwrite it with a filtered export:
+1. 拷仓库里的格式模板，或用筛选过的导出整份覆盖：
 
    ```bash
    cp examples/cookies/all_cookies.example.txt all_cookies.txt
    chmod 0600 all_cookies.txt
    ```
 
-2. Export a real Netscape file from the browser (YouTube/Google + Bilibili).
-   Filter **outside the repo** (`filter_cookie_jar.py` refuses in-repo paths).
-   You copy the candidate onto `all_cookies.txt`. Tools never write that path.
+2. 从浏览器导出真实 Netscape 文件（YouTube/Google + B 站）。
+   筛选必须在**仓库外**（`filter_cookie_jar.py` 拒绝仓库内路径）。
+   你自己把候选文件拷到 `all_cookies.txt`。工具从不写这个路径。
 
-3. Verify:
+3. 校验：
 
    ```bash
    python3 tools/video/check_yt_cookie.py
    ```
 
-   The check never prints cookie values. The example file fails on purpose
-   while `PLACEHOLDER_*` tokens remain.
+   检查从不打印 Cookie 值。示例文件在还留着 `PLACEHOLDER_*` 时会故意失败。
 
-4. Download **only** via `yt_dlp_readonly.py`. It copies the jar to a private
-   `amrh-cookie-*` directory outside the repository so yt-dlp cannot rewrite
-   the canonical file. Do not run `yt-dlp --cookies all_cookies.txt`.
+4. 下载**只**走 `yt_dlp_readonly.py`。它会把 jar 拷到仓库外的私有
+   `amrh-cookie-*` 目录，避免 yt-dlp 改写规范文件。不要跑 `yt-dlp --cookies all_cookies.txt`。
 
-See [examples/cookies/README.md](../../examples/cookies/README.md). Other
-show shapes and Baidu: [docs/beyond-the-demo.md](../../docs/beyond-the-demo.md).
+见 [examples/cookies/README.md](../../examples/cookies/README.md)。其他节目形态和百度网盘：[docs/beyond-the-demo.md](../../docs/beyond-the-demo.md)。

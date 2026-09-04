@@ -1,24 +1,22 @@
-# Beyond the demo
+# 教学项目之后
 
-Read this after the root README and the TOP-ranking example. Nothing here
-is required for first success.
+先读根目录 README 和 TOP 榜示例。这里没有任何第一次跑通的必做项。
 
-## Other show shapes
+## 其他节目形态
 
-The authoring contract (`project_kind`) also accepts:
+写作契约（`project_kind`）还接受：
 
-| Kind | Meaning |
+| 取值 | 含义 |
 | --- | --- |
-| `top_ranking` | Flagship. N→1 countdown, suspense on cover/intro. |
-| `narrative` | Timeline / essay order. Items have no `rank`. |
-| `free_exploration` | Experiment; needs a non-empty `rationale`. |
+| `top_ranking` | 旗舰。N→1 倒数揭晓，封面 / intro 保悬念。 |
+| `narrative` | 时间线 / 散文顺序。条目没有 `rank`。 |
+| `free_exploration` | 实验；需要非空的 `rationale`。 |
 
-Use the same voice, source, publishing, and mux rules. Do not start a new
-shape until you have walked the ranking demo once.
+配音、取材、发布、mux 规则相同。没走完榜单教学项目之前，不要另开新形态。
 
-## Hard media gates
+## 硬素材门禁
 
-Structure mode is the default so the demo runs without bundled clips.
+默认是结构模式，这样教学项目不附带片段也能跑。
 
 ```bash
 python3 tools/video/verify_project.py --project examples/top-ranking-demo --require-media
@@ -27,17 +25,15 @@ python3 tools/tts/verify_voice_usage.py \
   --project-root examples/top-ranking-demo --require-wav
 ```
 
-Those flags fail until real WAVs / clips exist.
+在真实 WAV / 片段齐备之前，这两个开关会失败。
 
-## Optional Baidu upload
+## 可选：百度网盘上传
 
-`tools/delivery/baidu/` is an **optional** plugin. The harness does not
-depend on it. Tokens never belong in git. See
-[tools/delivery/baidu/README.md](../tools/delivery/baidu/README.md).
+`tools/delivery/baidu/` 是**可选**插件。工作台本体不依赖它。token 永远不要进 git。见
+[tools/delivery/baidu/README.md](../tools/delivery/baidu/README.md)。
 
-## Command appendix
+## 命令附录
 
-Full command lists (vfill, bili search, resource budget, cookie filter)
-live in [tools/video/README.md](../tools/video/README.md) and
-[tools/tts/README.md](../tools/tts/README.md). Prefer the demo walkthrough
-until you need one of those tools.
+vfill、B 站搜索、资源预算、Cookie 筛选的完整命令在
+[tools/video/README.md](../tools/video/README.md) 和
+[tools/tts/README.md](../tools/tts/README.md)。用得到某个工具之前，优先跟教学项目走。

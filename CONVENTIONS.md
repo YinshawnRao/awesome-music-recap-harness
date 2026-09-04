@@ -1,85 +1,66 @@
-# CONVENTIONS.md — portable production standards
+# CONVENTIONS.md — 可复用的制作红线
 
-Humans start at [README.md](README.md). This file is the red-line list,
-not the first-success guide. Tool READMEs hold extra commands. `AGENTS.md`
-holds contributor automation. Do not fork conflicting rules.
+人从 [README.md](README.md) 开始。本文件是红线清单，不是「第一次跑通」指南。工具 README 里有额外命令。`AGENTS.md` 给自动化贡献者用。不要另起一套互相打架的规则。
 
-## Git boundary
+## Git 边界
 
-Commit source, docs, schemas, briefs, light QA JSON, and the **fake**
-Netscape template `examples/cookies/all_cookies.example.txt`. Do not commit
-downloads, renders, ordinary WAV/MP4, the runtime cookie jar, tokens, or
-model weights. Root `all_cookies.txt` is a user-only input (`0600`), not a
-git asset. `.gitignore` ignores `*cookies*.txt` and un-ignores the example.
+可以提交：源码、文档、schema、选题简报、轻量 QA JSON，以及**假的** Netscape 模板 `examples/cookies/all_cookies.example.txt`。不要提交：下载、成片、普通 WAV/MP4、运行时 Cookie、token、模型权重。根目录 `all_cookies.txt` 是用户自备输入（`0600`），不是 git 资产。`.gitignore` 忽略 `*cookies*.txt`，再把示例文件加回白名单。
 
-## Recap shapes
+## 盘点形态
 
-盘点 is broader than a TOP list. Set `project_kind` explicitly:
+盘点不只等于 TOP 榜。必须显式写 `project_kind`：
 
-- `top_ranking` — countdown, N→1 playback, cover/intro keep suspense.
-- `narrative` — timeline or essay order; items have no `rank`.
-- `free_exploration` — experiment; non-empty `rationale`.
+- `top_ranking` — 倒数揭晓，播放 N→1，封面 / intro 保悬念。
+- `narrative` — 时间线或散文顺序；条目没有 `rank`。
+- `free_exploration` — 实验；`rationale` 不能为空。
 
-New projects use authoring **schema v2**.
+新项目用写作 **schema v2**。
 
-## Dual-platform sources
+## 双平台取材
 
-Search YouTube **and** Bilibili unless the brief names one URL as mandatory.
-Lock version identity first (cover vs original performer), then official MV,
-then cleanliness, stereo, and resolution. Record the choice in `SOURCES.md`
-and `project-manifest.json`. Placeholder example.com URLs are for the demo
-only.
+除非简报指定某一条 URL 为必用，否则 YouTube **和** B 站都要搜。先锁定版本身份（翻唱 vs 原唱），再官方 MV，再干净度、立体声、分辨率。把选择写进 `SOURCES.md` 和 `project-manifest.json`。`example.com` 占位 URL 只给教学项目用。
 
-## TOP ranking (flagship)
+## TOP 榜（旗舰形态）
 
-- Playback N→1. That order is internal (scripts, timeline, QA).
-- Cover and intro do not list the full setlist, show the order, or leak #1.
-- Do not paint `05→01` / `N→1` / “倒数开始” on screen.
-- If the cover title already uses a Chinese superlative (“最难 / 最燃 /
-  被低估”), do not also stamp an extra `TOP N` badge on the cover.
-- Cover footage is the **first-played** song (last place), flowing into that
-  reveal.
+- 播放顺序 N→1。这个顺序是内部的（脚本、时间线、QA）。
+- 封面和 intro 不列完整歌单、不展示排序、不泄露第一名。
+- 画面上不要写 `05→01` / `N→1` / 「倒数开始」。
+- 封面标题已经用了中文极致词（「最难 / 最燃 / 被低估」），就不要再盖一个 `TOP N` 角标。
+- 封面素材用**最先播放**的那首（最后一名），并直接接到该名次揭晓。
 
-## Narration
+## 旁白
 
-- Structure: intro + per-item short transition + work outro + fixed CTA.
-- Intro must not contain “接下来”.
-- TOP transitions: one reveal + one judgment; target 4–6s, hard cap 8s WAV.
-- Narrative transitions: node + one meaning; target 6–8s, hard cap 10s WAV.
-- Fixed CTA is `tools/video/outro_cta.py::FIXED_OUTRO_CTA` and is the last
-  spoken line. Briefs do not replace it.
-- One `voice-selection.json` per project. Do not pick voice gender from
-  artist gender.
-- Qwen missing → fail the TTS step. Do not silently use Kokoro.
-- Pure Chinese is not rewritten. ASCII tokens may be normalized
-  (`BEYOND → Beyond`, `BTS → B T S`).
+- 结构：开头 + 每条短转场 + 作品 outro + 固定 CTA。
+- intro 里不能出现「接下来」。
+- TOP 转场：一次揭晓 + 一个判断；目标 4–6 秒，WAV 硬上限 8 秒。
+- 叙事转场：一个节点 + 一层意思；目标 6–8 秒，WAV 硬上限 10 秒。
+- 固定 CTA 是 `tools/video/outro_cta.py::FIXED_OUTRO_CTA`，必须是最后一句口播。简报不能替换它。
+- 每个项目一份 `voice-selection.json`。不要按艺人性别选配音性别。
+- Qwen 缺失 → TTS 这一步失败。不要悄悄改用 Kokoro。
+- 纯中文不改写。ASCII 专名可以规范化（`BEYOND → Beyond`，`BTS → B T S`）。
 
-## Picture
+## 画面
 
-- Default canvas 1080×1920 @ 30fps.
-- Letterbox via `vfill.sh` with a **full-width** crop band.
-- No custom narration captions unless the brief asks.
-- No watermarks, URLs, prompts, or file paths on the finished frame.
-- Fonts: project-local licensed WOFF2. No Google Fonts at render time.
+- 默认画幅 1080×1920 @ 30fps。
+- 用 `vfill.sh` 加黑边，裁切带必须**铺满宽度**。
+- 除非简报要求，不加自定义旁白字幕。
+- 成片画面上不要水印、URL、提示词、文件路径。
+- 字体：项目本地、有授权的 WOFF2。渲染时不要拉 Google Fonts。
 
-## Audio
+## 音频
 
-- Duck music under narration (~25%, 300ms).
-- Premix `master.wav`, then mux after HyperFrames (HF flattens dynamics).
-- `>1.5s` silence is a hard fail on a real final. Do not bed noise to pass.
+- 旁白底下压低音乐（大约 25%，300ms）。
+- 先预混 `master.wav`，HyperFrames 之后再 mux（HF 会压动态）。
+- 真成片上 `>1.5s` 静音是硬失败。不要铺底噪来混过门禁。
 
 ## HyperFrames
 
-Pin **0.6.69**. Render with `--sdr`. Start workers through
-`tools/video/resource_budget.py` (`4 → 3 → 2`, overrides `AMRH_*` 1–4).
+锁 **0.6.69**。渲染加 `--sdr`。工人数走 `tools/video/resource_budget.py`（`4 → 3 → 2`，环境变量 `AMRH_*` 只能 1–4）。
 
-## Publishing
+## 发布
 
-`publishing/xiaohongshu.md` after mux, before FINAL. 1–5 title candidates
-(default 3), 420–900 non-space body characters, a real question, 8–10
-hashtags, no emoji, no song titles.
+mux 之后、FINAL 之前写 `publishing/xiaohongshu.md`。标题候选 1–5 条（默认 3），正文去空格后 420–900 字，要有一个真问题，8–10 个话题标签，不要 emoji，不要歌名。
 
-## Optional Baidu
+## 可选：百度网盘
 
-`tools/delivery/baidu/` is upload-only and reads `AMRH_BAIDU_*` or a secret
-file. No tokens in git.
+`tools/delivery/baidu/` 只负责上传，读 `AMRH_BAIDU_*` 或仓库外的密钥文件。git 里不能有 token。
