@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "中段，《末班路灯》。句子开始被送到更远处。",
+  "text": "中段，《末班路灯》。句子开始被送到更远处。",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "era-mid.wav"
+}

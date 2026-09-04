@@ -1,0 +1,232 @@
+{
+  "schema_version": 2,
+  "project_kind": "narrative",
+  "voice_selection": "voice-selection.json",
+  "cover": {
+    "text": "南港 三个时期的现场",
+    "disclosed_item_ids": ["era-early"]
+  },
+  "narration_sequence": [
+    {
+      "id": "intro",
+      "role": "intro",
+      "text": "南港的现场不像一次排名，更像把同一副嗓子放回它走过的几个房间。今天按时间走三个时期。",
+      "wav": "narration/intro.wav",
+      "sidecar": "narration/intro.wav.tts.json"
+    },
+    {
+      "id": "transition-era-early",
+      "role": "transition",
+      "item_id": "era-early",
+      "text": "早期，《旧收音机》。墙很近，气口还没藏住。",
+      "wav": "narration/era-early.wav",
+      "sidecar": "narration/era-early.wav.tts.json"
+    },
+    {
+      "id": "transition-era-mid",
+      "role": "transition",
+      "item_id": "era-mid",
+      "text": "中段，《末班路灯》。句子开始被送到更远处。",
+      "wav": "narration/era-mid.wav",
+      "sidecar": "narration/era-mid.wav.tts.json"
+    },
+    {
+      "id": "transition-era-river",
+      "role": "transition",
+      "item_id": "era-river",
+      "text": "江边，《江面回声》。空间大了，字不必唱满。",
+      "wav": "narration/era-river.wav",
+      "sidecar": "narration/era-river.wav.tts.json"
+    },
+    {
+      "id": "work-outro",
+      "role": "work_outro",
+      "text": "南港把同一副嗓子走了很远，留下来的不是名次，是每个时期特有的停顿。",
+      "wav": "narration/work-outro.wav",
+      "sidecar": "narration/work-outro.wav.tts.json"
+    },
+    {
+      "id": "outro-cta",
+      "role": "outro_cta",
+      "text": "你最想为哪一首投票？评论区告诉我。记得点赞、收藏、关注我，下一期，可能就盘到你单曲循环过的那一首。",
+      "wav": "narration/outro-cta.wav",
+      "sidecar": "narration/outro-cta.wav.tts.json"
+    }
+  ],
+  "items": [
+    {
+      "id": "era-early",
+      "title": "旧收音机",
+      "performer": "南港",
+      "clip": "clips/vert_era-early.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "南港",
+          "original_artist": "南港"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 南港 旧收音机 official live"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-radio",
+                "performer": "南港",
+                "version_kind": "original",
+                "asset_type": "live",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Narrative scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 南港 旧收音机 官方现场"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-radio",
+                "performer": "南港",
+                "version_kind": "original",
+                "asset_type": "live",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Narrative scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "youtube",
+          "url": "https://example.com/placeholder/yt-radio",
+          "decision_reason": "Placeholder lock for the narrative scaffold"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_performance",
+          "fallback_reason": null
+        }
+      }
+    },
+    {
+      "id": "era-mid",
+      "title": "末班路灯",
+      "performer": "南港",
+      "clip": "clips/vert_era-mid.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "南港",
+          "original_artist": "南港"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 南港 末班路灯 official live"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-lamps",
+                "performer": "南港",
+                "version_kind": "original",
+                "asset_type": "live",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Narrative scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 南港 末班路灯 官方现场"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-lamps",
+                "performer": "南港",
+                "version_kind": "original",
+                "asset_type": "live",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Narrative scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "bilibili",
+          "url": "https://example.com/placeholder/bv-lamps",
+          "decision_reason": "Placeholder lock; compare stereo vs mono on real sources"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_performance",
+          "fallback_reason": null
+        }
+      }
+    },
+    {
+      "id": "era-river",
+      "title": "江面回声",
+      "performer": "南港",
+      "clip": "clips/vert_era-river.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "南港",
+          "original_artist": "南港"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 南港 江面回声 official live"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-echo",
+                "performer": "南港",
+                "version_kind": "original",
+                "asset_type": "live",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Narrative scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 南港 江面回声 官方现场"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-echo",
+                "performer": "南港",
+                "version_kind": "original",
+                "asset_type": "live",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Narrative scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "youtube",
+          "url": "https://example.com/placeholder/yt-echo",
+          "decision_reason": "Placeholder lock; finale stays last on the timeline"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_performance",
+          "fallback_reason": null
+        }
+      }
+    }
+  ]
+}

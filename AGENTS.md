@@ -13,7 +13,8 @@
 
 - `tools/tts/` — 体检、选声、配音、校验
 - `tools/video/` — Cookie、yt-dlp 封装、vfill、门禁、倒数计划、P1 占位片段 / 烟雾下载
-- `examples/top-ranking-demo/` — TOP 教学项目
+- `examples/top-ranking-demo/` — TOP 教学项目（旗舰可跑通路径）
+- `examples/narrative-eras-demo/` — 编年 / 叙事脚手架（结构门禁；不成片）
 - `examples/cookies/` — Netscape 格式模板（只有假值）
 - `examples/smoke-download/` — 公开 YouTube 下载烟雾
 - `docs/` — 第一次跑通之后的次要材料

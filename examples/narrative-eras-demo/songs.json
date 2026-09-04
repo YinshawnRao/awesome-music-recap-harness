@@ -1,0 +1,39 @@
+{
+  "slug": "narrative-eras-demo",
+  "project_kind": "narrative",
+  "playback_order": "chronological",
+  "show_default": 20,
+  "intro_seconds": 7,
+  "outro_seconds": 8,
+  "cta_seconds": 10,
+  "audio_dir": "narration",
+  "songs": [
+    {
+      "id": "era-early",
+      "title": "旧收音机",
+      "performer": "南港",
+      "tag": "墙很近，气口还没藏住",
+      "clip": "clips/vert_era-early.mp4",
+      "transition_seconds": 7,
+      "show_seconds": 20
+    },
+    {
+      "id": "era-mid",
+      "title": "末班路灯",
+      "performer": "南港",
+      "tag": "句子开始被送到更远处",
+      "clip": "clips/vert_era-mid.mp4",
+      "transition_seconds": 7,
+      "show_seconds": 22
+    },
+    {
+      "id": "era-river",
+      "title": "江面回声",
+      "performer": "南港",
+      "tag": "空间大了，字不必唱满",
+      "clip": "clips/vert_era-river.mp4",
+      "transition_seconds": 7.5,
+      "show_seconds": 24
+    }
+  ]
+}

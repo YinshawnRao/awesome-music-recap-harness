@@ -1,0 +1,46 @@
+name: structure-gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  structure:
+    name: pytest + structure-only gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ffmpeg (placeholder / mix tests)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+
+      - name: Install pytest
+        run: python3 -m pip install --upgrade pip && python3 -m pip install -r requirements-dev.txt
+
+      - name: pytest
+        run: python3 -m pytest
+
+      - name: Flagship structure-only smoke-e2e
+        run: python3 tools/cli.py smoke-e2e -- --structure-only
+
+      - name: Narrative scaffold gates
+        run: |
+          python3 tools/tts/verify_voice_usage.py \
+            --selection examples/narrative-eras-demo/voice-selection.json \
+            --project-root examples/narrative-eras-demo
+          python3 tools/video/verify_project.py --project examples/narrative-eras-demo
+          python3 tools/video/verify_publishing.py --project examples/narrative-eras-demo
+          python3 tools/video/prepare_final_qa.py --project examples/narrative-eras-demo
+
+      - name: Baidu upload dry-run (no credentials, no network)
+        run: |
+          python3 tools/cli.py baidu-upload --help
+          python3 tools/cli.py baidu-upload -- --dry-run \
+            --local README.md --remote /apps/amrh/readme.md

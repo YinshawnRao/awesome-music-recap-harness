@@ -7,11 +7,19 @@ from tools.video.outro_cta import FIXED_OUTRO_CTA
 from tools.video.verify_project import verify_project
 
 DEMO = Path(__file__).resolve().parents[3] / "examples" / "top-ranking-demo"
+NARRATIVE = Path(__file__).resolve().parents[3] / "examples" / "narrative-eras-demo"
 
 
 def test_flagship_demo_structure() -> None:
     errors = verify_project(DEMO)
     assert errors == []
+
+
+def test_narrative_scaffold_is_not_top_ranking() -> None:
+    errors = verify_project(NARRATIVE)
+    assert errors == []
+    manifest = json.loads((NARRATIVE / "project-manifest.json").read_text(encoding="utf-8"))
+    assert manifest["project_kind"] == "narrative"
 
 
 def test_top_order_must_be_n_to_1(tmp_path: Path) -> None:

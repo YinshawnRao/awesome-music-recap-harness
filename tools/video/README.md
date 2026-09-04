@@ -6,19 +6,24 @@
 ## 命令
 
 ```bash
-# Cookie 最短安装 + 公开下载烟雾 + 教学占位竖屏（P1）
+# Cookie 最短安装 + 公开下载烟雾 + 教学占位竖屏
 bash tools/video/install_cookies.sh
 python3 tools/cli.py smoke-download
 python3 tools/video/make_placeholder_clips.py
 
-# 配音烟雾（P2；缺权重会失败并打印中文下一步）
+# 配音烟雾（缺权重会失败并打印中文下一步）
 python3 tools/tts/setup_check.py
 python3 tools/cli.py smoke-narrate
 
-# 成片烟雾（P3；无 Chrome 会失败并打印中文下一步）
+# 成片烟雾（无 Chrome 会失败并打印中文下一步）
 python3 tools/cli.py smoke-e2e
 python3 tools/cli.py smoke-e2e -- --structure-only
 python3 tools/cli.py mix-master -- --tone
+
+# 可选：百度网盘（凭证在仓库外；空跑不要 token）
+python3 tools/cli.py baidu-upload --help
+python3 tools/cli.py baidu-upload -- --dry-run \
+  --local README.md --remote /apps/amrh/readme.md
 
 # 安全下载（必须有 jar；唯一允许的 yt-dlp 入口）
 python3 tools/video/check_yt_cookie.py
@@ -86,4 +91,4 @@ ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \
 4. 下载**只**走 `yt_dlp_readonly.py`。它会把 jar 拷到仓库外的私有
    `amrh-cookie-*` 目录，避免 yt-dlp 改写规范文件。不要跑 `yt-dlp --cookies all_cookies.txt`。
 
-见 [examples/cookies/README.md](../../examples/cookies/README.md)。其他节目形态和百度网盘：[docs/beyond-the-demo.md](../../docs/beyond-the-demo.md)。
+见 [examples/cookies/README.md](../../examples/cookies/README.md)。其他节目形态和百度网盘：[docs/beyond-the-demo.md](../../docs/beyond-the-demo.md)。编年脚手架：[examples/narrative-eras-demo/](../../examples/narrative-eras-demo/)。小红书文案：[docs/publishing.md](../../docs/publishing.md)。CI 对照：[docs/ci.md](../../docs/ci.md)。

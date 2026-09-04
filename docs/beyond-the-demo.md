@@ -6,13 +6,13 @@
 
 写作契约（`project_kind`）还接受：
 
-| 取值 | 含义 |
-| --- | --- |
-| `top_ranking` | 旗舰。N→1 倒数揭晓，封面 / intro 保悬念。 |
-| `narrative` | 时间线 / 散文顺序。条目没有 `rank`。 |
-| `free_exploration` | 实验；需要非空的 `rationale`。 |
+| 取值 | 含义 | 从哪抄 |
+| --- | --- | --- |
+| `top_ranking` | 旗舰。N→1 倒数揭晓，封面 / intro 保悬念。 | [`examples/top-ranking-demo/`](../examples/top-ranking-demo/) |
+| `narrative` | 时间线 / 散文顺序。条目没有 `rank`。 | [`examples/narrative-eras-demo/`](../examples/narrative-eras-demo/) |
+| `free_exploration` | 实验；需要非空的 `rationale`。 | 先走完上面两种，再自己写 `rationale` |
 
-配音、取材、发布、mux 规则相同。没走完榜单教学项目之前，不要另开新形态。
+配音、取材、发布、mux 规则相同。没走完榜单教学项目之前，不要另开新形态。编年脚手架只锁结构门禁，**没有** HyperFrames 合成；成片仍走 TOP 的 `smoke-e2e`。
 
 ## 硬素材门禁
 
@@ -35,8 +35,15 @@ python3 tools/tts/verify_voice_usage.py \
 
 ## 可选：百度网盘上传
 
-`tools/delivery/baidu/` 是**可选**插件。工作台本体不依赖它。token 永远不要进 git。见
-[tools/delivery/baidu/README.md](../tools/delivery/baidu/README.md)。
+`tools/delivery/baidu/` 是**可选**插件。工作台本体不依赖它。只上传，凭证在仓库外。发现命令：
+
+```bash
+python3 tools/cli.py baidu-upload --help
+python3 tools/cli.py baidu-upload -- --dry-run \
+  --local README.md --remote /apps/amrh/readme.md
+```
+
+token 永远不要进 git。见 [tools/delivery/baidu/README.md](../tools/delivery/baidu/README.md)。
 
 ## 命令附录
 

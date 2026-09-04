@@ -11,7 +11,7 @@
 盘点不只等于 TOP 榜。必须显式写 `project_kind`：
 
 - `top_ranking` — 倒数揭晓，播放 N→1，封面 / intro 保悬念。
-- `narrative` — 时间线或散文顺序；条目没有 `rank`。
+- `narrative` — 时间线或散文顺序；条目没有 `rank`。脚手架：`examples/narrative-eras-demo/`。
 - `free_exploration` — 实验；`rationale` 不能为空。
 
 新项目用写作 **schema v2**。
@@ -63,4 +63,4 @@ mux 之后、FINAL 之前写 `publishing/xiaohongshu.md`。标题候选 1–5 �
 
 ## 可选：百度网盘
 
-`tools/delivery/baidu/` 只负责上传，读 `AMRH_BAIDU_*` 或仓库外的密钥文件。git 里不能有 token。
+`tools/delivery/baidu/` 只负责上传，读 `AMRH_BAIDU_*` 或仓库外的密钥文件。发现命令：`python3 tools/cli.py baidu-upload --help`。git 里不能有 token。
