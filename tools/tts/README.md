@@ -31,6 +31,8 @@ python3 tools/tts/verify_voice_usage.py \
 3. `AMRH_QWEN_BASE_MODEL` 指向合法取得的 Qwen3-TTS Base 模型树
 4. 已解析 `CVxxx` 对应的参考 WAV（见 [voices/local/README.md](voices/local/README.md)）
 
+模型介绍、下载与用法先看官方仓库 [Qwen3-TTS](https://github.com/QwenLM/Qwen3-TTS)。本工作台教学路径使用的 MLX 量化模型卡：[mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit)。
+
 模型缺失就失败退出。**不要**悄悄回退到 Kokoro。
 
 Mac 复制步骤：[docs/mac-setup.md](../../docs/mac-setup.md)。

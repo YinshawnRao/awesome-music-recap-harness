@@ -109,11 +109,13 @@ export AMRH_QWEN_PYTHON="$PWD/tools/tts/qwen.venv/bin/python"
 
 ### 3. 合法下载权重（仓库不附带）
 
-模型卡：[mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit)
+官方仓库（模型介绍、下载与用法）：[QwenLM/Qwen3-TTS](https://github.com/QwenLM/Qwen3-TTS)
+
+本工作台教学路径使用的 MLX 量化模型卡：[mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit)
 
 钉死 revision（写在 `tools/tts/config.json`）：`50f45ef0047cde7e84c2ef04326acb8ada2436a7`
 
-大约 2GB。请从 Hugging Face 合法取得，不要把权重提交进 git。
+大约 2GB。请先阅读官方仓库，再从 Hugging Face 合法取得本机权重；不要把权重提交进 git。
 
 ```bash
 python3 -m pip install -U huggingface_hub
