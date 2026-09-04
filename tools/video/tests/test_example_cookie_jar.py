@@ -117,12 +117,13 @@ def test_gitignore_keeps_example_and_ignores_runtime_jar() -> None:
     assert tracked.stdout.strip() == "examples/cookies/all_cookies.example.txt"
 
     exception = subprocess.run(
-        ["git", "check-ignore", "-v", "--", "examples/cookies/all_cookies.example.txt"],
+        ["git", "check-ignore", "-v", "--no-index", "--", "examples/cookies/all_cookies.example.txt"],
         cwd=REPO_ROOT,
         check=False,
         capture_output=True,
         text=True,
     )
+    assert exception.returncode == 0
     assert "!" in exception.stdout
     assert "all_cookies.example.txt" in exception.stdout
 
