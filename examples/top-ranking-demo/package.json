@@ -1,0 +1,12 @@
+{
+  "name": "top-ranking-demo",
+  "private": true,
+  "description": "Flagship TOP countdown example. Pin hyperframes@0.6.69 only.",
+  "scripts": {
+    "lint": "npx --yes hyperframes@0.6.69 lint",
+    "render": "npx --yes hyperframes@0.6.69 render --output renders/full.mp4 --sdr"
+  },
+  "devDependencies": {
+    "hyperframes": "0.6.69"
+  }
+}

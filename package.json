@@ -1,0 +1,15 @@
+{
+  "name": "awesome-music-recap-harness",
+  "private": true,
+  "description": "HyperFrames pin and scripts for music recap projects. New compositions must use hyperframes@0.6.69.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lint:example": "npx --yes hyperframes@0.6.69 lint --project examples/top-ranking-demo",
+    "doctor:hf": "npx --yes hyperframes@0.6.69 doctor"
+  },
+  "devDependencies": {
+    "hyperframes": "0.6.69"
+  }
+}

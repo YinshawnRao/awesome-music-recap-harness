@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "preflight_voice_id": "CV001",
+  "decision_voice_pool": [
+    "CV001",
+    "CV002",
+    "CV003",
+    "CV004",
+    "CV005",
+    "CV006",
+    "CV007",
+    "CV008",
+    "CV009",
+    "CV010"
+  ],
+  "random_voice_pool": [
+    "CV001",
+    "CV002",
+    "CV003",
+    "CV004",
+    "CV005",
+    "CV006",
+    "CV007",
+    "CV008",
+    "CV009",
+    "CV010"
+  ],
+  "decision_pool_expected_groups": {
+    "female": 5,
+    "male": 5
+  },
+  "compatible_selection_hashes": [],
+  "selection_policy": {
+    "default": "model_emotion_decision",
+    "unknown": "model_emotion_decision",
+    "ambiguous": "model_emotion_decision",
+    "model_unavailable": "random_voice_pool",
+    "model_decision_confidence": ["high", "medium"],
+    "model_decision_requires_reason": true,
+    "decision_basis": ["project_theme", "emotional_expression", "narrative_angle", "pacing"],
+    "ignore_artist_gender_for_voice_gender": true,
+    "fuzzy_matching": false,
+    "parse_once_per_project": true
+  },
+  "runtime": {
+    "offline_required": true,
+    "qwen_python_env": "AMRH_QWEN_PYTHON",
+    "qwen_python_candidates": ["qwen.venv/bin/python"],
+    "qwen_base_model_envs": ["AMRH_QWEN_BASE_MODEL"],
+    "qwen_base_model_candidates": [
+      "models/qwen3-tts/Qwen3-TTS-12Hz-0.6B-Base-8bit"
+    ]
+  },
+  "qwen_base": {
+    "engine": "qwen3-tts-base-mlx",
+    "model_id": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit",
+    "model_revision": "50f45ef0047cde7e84c2ef04326acb8ada2436a7",
+    "mlx_audio_version": "0.4.5",
+    "sample_rate_hz": 24000,
+    "language": "Auto",
+    "notes": "Pin is the documented Mac/MLX path. Weights are not shipped. Users download legally from the model card."
+  },
+  "legacy_kokoro": {
+    "engine": "kokoro-misaki-zh",
+    "model_id": "hexgrad/Kokoro-82M",
+    "sample_rate_hz": 24000,
+    "voices": [
+      "zf_xiaobei",
+      "zf_xiaoni",
+      "zf_xiaoxiao",
+      "zf_xiaoyi",
+      "zm_yunjian",
+      "zm_yunxi",
+      "zm_yunxia",
+      "zm_yunyang"
+    ],
+    "notes": "Linux/future path. Not required for v1. Do not silently fall back from Qwen."
+  }
+}

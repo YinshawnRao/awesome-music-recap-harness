@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "第一名，《末班月台》。最后一班也不必赶。",
+  "text": "第一名，《末班月台》。最后一班也不必赶。",
+  "text_sha256": "7c5472dbd4566966263cada69b6eb07d24ca3ef2316b34c3a0de7e8b88090500",
+  "normalized_text_sha256": "7c5472dbd4566966263cada69b6eb07d24ca3ef2316b34c3a0de7e8b88090500",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "rank-01.wav"
+}

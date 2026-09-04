@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://awesome-music-recap-harness.local/schemas/project-manifest.schema.json",
+  "title": "AMRH authoring project contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project_kind",
+    "voice_selection",
+    "cover",
+    "narration_sequence",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2,
+      "description": "New projects use schema v2 with transition duration limits. v1 is not used in this public harness."
+    },
+    "project_kind": {
+      "enum": ["top_ranking", "narrative", "free_exploration"],
+      "description": "盘点 is broader than rank. top_ranking is the flagship demo; narrative/timeline and free_exploration are first-class."
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "voice_selection": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cover": {
+      "type": "object",
+      "required": ["text", "disclosed_item_ids"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "disclosed_item_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "narration_sequence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/narration" }
+    },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": ["project_kind"],
+        "properties": { "project_kind": { "const": "free_exploration" } }
+      },
+      "then": {
+        "required": ["rationale"],
+        "properties": { "rationale": { "type": "string", "minLength": 1 } }
+      }
+    },
+    {
+      "if": {
+        "required": ["project_kind"],
+        "properties": { "project_kind": { "const": "top_ranking" } }
+      },
+      "then": {
+        "properties": {
+          "cover": {
+            "properties": { "disclosed_item_ids": { "maxItems": 0 } }
+          },
+          "items": {
+            "minItems": 2,
+            "items": { "required": ["rank"] }
+          },
+          "narration_sequence": { "minItems": 5 }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": ["project_kind"],
+        "properties": { "project_kind": { "enum": ["narrative", "free_exploration"] } }
+      },
+      "then": {
+        "properties": {
+          "items": {
+            "items": { "not": { "required": ["rank"] } }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "narration": {
+      "type": "object",
+      "required": ["id", "role", "text", "wav", "sidecar"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "role": { "enum": ["intro", "transition", "work_outro", "outro_cta", "free"] },
+        "item_id": { "type": "string" },
+        "text": { "type": "string", "minLength": 1 },
+        "wav": { "type": "string", "minLength": 1 },
+        "sidecar": { "type": "string", "minLength": 1 },
+        "disclosed_item_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["url", "performer", "version_kind", "asset_type", "official", "usable"],
+      "properties": {
+        "url": { "type": "string", "pattern": "^https?://" },
+        "performer": { "type": "string", "minLength": 1 },
+        "version_kind": { "enum": ["original", "cover"] },
+        "asset_type": { "enum": ["mv", "live", "show", "secondary"] },
+        "official": { "type": "boolean" },
+        "usable": { "type": "boolean" },
+        "reject_reason": { "type": ["string", "null"] }
+      }
+    },
+    "platformSearch": {
+      "type": "object",
+      "required": ["searched", "search_queries", "candidates"],
+      "properties": {
+        "searched": { "const": true },
+        "search_queries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "candidates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/candidate" }
+        },
+        "no_usable_reason": { "type": ["string", "null"] }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "title", "performer", "clip", "audio_mode", "sources"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "rank": { "type": "integer", "minimum": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "performer": { "type": "string", "minLength": 1 },
+        "clip": { "type": "string", "minLength": 1 },
+        "clip_sha256": { "type": "string" },
+        "audio_mode": { "enum": ["vocal", "instrumental"] },
+        "evidence": { "type": "object" },
+        "sources": {
+          "type": "object",
+          "required": ["target_version", "platforms", "selection", "official_choice"],
+          "properties": {
+            "target_version": {
+              "type": "object",
+              "required": ["kind", "performer"],
+              "properties": {
+                "kind": { "enum": ["original", "cover"] },
+                "performer": { "type": "string" },
+                "original_artist": { "type": ["string", "null"] }
+              }
+            },
+            "platforms": {
+              "type": "object",
+              "required": ["youtube", "bilibili"],
+              "properties": {
+                "youtube": { "$ref": "#/$defs/platformSearch" },
+                "bilibili": { "$ref": "#/$defs/platformSearch" }
+              }
+            },
+            "selection": {
+              "type": "object",
+              "required": ["platform", "url", "decision_reason"],
+              "properties": {
+                "platform": { "enum": ["youtube", "bilibili"] },
+                "url": { "type": "string", "pattern": "^https?://" },
+                "decision_reason": { "type": "string", "minLength": 1 },
+                "download_receipt": { "type": "object" }
+              }
+            },
+            "cover_fallback": { "type": "object" },
+            "official_choice": {
+              "type": "object",
+              "required": ["selected_tier"],
+              "properties": {
+                "selected_tier": {
+                  "enum": ["official_mv", "official_performance", "secondary"]
+                },
+                "fallback_reason": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+# Dependencies / local environments
+node_modules/
+.hf-local/
+.hyperframes/
+hyperframes-local/
+venv/
+.venv/
+*.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Secrets — never commit cookies, tokens, or private config
+all_cookies.txt
+cookies.txt
+*cookies*.txt
+*cookies*.json
+.env
+.env.*
+!.env.example
+.npmrc
+.pypirc
+.netrc
+*credentials*.json
+*service-account*.json
+*.p12
+*.pfx
+*.pem
+*.key
+.baidu-token.json
+
+# Generated media (reproducible from sources)
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.opus
+*.pcm
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.avi
+*.flv
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+*.bmp
+*.tiff
+
+# Keep documented example images if we ever add tiny public-domain fixtures
+!docs/assets/*.svg
+
+# Render / download / clip directories
+renders/
+downloads/
+clips/
+audio/
+raw/
+*.part
+*.ytdl
+
+# TTS local models and runtime receipts
+tools/tts/models/
+tools/tts/runtime/
+tools/tts/qwen.venv/
+tools/tts/voices/CV*/reference.wav
+tools/tts/voices/CV*/examples/*.wav
+
+# Project scratch
+/sandbox/
+/probe/
+tmp/
+*.log
+.DS_Store
+.workbuddy/
