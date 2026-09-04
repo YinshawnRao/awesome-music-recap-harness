@@ -30,8 +30,7 @@
   "notes": [
     "v1 writes a skeleton only. Do not claim machine understanding of frames.",
     "Never forge reviewer_kind=human.",
-    "Full Whisper/ffmpeg diagnostics are a documented follow-up.",
-    "Narrative scaffold has no HyperFrames composition in P4."
+    "Full Whisper/ffmpeg diagnostics are a documented follow-up."
   ],
   "missing_inputs": [],
   "authoring_manifest": {
