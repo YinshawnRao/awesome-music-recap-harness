@@ -1,6 +1,6 @@
 # CONVENTIONS.md — 可复用的制作红线
 
-请从 [README.md](README.md) 开始。本文件是红线清单，不是「第一次跑通」指南。工具 README 里有额外命令。`AGENTS.md` 给自动化贡献者用。不要另起一套互相冲突的规则。
+请从 [README.md](README.md) 开始。本文件是红线清单，不是「第一次跑通」指南。工具 README 里有额外命令。本地 AI Agent 的工作契约是 [`AGENTS.md`](AGENTS.md)。不要另起一套互相冲突的规则。
 
 ## Git 边界
 

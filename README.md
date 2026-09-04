@@ -2,7 +2,7 @@
 
 面向中文创作者的开源音乐盘点工作台：选题、YouTube 与 B 站取材、旁白配音、竖屏短视频合成，以及发布文案校验。
 
-本页是可复现操作入口，不是内部实现说明。请先读本页与 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。协议：**MIT**。成片渲染与真配音以 **Mac** 为主。
+本页是可复现操作入口，不是内部实现说明。请先读本页与 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。用本地 AI Agent 驱动时，见下方「在本地 AI Agent 中运行」与 [`AGENTS.md`](AGENTS.md)。协议：**MIT**。成片渲染与真配音以 **Mac** 为主。
 
 [![结构门禁](https://github.com/YinshawnRao/awesome-music-recap-harness/actions/workflows/structure-gates.yml/badge.svg)](https://github.com/YinshawnRao/awesome-music-recap-harness/actions/workflows/structure-gates.yml)
 
@@ -32,6 +32,24 @@
 - 受控的 Cookie 下载路径（渲染真实成片须使用真实 Cookie）
 - 四道门禁，用于确认项目结构完整
 - 明确的完成产物：`renders/<slug>.mp4` 与小红书文案
+
+## 在本地 AI Agent 中运行
+
+多数制作现在由本地 AI Agent 驱动，而不是逐条在终端里执行命令。把本仓库放到 **Cursor、Claude Code、Codex、Windsurf** 或同类工具里打开，让 Agent 按契约执行。人类操作入口仍是本页；Agent 的工作契约是 [`AGENTS.md`](AGENTS.md)（Claude Code 若加载 [`CLAUDE.md`](CLAUDE.md)，它只指向同一份契约）。制作红线见 [`CONVENTIONS.md`](CONVENTIONS.md)。
+
+人类仍须自行准备下列输入，Agent 不能从仓库里变出来：
+
+- 真实 Netscape Cookie（仓库根目录 `all_cookies.txt`，权限 `0600`；不要提交）
+- 有权使用的素材 URL（教学示例用本机占位竖屏，不要下载 `example.com`）
+- 真配音：Apple Silicon Mac 上的合法 Qwen 权重 + 自录参考 WAV
+
+没有这些输入时，Agent 应停在对应步骤，并继续可做的结构门禁。Linux 上通常只能跑到结构 PASS；可播放竖屏与真配音仍以 Mac 为准。
+
+把下面整段发给 Agent 作为第一条指令：
+
+```text
+请先阅读本仓库的 AGENTS.md（工作契约）、README.md、CONVENTIONS.md，以及 tools/tts/README.md 与 tools/video/README.md。然后按 examples/top-ranking-demo/ 走默认可复现路径：先跑结构门禁，再在环境允许时执行 python3 tools/cli.py smoke-e2e（无 Chrome 则改为 --structure-only）。向我回报已读文件、已执行命令、四道门禁的字面结果、成片路径（renders/top-ranking-demo.mp4）或停步原因与下一步。不要提交 Cookie、模型权重、配音母带或版权素材；缺 Qwen 时不要改用 Kokoro。
+```
 
 ## 1. 安装（Mac）
 
@@ -205,4 +223,5 @@ FINAL VIDEO QA: PASS skeleton pending_machine_qa
 | 其他节目形态、硬素材门禁 | [docs/beyond-the-demo.md](docs/beyond-the-demo.md) |
 | CI 和本机分别做什么 | [docs/ci.md](docs/ci.md) |
 | 制作红线 | [CONVENTIONS.md](CONVENTIONS.md) |
+| 本地 AI Agent 工作契约 | [AGENTS.md](AGENTS.md) |
 | 次要文档目录 | [docs/README.md](docs/README.md) |

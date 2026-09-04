@@ -1,7 +1,7 @@
 # tools/video — 命令附录
 
 请从根目录 [README](../../README.md) 和
-[examples/top-ranking-demo/](../../examples/top-ranking-demo/) 开始。本页列额外命令。第一次跑通用不到其中大部分。
+[examples/top-ranking-demo/](../../examples/top-ranking-demo/) 开始。本地 AI Agent 请同时遵守 [AGENTS.md](../../AGENTS.md)。本页列额外命令。第一次跑通用不到其中大部分。
 
 ## 命令
 

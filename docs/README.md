@@ -16,4 +16,4 @@
 | [../examples/cookies/README.md](../examples/cookies/README.md) | Cookie 导出 / 封装规则 |
 | [../examples/smoke-download/README.md](../examples/smoke-download/README.md) | 公开 YouTube 下载连通性验证 |
 | [../CONVENTIONS.md](../CONVENTIONS.md) | 制作红线 |
-| [../AGENTS.md](../AGENTS.md) | 自动化备注（不是操作手册） |
+| [../AGENTS.md](../AGENTS.md) | 本地 AI Agent 工作契约 |
