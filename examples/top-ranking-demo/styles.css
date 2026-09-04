@@ -1,0 +1,125 @@
+/* Offline stack only. Do not @import Google Fonts. */
+:root {
+  --bg: #0a0a0d;
+  --accent: #7ad1c4;
+  --text: #f4f4f2;
+  --muted: #b8b8c0;
+  --safe-left: 72px;
+  --safe-right: 72px;
+  --safe-top: 220px;
+  --card-width: 936px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+#root {
+  position: relative;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.clip {
+  position: absolute;
+  inset: 0;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+}
+
+video.clip {
+  object-fit: cover;
+  background: var(--bg);
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 13, 0.15) 0%,
+    rgba(10, 10, 13, 0.35) 45%,
+    rgba(10, 10, 13, 0.72) 100%
+  );
+}
+
+.card {
+  position: absolute;
+  left: var(--safe-left);
+  top: var(--safe-top);
+  width: var(--card-width);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.artist {
+  font-size: 120px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+
+.theme {
+  font-size: 42px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.rank-label {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.18em;
+}
+
+.title {
+  font-size: 88px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.performer {
+  font-size: 36px;
+  color: var(--muted);
+}
+
+.tag {
+  font-size: 40px;
+  color: var(--accent);
+  margin-top: 12px;
+}
+
+.outro-card,
+.cta-card {
+  justify-content: center;
+  min-height: 1200px;
+}
+
+.outro-line,
+.cta-line {
+  font-size: 48px;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.cta-line {
+  color: var(--accent);
+}

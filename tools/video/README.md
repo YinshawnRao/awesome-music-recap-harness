@@ -15,6 +15,11 @@ python3 tools/video/make_placeholder_clips.py
 python3 tools/tts/setup_check.py
 python3 tools/cli.py smoke-narrate
 
+# 成片烟雾（P3；无 Chrome 会失败并打印中文下一步）
+python3 tools/cli.py smoke-e2e
+python3 tools/cli.py smoke-e2e -- --structure-only
+python3 tools/cli.py mix-master -- --tone
+
 # 安全下载（必须有 jar；唯一允许的 yt-dlp 入口）
 python3 tools/video/check_yt_cookie.py
 python3 tools/video/yt_dlp_readonly.py -- "<URL>" --skip-download --print id,title

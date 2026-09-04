@@ -4,7 +4,7 @@
 
 这是一份**能跟着做完的指南**，不是内部实现说明书。先看本页和 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。协议：**MIT**。v1 **以 Mac 为主**。
 
-四期开箱即用：[ROADMAP.md](ROADMAP.md)。**本仓库现在是 P2：配音闭环能跑。** P1（Cookie / 下载烟雾 / 占位竖屏）已完成。
+四期开箱即用：[ROADMAP.md](ROADMAP.md)。**本仓库现在是 P3：一条命令能渲出竖屏烟雾成片。** P1（素材）和 P2（配音）已完成。
 
 ## 适合谁
 
@@ -98,7 +98,27 @@ python3 tools/cli.py smoke-narrate -- --full
 
 录音要点和路径：[tools/tts/voices/local/README.md](tools/tts/voices/local/README.md)。完整复制步骤：[docs/mac-setup.md](docs/mac-setup.md)。
 
-## 5. 第一次跑通 — TOP 教学项目
+## 5. P3 渲染成片（一条命令）
+
+装好 ffmpeg + Node 22 + Chrome 之后，在仓库根目录：
+
+```bash
+python3 tools/cli.py smoke-e2e
+```
+
+它会：没有占位竖屏就生成本机色条 → 有旁白 WAV 就预混 `master.wav`，没有就铺静音床（加 `--tone` 改轻正弦）→ `hyperframes@0.6.69 render --sdr` → mux 到 `examples/top-ranking-demo/renders/top-ranking-demo.mp4`（gitignore）→ 再跑结构门禁。
+
+**做完长什么样：** 一条可播放的竖屏 mp4。画面可以是色条。没有 P2 真配音也能出片（视觉烟雾 / 静音床），不要把它当成可发布成片。
+
+Linux CI 常常没有 Chrome：命令会失败，并用中文写出下一步。合成文件（HTML / CSS / JS / `package.json`）已经提交，请到 Mac 上渲。
+
+只要结构、不渲染：
+
+```bash
+python3 tools/cli.py smoke-e2e -- --structure-only
+```
+
+## 6. 第一次跑通 — TOP 教学项目
 
 在仓库根目录执行。教学项目已经带好选题简报、配音选择、清单、旁白 sidecar 和小红书文案。你现在要确认的是**结构能走通**：
 
@@ -124,31 +144,20 @@ FINAL VIDEO QA: PASS skeleton pending_machine_qa
 
 目录说明、选题简报、以及后面的下载 / 渲染步骤，见 [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md)。
 
-## 6. 「做完」长什么样
+## 7. 「做完」长什么样
 
 | 阶段 | 你手上有什么 | 门禁 |
 | --- | --- | --- |
 | **P1** | Cookie 路径 + 公开下载烟雾 + 五条占位竖屏 + 结构门禁 | VOICE `mode=structure`、PROJECT、PUBLISHING、FINAL 骨架全部 **PASS** |
-| **P2 今天** | 自录参考 + 合法 Qwen 权重 → 至少一句真旁白 WAV | `setup_check` / `smoke-narrate`；齐了之后 `VOICE GATE: PASS mode=wav` |
-| **真正的盘点成片** | `examples/top-ranking-demo/renders/top-ranking-demo.mp4` 和 `publishing/xiaohongshu.md` | 还是这四道门禁；mux 之后再过发布门禁 |
+| **P2** | 自录参考 + 合法 Qwen 权重 → 至少一句真旁白 WAV | `setup_check` / `smoke-narrate`；齐了之后 `VOICE GATE: PASS mode=wav` |
+| **P3 今天** | `examples/top-ranking-demo/renders/top-ranking-demo.mp4`（占位竖屏也可以） | 还是这四道门禁；FINAL 仍是待审骨架，不证明画面 / ASR |
+| **真正的盘点成片** | 换成你有权使用的素材 + 真 Cookie + P2 WAV + 同一条 mux | 发布文案已有；机器画面审核是后续 |
 
-真 mp4 需要：**你自己有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com`）、**真实** Cookie、旁白 WAV，以及一份 HyperFrames 成片。P1 先用占位片段，不要去下 `example.com`。
-
-素材齐了之后再渲染（P3）：
-
-```bash
-# 下载只能走只读封装
-python3 tools/video/yt_dlp_readonly.py -- "<YOUR_URL>" -o "examples/top-ranking-demo/downloads/%(id)s.%(ext)s"
-# 加黑边、配音（不要再加 --dry-run）、HyperFrames 0.6.69 --sdr，然后：
-ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
-  -i examples/top-ranking-demo/master.wav \
-  -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest \
-  examples/top-ranking-demo/renders/top-ranking-demo.mp4
-```
+真版权成片需要：**你自己有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com`）、**真实** Cookie、旁白 WAV。P3 先用占位片段证明渲染闭环，不要去下 `example.com`。
 
 分目录的完整命令：见 [教学项目 README](examples/top-ranking-demo/README.md)。
 
-## 7. 常见问题（前 5 条）
+## 8. 常见问题（前 5 条）
 
 **Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自己跑 `yt-dlp --cookies`。
 
@@ -162,7 +171,7 @@ ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
 
 ## 第一次跑通之后
 
-不要从这里起步。P3–P4 见 [ROADMAP.md](ROADMAP.md)。
+不要从这里起步。P4 见 [ROADMAP.md](ROADMAP.md)。
 
 | 你想做什么 | 看哪篇 |
 | --- | --- |
