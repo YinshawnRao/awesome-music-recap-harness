@@ -16,4 +16,4 @@
 结尾文案：只写作品 outro；固定 CTA 由 tools/video/outro_cta.py 追加
 ```
 
-`project_kind` 是 `top_ranking`。先走完这个教学项目，再看其他形态（`docs/beyond-the-demo.md`）。
+`project_kind` 是 `top_ranking`。先走完这个教学项目，再看编年脚手架（`examples/narrative-eras-demo/`）或其他形态（`docs/beyond-the-demo.md`）。

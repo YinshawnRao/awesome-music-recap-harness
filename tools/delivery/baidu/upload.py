@@ -175,11 +175,40 @@ def upload(local: Path, remote: str, credentials: Credentials) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--local", required=True, type=Path)
-    parser.add_argument("--remote", required=True)
-    parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--credentials-file", type=Path)
+    parser = argparse.ArgumentParser(
+        prog="python3 tools/cli.py baidu-upload",
+        description=(
+            "可选：把成片上传到百度网盘（只上传，不下载、不删、不改分享）。"
+            "凭证来自仓库外的 AMRH_BAIDU_CREDENTIALS_FILE（0600 JSON）"
+            "或 AMRH_BAIDU_ACCESS_TOKEN。从不打印密钥。"
+        ),
+        epilog=(
+            "空跑：python3 tools/cli.py baidu-upload -- --dry-run "
+            "--local README.md --remote /apps/amrh/readme.md\n"
+            "实际上传：先 export AMRH_BAIDU_CREDENTIALS_FILE，再去掉 --dry-run。"
+        ),
+    )
+    parser.add_argument(
+        "--local",
+        required=True,
+        type=Path,
+        help="本机文件（成片 mp4，或空跑时任意小文件）",
+    )
+    parser.add_argument(
+        "--remote",
+        required=True,
+        help="网盘路径；不以 /apps/ 开头时自动补 /apps/<app_name>/",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="只打印上传计划，不联网、不要 token",
+    )
+    parser.add_argument(
+        "--credentials-file",
+        type=Path,
+        help="仓库外的 0600 JSON（也可用环境变量 AMRH_BAIDU_CREDENTIALS_FILE）",
+    )
     args = parser.parse_args()
     credentials = None
     try:
@@ -187,11 +216,21 @@ def main() -> int:
     except CredentialError as exc:
         if not args.dry_run:
             print(f"BAIDU UPLOAD: FAIL — {exc}", file=sys.stderr)
+            print(
+                "下一步：把 0600 JSON 放到仓库外，export AMRH_BAIDU_CREDENTIALS_FILE，"
+                "或先加 --dry-run 只看计划。",
+                file=sys.stderr,
+            )
             return 2
     plan = plan_upload(args.local, args.remote, credentials)
     print(json.dumps(plan, ensure_ascii=False, indent=2))
     if args.dry_run:
         print("BAIDU UPLOAD: DRY-RUN (no network, no secrets printed)")
+        if credentials is None:
+            print(
+                "下一步：凭证放仓库外（chmod 0600），"
+                "export AMRH_BAIDU_CREDENTIALS_FILE 后再去掉 --dry-run。"
+            )
         return 0
     assert credentials is not None
     try:

@@ -49,4 +49,4 @@ python3 tools/video/prepare_final_qa.py --project <project>
 
 v1 的 FINAL 只写待审骨架。不要声称已经做完机器画面 / ASR 审核，也不要伪造 `reviewer_kind=human`。
 
-其他形态、百度网盘、`--require-media`：[beyond-the-demo.md](beyond-the-demo.md)。
+其他形态、百度网盘、`--require-media`：[beyond-the-demo.md](beyond-the-demo.md)。编年脚手架（不是榜单）：[narrative-eras-demo](../examples/narrative-eras-demo/)。小红书文案：[publishing.md](publishing.md)。

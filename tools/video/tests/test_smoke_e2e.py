@@ -24,6 +24,8 @@ def test_cli_dispatcher_exposes_p3_commands() -> None:
     assert "smoke-e2e" in COMMANDS
     assert "mix-master" in COMMANDS
     assert "placeholder-clips" in COMMANDS
+    assert "baidu-upload" in COMMANDS
+    assert "publishing-verify" in COMMANDS
 
 
 def test_demo_composition_is_committed_vertical_n_to_1() -> None:

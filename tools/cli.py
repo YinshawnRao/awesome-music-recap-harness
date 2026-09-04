@@ -33,14 +33,26 @@ COMMANDS = {
     "baidu-upload": TOOLS / "delivery" / "baidu" / "upload.py",
 }
 
+EPILOG = """
+常用（从仓库根目录）：
+  python3 tools/cli.py smoke-e2e -- --structure-only
+  python3 tools/cli.py publishing-verify -- --project examples/top-ranking-demo
+  python3 tools/cli.py baidu-upload --help
+  python3 tools/cli.py baidu-upload -- --dry-run --local README.md --remote /apps/amrh/readme.md
+
+子命令的 --help 会转发给对应脚本。CI 只跑结构门禁；Chrome / Qwen / 真 Cookie 仍在 Mac 上。
+"""
+
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="amrh",
-        description="Awesome Music Recap Harness — public CLI for gates and helpers.",
+        prog="python3 tools/cli.py",
+        description="音乐盘点工作台公开命令：门禁、烟雾、可选百度上传。",
+        epilog=EPILOG,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("command", choices=sorted(COMMANDS), help="tool to run")
-    parser.add_argument("args", nargs=argparse.REMAINDER, help="arguments for the tool")
+    parser.add_argument("command", choices=sorted(COMMANDS), help="要跑的工具")
+    parser.add_argument("args", nargs=argparse.REMAINDER, help="转发给该工具的参数")
     ns = parser.parse_args(argv)
     script = COMMANDS[ns.command]
     forwarded = list(ns.args)

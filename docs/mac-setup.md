@@ -1,6 +1,6 @@
 # Mac 安装（附录）
 
-最短可复制路径在根目录 [README](../README.md)。本页把 **P2 配音**写成可以照着敲的步骤。v1 **以 Mac / Apple Silicon 为主**。
+最短可复制路径在根目录 [README](../README.md)。本页把 **配音**写成可以照着敲的步骤。v1 **以 Mac / Apple Silicon 为主**。
 
 仓库**不附带** Qwen 权重、也不附带任何人的参考 WAV。缺了就失败，并打印中文下一步。**不要改用 Kokoro。**
 

@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "南港把同一副嗓子走了很远，留下来的不是名次，是每个时期特有的停顿。",
+  "text": "南港把同一副嗓子走了很远，留下来的不是名次，是每个时期特有的停顿。",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "work-outro.wav"
+}

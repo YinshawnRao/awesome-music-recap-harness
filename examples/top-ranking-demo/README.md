@@ -1,10 +1,12 @@
 # 旗舰示例：TOP 榜倒数揭晓
 
-竖屏盘点短视频的教学项目。看完根目录 [README](../../README.md) 再跟这个文件夹。
+竖屏盘点短视频的教学项目，也是仓库里**唯一一条能 `smoke-e2e` 出片**的路径。看完根目录 [README](../../README.md) 再跟这个文件夹。
 
 艺人 **北城** 和下面五首歌名都是**虚构占位**。它们不是必用的版权歌单。
 
-**P1 用本机生成的合法占位竖屏**（色条 / 色块），不要去下载 `SOURCES.md` 里的 `example.com`。换成真实官方 URL 是后面的事。
+**用本机生成的合法占位竖屏**（色条 / 色块），不要去下载 `SOURCES.md` 里的 `example.com`。换成真实官方 URL 是后面的事。
+
+不是榜单、想按时间线讲？编年脚手架在 [`examples/narrative-eras-demo/`](../narrative-eras-demo/)（只有结构，没有合成）。
 
 ## 1. 简报 — 你在做什么
 
@@ -28,7 +30,7 @@
 ```text
 examples/top-ranking-demo/
   BRIEF.md                 这期为什么存在
-  SOURCES.md               P1=本地占位；以后再换官方 URL
+  SOURCES.md               本地占位；以后再换官方 URL
   songs.json               N→1 播放列表
   project-manifest.json    schema v2 契约
   voice-selection.json     整期只用一个声音
@@ -38,12 +40,12 @@ examples/top-ranking-demo/
   publishing/xiaohongshu.md
   qa/                      FINAL 骨架落在这里
   package.json             hyperframes@0.6.69 版本钉
-  index.html               P3 竖屏合成（1080×1920，已提交）
+  index.html               竖屏合成（1080×1920，已提交）
   styles.css / composition.js
-  smoke-timeline.json      P3 烟雾时长（30s）；正式片长仍看 timeline.json
+  smoke-timeline.json      烟雾时长（30s）；正式片长仍看 timeline.json
   footage/                 生成器输出 — 合法占位竖屏（gitignore）
   downloads/               你自己建 — yt-dlp 原始输出（gitignore）
-  clips/                   加过黑边的竖屏；P1 生成器会写入（gitignore）
+  clips/                   加过黑边的竖屏；占位生成器会写入（gitignore）
   renders/                 smoke-e2e 写出 full.mp4 再成 <slug>.mp4（gitignore）
 ```
 
@@ -51,7 +53,7 @@ examples/top-ranking-demo/
 
 ## 3. 命令（从仓库根目录）
 
-### P1 — 生成本地占位竖屏（不联网）
+### 生成本地占位竖屏（不联网）
 
 不要下载版权 MV，也不要去拉 `example.com`：
 
@@ -91,7 +93,7 @@ python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 
 只有改了简报，才重新解析配音或重新空跑旁白（见 [docs/runbook.md](../../docs/runbook.md)）。不要从那里起步。
 
-### P2 — 真配音（Apple Silicon + 自录参考）
+### 真配音（可选；Apple Silicon + 自录参考）
 
 环境 + `reference.wav` 齐了之后，不要再加 `--dry-run`：
 
@@ -113,7 +115,7 @@ VOICE 两种模式：
 
 安装、录音、缺权重时的中文下一步：[docs/mac-setup.md](../../docs/mac-setup.md)、[voices/local/README.md](../../tools/tts/voices/local/README.md)。不要改用 Kokoro。
 
-### P3 — 一条命令出竖屏成片
+### 一条命令出竖屏成片
 
 不需要真 Cookie，也不需要 Qwen。没有旁白 WAV 就铺静音床（加 `--tone` 改轻正弦）：
 
@@ -174,7 +176,7 @@ v1 的 FINAL 只写待审骨架。它不证明画面或 ASR。
 
 ## 5. 做完
 
-- **P1：** 占位竖屏 + 上面四行结构门禁。
-- **P2：** `audio/smoke.wav` 或 `narration/*.wav` + `VOICE GATE: PASS mode=wav`。
-- **P3 今天：** `renders/top-ranking-demo.mp4`（色条也可以）+ `publishing/xiaohongshu.md`。
-  换成真素材 / 真 Cookie 是后面的事。
+- 占位竖屏 + 上面四行结构门禁。
+- 可选：`audio/smoke.wav` 或 `narration/*.wav` + `VOICE GATE: PASS mode=wav`。
+- `renders/top-ranking-demo.mp4`（色条也可以）+ `publishing/xiaohongshu.md`。
+  换成真素材 / 真 Cookie 是后面的事。文案规则见 [docs/publishing.md](../../docs/publishing.md)。

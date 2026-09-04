@@ -15,7 +15,7 @@ narrative    ── 时间线 / 散文 / 人物纪录片（按脚本顺序，没
 free_exploration ── 音乐或画面实验（必须写 rationale）
 ```
 
-写作契约（`tools/video/project-manifest.schema.json`）是共用的。门禁按 `project_kind` 分支，而不是把单一格式写死进工具。`examples/top-ranking-demo/` 是带名次的参考实现。叙事项目复用同一套配音、取材、发布、mux 规则，只是省略 `rank`。
+写作契约（`tools/video/project-manifest.schema.json`）是共用的。门禁按 `project_kind` 分支，而不是把单一格式写死进工具。`examples/top-ranking-demo/` 是带名次的参考实现（也是唯一一条 `smoke-e2e` 成片路径）。叙事脚手架在 [`examples/narrative-eras-demo/`](../examples/narrative-eras-demo/)，复用同一套配音、取材、发布规则，只是省略 `rank`，P4 不提交 HyperFrames 合成。
 
 ## 分层
 

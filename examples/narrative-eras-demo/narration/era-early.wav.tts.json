@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "早期，《旧收音机》。墙很近，气口还没藏住。",
+  "text": "早期，《旧收音机》。墙很近，气口还没藏住。",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "era-early.wav"
+}

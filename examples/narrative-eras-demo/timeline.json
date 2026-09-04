@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "project_kind": "narrative",
+  "playback_order": "chronological",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "hyperframes": "0.6.69",
+  "notes": [
+    "Scaffold only. P4 does not ship a HyperFrames composition for narrative.",
+    "Flagship render path remains examples/top-ranking-demo via smoke-e2e."
+  ],
+  "intro": {
+    "start": 0.0,
+    "voice_end": 7.0
+  },
+  "blocks": [
+    {
+      "id": "era-early",
+      "title": "旧收音机",
+      "performer": "南港",
+      "tag": "墙很近，气口还没藏住",
+      "clip": "clips/vert_era-early.mp4",
+      "start": 8.2,
+      "end": 35.2
+    },
+    {
+      "id": "era-mid",
+      "title": "末班路灯",
+      "performer": "南港",
+      "tag": "句子开始被送到更远处",
+      "clip": "clips/vert_era-mid.mp4",
+      "start": 35.2,
+      "end": 64.2
+    },
+    {
+      "id": "era-river",
+      "title": "江面回声",
+      "performer": "南港",
+      "tag": "空间大了，字不必唱满",
+      "clip": "clips/vert_era-river.mp4",
+      "start": 64.2,
+      "end": 95.7
+    }
+  ]
+}

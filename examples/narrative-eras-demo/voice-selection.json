@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "requested_voice": "CV007 低沉纪实",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "resolution_reason": "explicit_prompt_match",
+  "matched_by": "id",
+  "fallback": false,
+  "selection_mode": "explicit",
+  "candidate_voice_ids": [
+    "CV007"
+  ],
+  "model_decision_reason": null,
+  "model_decision_confidence": null,
+  "registry_sha256": "a8046ff7f1d5fdd749ddc96c4ed27bcced145120a9d5d5b670b025bd09305cb6",
+  "config_sha256": "0eecbc096b73aa4705959c67c9f6ffcbb1587d556a6d74798586b77c05b6521a",
+  "task_prompt_sha256": "238e4171acac714ffcc833752d7628a8acf99953541bfa879e95684fafd36a95"
+}
