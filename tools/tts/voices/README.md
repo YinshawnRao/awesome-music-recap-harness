@@ -4,12 +4,20 @@
 
 **不**提供专有参考 WAV、明星克隆声，或模型权重。
 
+用户自录的参考装在 **[local/](local/README.md)**（gitignore），教学项目默认 **CV007**。
+
 ## 加一个声音
 
 1. 保留永久 `CVxxx` ID。不要把同一个 ID 复用到另一个声音。
 2. 录制或取得有授权的短参考 WAV，文本对齐 `registry.json` 的 `reference_text`（或该声音自己的 `reference_text`）。
-3. 放到 `reference_audio` 路径，例如 `CV001-calm-narrator/reference.wav`。
-4. 跑 `python3 tools/tts/doctor.py --voice CV001`。
+3. 用安装器放进本地声槽（不要提交真实 WAV）：
+
+   ```bash
+   python3 tools/tts/install_reference.py ~/Desktop/reference.wav --voice CV001
+   ```
+
+   实际路径：`tools/tts/voices/local/CV001/reference.wav`。登记里的 `CV001-calm-narrator/reference.wav` 仍可作为后备。
+4. 跑 `python3 tools/tts/setup_check.py --voice CV001`。
 5. 只从你有权使用的声音生成样例。
 
 Mac 路径的合法替代：

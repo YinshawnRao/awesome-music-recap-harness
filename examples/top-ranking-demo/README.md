@@ -34,6 +34,7 @@ examples/top-ranking-demo/
   voice-selection.json     整期只用一个声音
   narration-request.json   TTS 批次
   narration/*.wav.tts.json sidecar（结构 VOICE 门禁够用）
+  audio/                   P2 一句烟雾 WAV（gitignore；见 audio/README.md）
   publishing/xiaohongshu.md
   qa/                      FINAL 骨架落在这里
   package.json             hyperframes@0.6.69 版本钉
@@ -43,7 +44,7 @@ examples/top-ranking-demo/
   renders/                 你自己建 — full.mp4 再成 <slug>.mp4（gitignore）
 ```
 
-`footage/`、`downloads/`、`clips/`、`renders/` 里什么都不随仓库附带。
+`footage/`、`downloads/`、`clips/`、`renders/`、`audio/*.wav` 里什么都不随仓库附带。
 
 ## 3. 命令（从仓库根目录）
 
@@ -87,6 +88,28 @@ python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 
 只有改了简报，才重新解析配音或重新空跑旁白（见 [docs/runbook.md](../../docs/runbook.md)）。不要从那里起步。
 
+### P2 — 真配音（Apple Silicon + 自录参考）
+
+环境 + `reference.wav` 齐了之后，不要再加 `--dry-run`：
+
+```bash
+python3 tools/tts/setup_check.py
+python3 tools/cli.py smoke-narrate
+# 一句 → audio/smoke.wav
+
+python3 tools/cli.py smoke-narrate -- --full
+# 再跑 narration-request.json → narration/*.wav
+```
+
+VOICE 两种模式：
+
+| 模式 | 你有什么 | 命令 |
+| --- | --- | --- |
+| 结构 | 只有 sidecar | `verify_voice_usage.py` → `VOICE GATE: PASS mode=structure` |
+| 真 WAV | sidecar + 旁白文件 | 同上并加 `--require-wav` → `VOICE GATE: PASS mode=wav` |
+
+安装、录音、缺权重时的中文下一步：[docs/mac-setup.md](../../docs/mac-setup.md)、[voices/local/README.md](../../tools/tts/voices/local/README.md)。不要改用 Kokoro。
+
 ### 以后：有了真实 URL + 真实 Cookie
 
 1. 把 `SOURCES.md` 里每一行 `example.com` 换成你有权使用的素材。
@@ -100,7 +123,7 @@ python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
    ```
 
 4. 每条片段用 `vfill.sh`（裁切带铺满宽度）加黑边，输出到 `clips/vert_rank-0N.mp4`。
-5. 生成旁白 WAV（TTS 体检变绿后去掉 `--dry-run`）。这是 **P2**。
+5. 生成旁白 WAV：`python3 tools/cli.py smoke-narrate -- --full`（P2；不要 `--dry-run`）。
 6. 进本目录，锁版本渲染再 mux（**P3**）：
 
    ```bash
@@ -115,7 +138,7 @@ python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 
 | 门禁 | 命令 | 成功那一行（工具原文） |
 | --- | --- | --- |
-| VOICE | `verify_voice_usage.py` | `VOICE GATE: PASS` |
+| VOICE | `verify_voice_usage.py` | `VOICE GATE: PASS mode=structure`（有 WAV 再加 `--require-wav` → `mode=wav`） |
 | PROJECT | `verify_project.py` | `PROJECT CONTRACT: PASS mode=structure` |
 | PUBLISHING | `verify_publishing.py` | `PUBLISHING COPY: PASS` |
 | FINAL | `prepare_final_qa.py` | `FINAL VIDEO QA: PASS skeleton pending_machine_qa` |
@@ -124,6 +147,7 @@ v1 的 FINAL 只写待审骨架。它不证明画面或 ASR。
 
 ## 5. 做完
 
-- **P1 今天：** 占位竖屏 + 上面四行结构门禁。你已经理解这期盘点短视频。
+- **P1：** 占位竖屏 + 上面四行结构门禁。
+- **P2 今天：** `audio/smoke.wav` 或 `narration/*.wav` + `VOICE GATE: PASS mode=wav`。
 - **成片文件：** `renders/top-ranking-demo.mp4` + `publishing/xiaohongshu.md`。
   后面阶段需要你的 Cookie、网络和有授权的素材。

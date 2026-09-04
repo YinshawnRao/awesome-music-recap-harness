@@ -25,7 +25,7 @@ YouTube **和** B 站都要搜。先锁定版本身份，再官方 MV，再干�
 
 ## 3. 配音，再过项目门禁
 
-整期只用一个声音。TTS 体检变绿之前，空跑旁白就够。写 `master.wav` 或成片 HTML **之前**，`verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
+整期只用一个声音。TTS 体检变绿之前，空跑旁白就够（`VOICE GATE: PASS mode=structure`）。真 WAV 走 P2：`setup_check.py` → `install_reference.py` → `smoke-narrate`（不要 `--dry-run`，不要改用 Kokoro）。写 `master.wav` 或成片 HTML **之前**，`verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
 
 ```bash
 python3 tools/video/countdown_build.py --project <project> --plan-only

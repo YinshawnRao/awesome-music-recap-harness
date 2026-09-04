@@ -71,6 +71,13 @@ footage/
 audio/
 raw/
 examples/smoke-download/out/
+# Keep P2 docs in otherwise-ignored output / local voice slots
+!examples/top-ranking-demo/audio/
+!examples/top-ranking-demo/audio/README.md
+!examples/top-ranking-demo/audio/.gitkeep
+!tools/tts/voices/local/
+!tools/tts/voices/local/README.md
+!tools/tts/voices/local/.gitkeep
 *.part
 *.ytdl
 
@@ -80,6 +87,7 @@ tools/tts/runtime/
 tools/tts/qwen.venv/
 tools/tts/voices/CV*/reference.wav
 tools/tts/voices/CV*/examples/*.wav
+tools/tts/voices/local/*/reference.wav
 
 # Project scratch
 /sandbox/

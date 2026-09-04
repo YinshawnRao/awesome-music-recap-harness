@@ -1,6 +1,8 @@
 # Mac 安装（附录）
 
-最短可复制路径在根目录 [README](../README.md)。本页补 TTS 细节和更完整的 Cookie 表。v1 **以 Mac 为主**。
+最短可复制路径在根目录 [README](../README.md)。本页把 **P2 配音**写成可以照着敲的步骤。v1 **以 Mac / Apple Silicon 为主**。
+
+仓库**不附带** Qwen 权重、也不附带任何人的参考 WAV。缺了就失败，并打印中文下一步。**不要改用 Kokoro。**
 
 ## 必装
 
@@ -62,27 +64,125 @@ python3 tools/video/yt_dlp_readonly.py -- --skip-download --print id "<URL>"
 
 `yt_dlp_readonly.py` 会把 `all_cookies.txt` 拷到系统临时目录下的私有 `amrh-cookie-*` 文件夹，这样 yt-dlp 退出时改不了规范文件。永远不要直接跑 `yt-dlp --cookies all_cookies.txt`。
 
-## 可选：Qwen / MLX TTS
+## P2：Apple Silicon 上的 Qwen3-TTS / MLX
 
-Apple Silicon 上：
+只支持 **M 系列 Mac**。Intel Mac、Linux、无 Metal 的远程机会失败。权重不随仓库分发。
 
-1. 单独建一个解释器（不要和通用 Whisper 虚拟环境混用）。
-2. 安装合法的 `mlx-audio==0.4.5`，以及 `tools/tts/config.json` 里写明的 Qwen3-TTS 0.6B Base 8-bit 模型树。
-3. 导出：
+### 1. 确认机器
 
 ```bash
-export AMRH_QWEN_PYTHON=/path/to/qwen.venv/bin/python
-export AMRH_QWEN_BASE_MODEL=/path/to/Qwen3-TTS-12Hz-0.6B-Base-8bit@REVISION
+uname -sm
+# 期望：Darwin arm64
+python3 tools/tts/metal_preflight.py
+# 期望：QWEN METAL PREFLIGHT: PASS
 ```
 
-4. 把你自己有授权的 `reference.wav` 放到 `tools/tts/voices/CVxxx-*/`。
-5. `python3 tools/tts/doctor.py --voice CV007 --require-reference`
+不是 `Darwin arm64` 就停。不要改用 Kokoro。
 
-`metal_preflight.py` 会在导入 MLX **之前**检查 Metal。没有 Metal，当前 TTS 步骤直接失败。不要悄悄改用 Kokoro。
+### 2. 建 Qwen 解释器（复制即可）
+
+```bash
+bash tools/tts/bootstrap_mac.sh
+```
+
+这一步会：
+
+- 再确认一次 Apple Silicon + Metal
+- 在 `tools/tts/qwen.venv/` 建独立虚拟环境（不要和 Whisper 混用）
+- 安装钉死的 `mlx-audio==0.4.5`
+- 写一份 gitignore 的 `tools/tts/runtime/env.sh`
+
+**不会**替你下载模型。
+
+每个新终端：
+
+```bash
+source tools/tts/runtime/env.sh
+```
+
+等价于：
+
+```bash
+export AMRH_QWEN_PYTHON="$PWD/tools/tts/qwen.venv/bin/python"
+# AMRH_QWEN_BASE_MODEL 在下一步下载之后再设
+```
+
+### 3. 合法下载权重（仓库不附带）
+
+模型卡：[mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit)
+
+钉死 revision（写在 `tools/tts/config.json`）：`50f45ef0047cde7e84c2ef04326acb8ada2436a7`
+
+大约 2GB。请你自己从 Hugging Face 合法取得，不要把权重提交进 git。
+
+```bash
+python3 -m pip install -U huggingface_hub
+huggingface-cli download mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit \
+  --revision 50f45ef0047cde7e84c2ef04326acb8ada2436a7 \
+  --local-dir "$HOME/amrh-models/Qwen3-TTS-12Hz-0.6B-Base-8bit"
+
+export AMRH_QWEN_BASE_MODEL="$HOME/amrh-models/Qwen3-TTS-12Hz-0.6B-Base-8bit"
+# 也可以写进 tools/tts/runtime/env.sh 再 source
+```
+
+目录里至少要有 `config.json` 或 `*.safetensors`。空文件夹会失败。
+
+生成时**不会**自动从网上拉模型（`offline_required`）。`AMRH_QWEN_BASE_MODEL` 必须指向本机树。
+
+### 4. 自录约 10 秒 `reference.wav`
+
+教学项目用 **CV007**。详细要点：[tools/tts/voices/local/README.md](../tools/tts/voices/local/README.md)。
+
+- 安静房间，单声道 16-bit PCM WAV
+- 目标约 10 秒（8–15 秒）
+- 读 registry 里的参考句
+
+```bash
+python3 tools/tts/install_reference.py --print-tips
+python3 tools/tts/install_reference.py ~/Desktop/reference.wav
+# 装到 tools/tts/voices/local/CV007/reference.wav（gitignore）
+```
+
+### 5. 体检（失败会写中文下一步）
+
+```bash
+python3 tools/tts/setup_check.py
+# 或
+python3 tools/cli.py tts-setup
+```
+
+期望最后一行：`TTS SETUP: PASS`。
+
+缺 Metal、缺 `AMRH_QWEN_*`、缺模型树、缺参考 WAV → 退出码 2，不会悄悄改用 Kokoro。
+
+结构门禁仍然可以只跑：
+
+```bash
+python3 tools/tts/doctor.py
+# TTS DOCTOR: PASS structure-only   ← 还没有真 WAV，这是正常的
+```
+
+真配音再加：
+
+```bash
+python3 tools/tts/doctor.py --voice CV007 --require-reference
+```
+
+### 6. 生成一句，再可选整批
+
+```bash
+python3 tools/cli.py smoke-narrate
+# 写出 examples/top-ranking-demo/audio/smoke.wav
+
+python3 tools/cli.py smoke-narrate -- --full
+# 再跑教学项目 narration-request.json → narration/*.wav
+```
+
+不要加 `--dry-run`。空跑 sidecar 只给第一次结构走查用。
 
 ## Linux / Kokoro
 
-只作为将来的显式旧引擎提起（`hexgrad/Kokoro-82M`）。v1 用这套工作台不需要它。
+只作为将来的显式旧引擎提起（`hexgrad/Kokoro-82M`）。v1 用这套工作台不需要它。缺 Qwen **不要**回退过去。
 
 ## 不带素材的测试
 
