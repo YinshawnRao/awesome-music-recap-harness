@@ -107,14 +107,24 @@ def test_filter_accepts_copied_example_outside_repo(tmp_path: Path) -> None:
 
 def test_gitignore_keeps_example_and_ignores_runtime_jar() -> None:
     tracked = subprocess.run(
-        ["git", "add", "-n", "--", "examples/cookies/all_cookies.example.txt"],
+        ["git", "ls-files", "--error-unmatch", "--", "examples/cookies/all_cookies.example.txt"],
         cwd=REPO_ROOT,
         check=False,
         capture_output=True,
         text=True,
     )
     assert tracked.returncode == 0
-    assert "all_cookies.example.txt" in tracked.stdout + tracked.stderr
+    assert tracked.stdout.strip() == "examples/cookies/all_cookies.example.txt"
+
+    exception = subprocess.run(
+        ["git", "check-ignore", "-v", "--", "examples/cookies/all_cookies.example.txt"],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert "!" in exception.stdout
+    assert "all_cookies.example.txt" in exception.stdout
 
     ignored = subprocess.run(
         ["git", "check-ignore", "-q", "--", "all_cookies.txt"],
