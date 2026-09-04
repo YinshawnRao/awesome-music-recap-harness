@@ -85,7 +85,11 @@ def _ffmpeg_command(
 ) -> list[str]:
     video = _video_source(item_id)
     if beep:
-        audio = "sine=frequency=880:sample_rate=48000:duration=0.25"
+        # Short beep, then pad so -t seconds is not truncated to 0.25s.
+        audio = (
+            f"sine=frequency=880:sample_rate=48000:duration=0.25,"
+            f"apad=whole_dur={seconds:g}"
+        )
     else:
         audio = "anullsrc=channel_layout=stereo:sample_rate=48000"
     return [
@@ -118,7 +122,6 @@ def _ffmpeg_command(
         "48000",
         "-b:a",
         "128k",
-        "-shortest",
         str(dest),
     ]
 

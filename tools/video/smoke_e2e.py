@@ -75,13 +75,46 @@ def assert_composition_files(project: Path) -> None:
             raise SmokeE2EError(f"index.html 应引用 {rel}")
 
 
+def _clip_duration_seconds(path: Path) -> float:
+    completed = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=nw=1:nk=1",
+            str(path),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    try:
+        return float((completed.stdout or "").strip())
+    except ValueError:
+        return 0.0
+
+
 def ensure_placeholder_clips(project: Path) -> None:
     missing = [rel for rel in CLIP_RELS if not (project / rel).is_file()]
-    if not missing:
+    too_short = [
+        rel
+        for rel in CLIP_RELS
+        if (project / rel).is_file() and _clip_duration_seconds(project / rel) < 3.5
+    ]
+    if not missing and not too_short:
         print("占位竖屏：已存在，跳过生成", flush=True)
         print("vfill：跳过 — P1 占位已经是 1080×1920，不必加黑边", flush=True)
         return
-    print("占位竖屏：缺失，正在生成本机色条 / 色块（不联网）", flush=True)
+    if too_short:
+        print(
+            "占位竖屏：时长不够（旧版短鸣曾把片子截成 0.25s），重新生成 4 秒",
+            flush=True,
+        )
+    else:
+        print("占位竖屏：缺失，正在生成本机色条 / 色块（不联网）", flush=True)
     generate_placeholder_clips(project, seconds=4, beep=True)
     still = [rel for rel in CLIP_RELS if not (project / rel).is_file()]
     if still:

@@ -64,6 +64,22 @@ def test_generates_five_vertical_clips(tmp_path: Path) -> None:
         assert int(info["width"]) == 1080
         assert int(info["height"]) == 1920
         assert path.stat().st_size > 0
+        duration = subprocess.run(
+            [
+                "ffprobe",
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration",
+                "-of",
+                "default=nw=1:nk=1",
+                str(path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        assert abs(float(duration) - 0.5) < 0.15
 
 
 @pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="ffmpeg required")
