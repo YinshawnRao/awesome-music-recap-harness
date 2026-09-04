@@ -107,12 +107,15 @@ python3 tools/video/make_placeholder_clips.py
 
 结构门禁不需要这一节。要生成**真实 WAV**，在 M 系列 Mac 上按顺序执行。权重与参考音均不随仓库分发。
 
+先阅读官方仓库 [Qwen3-TTS](https://github.com/QwenLM/Qwen3-TTS)，了解模型介绍、下载与用法；再按本仓库的 Mac 引导建立解释器、设置权重路径并装入参考音。本工作台教学路径使用 Hugging Face 上的 MLX 量化模型卡，钉 revision 见 [docs/mac-setup.md](docs/mac-setup.md)。
+
 ```bash
 # 1）建独立 Qwen 解释器（不下载权重）
 bash tools/tts/bootstrap_mac.sh
 source tools/tts/runtime/env.sh
 
 # 2）合法下载 Qwen3-TTS Base 8-bit 到本机，再 export
+#    官方仓库：https://github.com/QwenLM/Qwen3-TTS
 #    模型卡与钉 revision：docs/mac-setup.md
 export AMRH_QWEN_BASE_MODEL="$HOME/amrh-models/Qwen3-TTS-12Hz-0.6B-Base-8bit"
 
