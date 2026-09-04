@@ -1,8 +1,15 @@
 # Architecture
 
+Start at the root [README](../README.md) and the
+[TOP demo](../examples/top-ranking-demo/). This page is the why, not the
+first-success path.
+
 AMRH is a **music recap / 盘点 harness**. A recap is any structured short-form
 show built from sourced clips + narration + a composition layer. Ranking is
 one shape, not the only shape.
+
+Other `project_kind` values and the optional Baidu plugin:
+[beyond-the-demo.md](beyond-the-demo.md).
 
 ## project_kind
 

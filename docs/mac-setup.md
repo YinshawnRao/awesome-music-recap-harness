@@ -1,6 +1,7 @@
-# Mac setup
+# Mac setup (appendix)
 
-v1 is **Mac-first**. These are the expected local tools.
+The short copy-paste path is the root [README](../README.md). This page
+adds TTS detail and a fuller cookie table. v1 is **Mac-first**.
 
 ## Required
 

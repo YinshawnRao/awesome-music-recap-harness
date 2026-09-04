@@ -1,7 +1,8 @@
 # CONVENTIONS.md — portable production standards
 
-Reusable rules for anyone running this harness. Tool READMEs hold commands.
-`AGENTS.md` holds contributor automation. Do not fork conflicting rules.
+Humans start at [README.md](README.md). This file is the red-line list,
+not the first-success guide. Tool READMEs hold extra commands. `AGENTS.md`
+holds contributor automation. Do not fork conflicting rules.
 
 ## Git boundary
 

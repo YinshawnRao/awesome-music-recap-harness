@@ -1,35 +1,34 @@
 # AGENTS.md
 
-Contributor / automation runbook for this public harness. Keep operator-specific
+Humans start at [README.md](README.md) and
+[examples/top-ranking-demo/](examples/top-ranking-demo/). This file is for
+contributor automation, not the operator guide. Keep operator-specific
 goal quirks out of this file.
 
 ## Intent
 
-Help another person build a music recap with:
+Help another person follow the README and finish the TOP-ranking demo.
+Do not lead with every `project_kind` or optional plugin.
 
-1. Dual-platform sourcing (YouTube + Bilibili)
-2. One project-level voice
-3. A `project_kind` that may be rank, narrative, or free-exploration
-4. HyperFrames 0.6.69 packaging and `master.wav` mux
-5. VOICE → PROJECT → PUBLISHING → FINAL gates
-
-The flagship example is `examples/top-ranking-demo/` (N→1). Do not assume every
-brief is a ranking show.
+The teaching project is `examples/top-ranking-demo/` (N→1). Other shapes
+are documented in `docs/beyond-the-demo.md` after first success.
 
 ## Layout
 
 - `tools/tts/` — doctor, resolve, narrate, verify
 - `tools/video/` — cookies, yt-dlp wrapper, vfill, gates, countdown planner
-- `tools/delivery/baidu/` — optional upload
-- `examples/top-ranking-demo/` — placeholder TOP scaffold
+- `examples/top-ranking-demo/` — teaching TOP project
 - `examples/cookies/` — Netscape format template (fake values only)
-- `docs/` — architecture, Mac setup, operator runbook
+- `docs/` — secondary material after first success
+- `tools/delivery/baidu/` — optional; not part of first success
 
 ## Start of a video task
 
-1. Read `CONVENTIONS.md` and `tools/video/README.md`.
+1. Read `README.md` and `examples/top-ranking-demo/README.md`. Then
+   `CONVENTIONS.md` if you need a red-line.
 2. Run `python3 tools/tts/doctor.py` (structure-only PASS is OK until voices exist).
-3. Resolve **one** `voice-selection.json` from the original brief.
+3. Resolve **one** `voice-selection.json` from the original brief. Only
+   re-run this if the brief changed; the demo already has a selection.
 4. A Netscape jar at repo-root `all_cookies.txt` (`0600`) is **required**
    before any real download. Copy `examples/cookies/all_cookies.example.txt`,
    replace placeholder values with a filtered browser export, then

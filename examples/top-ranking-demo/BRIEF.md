@@ -17,5 +17,5 @@ fictional placeholders. Do not treat them as a real copyrighted setlist.
 结尾文案：只写作品 outro；固定 CTA 由 tools/video/outro_cta.py 追加
 ```
 
-`project_kind` is `top_ranking`. The same harness also accepts `narrative`
-and `free_exploration` — see `docs/architecture.md`.
+`project_kind` is `top_ranking`. Walk this demo before other shapes
+(`docs/beyond-the-demo.md`).

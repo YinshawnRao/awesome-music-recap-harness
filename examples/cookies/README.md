@@ -1,5 +1,8 @@
 # Cookie jar example
 
+The short install path is in the root [README](../../README.md). This page
+is the longer export / wrapper note.
+
 `all_cookies.example.txt` is a **valid Netscape cookie file** filled with
 obvious `PLACEHOLDER_NOT_A_SESSION_*` values. It is not a login. Comments
 in the file label the YouTube/Google and Bilibili field families.

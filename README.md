@@ -1,56 +1,84 @@
 # awesome-music-recap-harness
 
-Open-source **music recap / 盘点 harness** for other people to run, fork, and
-teach from. It is a pipeline, not a clip dump: dual-platform sourcing,
-narration, HyperFrames packaging, four quality gates, and an optional upload
-plugin.
+A **music 盘点 harness** for making a vertical ranking short: pick songs,
+source clips from YouTube + Bilibili, narrate, package, publish.
 
-**TOP ranking countdown is the flagship demo.** The architecture is not limited
-to rank lists. `project_kind` also supports narrative / timeline essays and
-free-exploration experiments.
+This repo is a **guide you can follow**, not a dump of internals. Read this
+page and [`examples/top-ranking-demo/`](examples/top-ranking-demo/). License:
+**MIT**. v1 is **Mac-first**.
 
-License: **MIT** (see `LICENSE`).
+## Who this is for
 
-## Why this exists
+You want to produce a ranking recap (TOP / 榜单, playback **N→1**) and you
+have a Mac with Homebrew. You do not need to learn every tool on day one.
 
-A stranger should be able to:
+## What you get
 
-1. Install FFmpeg, yt-dlp, Node 22, and Python 3 on a Mac.
-2. Fill a project contract (`project-manifest.json` schema v2).
-3. Resolve one voice, generate narration sidecars, plan an N→1 countdown.
-4. Pass VOICE → PROJECT → PUBLISHING → FINAL gates.
-5. Optionally upload a finished file to Baidu Netdisk **without** committing tokens.
+- A flagship teaching project: fictional artist **北城**, five labeled
+  placeholder songs (not a real copyrighted setlist)
+- A cookie-safe download path (required for a real render)
+- Four gates so you know when the structure is sound
+- A known “done” file: `renders/<slug>.mp4` plus Xiaohongshu copy
 
-This repository ships **structure and tools**, not model weights, voice
-masters, real session cookies, or private shows. A format-only Netscape
-example lives at `examples/cookies/all_cookies.example.txt`.
+Media, model weights, voice masters, and **real cookies are not shipped**.
 
-## Quickstart (Mac)
+## 1. Mac prerequisites (copy-paste)
 
 ```bash
 brew install ffmpeg yt-dlp
-# Node >= 22 for HyperFrames
+# Node 22+ (Homebrew node, fnm, or nvm)
+node -v          # expect v22 or newer
+python3 --version
+ffmpeg -version | head -n 1
+yt-dlp --version
 
-# Required for the full dual-platform download pipeline (not for structure gates)
+npx --yes hyperframes@0.6.69 doctor
+python3 tools/tts/doctor.py
+```
+
+Always pin HyperFrames to **0.6.69**. Do not use `@latest`.
+
+## 2. Cookies (required for the full flow)
+
+Downloads will not start without repo-root `all_cookies.txt` (mode `0600`).
+The structure walkthrough in §3 still runs without a real login.
+
+```bash
 cp examples/cookies/all_cookies.example.txt all_cookies.txt
 chmod 0600 all_cookies.txt
-# Replace PLACEHOLDER_* values with a real Netscape export (see docs/mac-setup.md)
+```
+
+That example is **fake** (`PLACEHOLDER_NOT_A_SESSION_*`). It is not a login.
+
+**Export a real Netscape jar** from your browser (signed into YouTube/Google
+**and** Bilibili). Use a `cookies.txt` exporter such as “Get cookies.txt
+LOCALLY”. Save the dump **outside this repo**, then overwrite the runtime
+file yourself:
+
+```bash
+# raw dump and candidate must live outside the repository
+python3 tools/video/filter_cookie_jar.py "$HOME/Downloads/raw-cookies.txt" \
+  --output "$HOME/Downloads/candidate-cookies.txt"
+cp "$HOME/Downloads/candidate-cookies.txt" all_cookies.txt
+chmod 0600 all_cookies.txt
 python3 tools/video/check_yt_cookie.py
+```
 
-python3 tools/tts/doctor.py
-python3 tools/tts/resolve_voice.py --list
+`check_yt_cookie.py` never prints cookie values. It **fails** while
+placeholder tokens remain — that is expected until you install a real
+export. Never commit `all_cookies.txt`. The only allowed yt-dlp consumer is
+`tools/video/yt_dlp_readonly.py` (it copies the jar outside the repo so
+yt-dlp cannot rewrite it).
 
-# Flagship demo (no media bundled)
-python3 tools/tts/resolve_voice.py \
-  --task-prompt-file examples/top-ranking-demo/BRIEF.md \
-  --model-choice CV007 \
-  --model-reason 'Archival documentary tone for an underrated-live ranking.' \
-  --model-confidence high \
-  -o examples/top-ranking-demo/voice-selection.json
+More detail: [examples/cookies/README.md](examples/cookies/README.md).
 
-python3 tools/tts/narrate.py --batch examples/top-ranking-demo/narration-request.json \
-  --selection-file examples/top-ranking-demo/voice-selection.json --dry-run
+## 3. First success — run the TOP demo
 
+From the repository root. The demo already has a brief, voice selection,
+manifest, narration sidecars, and publishing copy. You are checking that
+the **structure** walks:
+
+```bash
 python3 tools/tts/verify_voice_usage.py \
   --selection examples/top-ranking-demo/voice-selection.json \
   --project-root examples/top-ranking-demo
@@ -61,93 +89,79 @@ python3 tools/video/verify_publishing.py --project examples/top-ranking-demo
 python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 ```
 
-More: [docs/mac-setup.md](docs/mac-setup.md), [docs/runbook.md](docs/runbook.md),
-[docs/architecture.md](docs/architecture.md).
-
-Linux / Kokoro is a **future** path, not required for v1.
-
-## Architecture in one page
+Expected lines:
 
 ```text
-all_cookies.txt (0600) ── yt_dlp_readonly.py snapshot ── YouTube + Bilibili clips
-                              │
-                              ▼
-                     vfill.sh letterbox 1080×1920
-                              │
-TTS (Qwen/MLX on Mac) ── voice-selection.json ── narration WAVs + sidecars
-                              │
-                              ▼
-              VOICE gate → PROJECT contract → countdown plan
-                              │
-              HyperFrames 0.6.69 render --sdr (resource_budget workers)
-                              │
-                     mux master.wav over picture
-                              │
-              PUBLISHING (xiaohongshu.md) → FINAL QA skeleton
-                              │
-                     optional Baidu upload plugin
+VOICE GATE: PASS
+PROJECT CONTRACT: PASS mode=structure
+PUBLISHING COPY: PASS
+FINAL VIDEO QA: PASS skeleton pending_machine_qa
 ```
 
-`project_kind`:
+Folder map, brief, and the later download/render steps live in
+[examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md).
 
-| Kind | Meaning | Flagship? |
+## 4. What “done” looks like
+
+| Stage | You have | Gates |
 | --- | --- | --- |
-| `top_ranking` | N→1 countdown, suspense on cover/intro | **Yes — see `examples/top-ranking-demo/`** |
-| `narrative` | Timeline / essay order, no `rank` | Supported by the same contract |
-| `free_exploration` | Music/visual experiment; needs `rationale` | Supported; not the demo |
+| **First success (today)** | Structure + countdown plan, no bundled video | VOICE, PROJECT, PUBLISHING, FINAL skeleton all **PASS** |
+| **A finished ranking short** | `examples/top-ranking-demo/renders/top-ranking-demo.mp4` and `publishing/xiaohongshu.md` | Same four gates; publishing after mux |
 
-## Gates
+A real mp4 needs **your** licensed source URLs (replace the `example.com`
+placeholders in `SOURCES.md`), a **real** cookie jar, narration WAVs, and a
+HyperFrames composition. Full media download depends on your cookies and
+network. The demo does not ship clips.
 
-1. **VOICE** — one resolved voice for the whole show; sidecars match.
-2. **PROJECT** — schema v2, dual-platform search, TOP rules, canonical CTA.
-3. **PUBLISHING** — `publishing/xiaohongshu.md` structure, no song-title spoilers.
-4. **FINAL** — v1 writes a pending `qa/final-video-qa.json` skeleton.
-
-Structure mode is the default so the demo runs without bundled media.
-`--require-media` / `--require-wav` are the production switches.
-
-## Cookie rule (required for the full pipeline)
-
-The dual-platform yt-dlp flow **requires** a Netscape cookie jar. Structure
-gates (`VOICE` / `PROJECT` / `PUBLISHING` / FINAL skeleton) still run without
-one. Downloads do not.
-
-1. Export a Netscape cookie file from your browser (YouTube/Google + Bilibili
-   session). See [docs/mac-setup.md](docs/mac-setup.md) and
-   [examples/cookies/README.md](examples/cookies/README.md).
-2. Filter **outside the repo** with `tools/video/filter_cookie_jar.py`.
-3. Install the candidate yourself:
-
-   ```bash
-   cp examples/cookies/all_cookies.example.txt all_cookies.txt   # format template
-   # or: cp /absolute/outside/candidate.txt all_cookies.txt
-   chmod 0600 all_cookies.txt
-   python3 tools/video/check_yt_cookie.py
-   ```
-
-4. Consume the jar **only** through `tools/video/yt_dlp_readonly.py`. That
-   wrapper copies the file to a private temp directory **outside the
-   repository** so yt-dlp cannot rewrite `all_cookies.txt`.
-
-**Never commit `all_cookies.txt`.** The gitignored runtime file is yours. The
-committed `all_cookies.example.txt` is fake (`PLACEHOLDER_NOT_A_SESSION_*`)
-and is not a login. `check_yt_cookie.py` fails the example on purpose until
-placeholder values are replaced.
-
-## What is not in this repo
-
-- Personal artist lists or private production shows
-- Real session cookies, Baidu tokens, or sandbox renders
-- Proprietary voice master WAVs (registry stubs + add-your-own docs instead)
-- Model weights
-
-## Tests
+When you are ready to render (after sources exist):
 
 ```bash
-python3 -m pytest
+# download only through the readonly wrapper
+python3 tools/video/yt_dlp_readonly.py -- "<YOUR_URL>" -o "examples/top-ranking-demo/downloads/%(id)s.%(ext)s"
+# letterbox, narrate (not --dry-run), HyperFrames 0.6.69 --sdr, then:
+ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
+  -i examples/top-ranking-demo/master.wav \
+  -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest \
+  examples/top-ranking-demo/renders/top-ranking-demo.mp4
 ```
 
-## HyperFrames pin
+Exact per-folder commands: the [demo README](examples/top-ranking-demo/README.md).
 
-New compositions use **`hyperframes@0.6.69` only**. No bare `npx hyperframes`
-and no `@latest`.
+## 5. Troubleshooting (top 5)
+
+**Cookie check fails.** Missing `all_cookies.txt`, mode not `0600`, leftover
+`PLACEHOLDER_*` values, or a dump that lacks YouTube/Google + Bilibili
+names. Copy the example, export a real Netscape file, `chmod 0600`, rerun
+`python3 tools/video/check_yt_cookie.py`. Never run `yt-dlp --cookies`
+yourself.
+
+**`ffmpeg` not found.** `brew install ffmpeg` and open a new terminal.
+`which ffmpeg` should print a Homebrew path.
+
+**`node -v` below 22.** HyperFrames 0.6.69 needs Node 22+. Upgrade with
+Homebrew / fnm / nvm, then `hash -r` and check `node -v` again.
+
+**HyperFrames pin.** Only `npx --yes hyperframes@0.6.69 ...`. Bare
+`npx hyperframes` or `@latest` is wrong. From the demo folder,
+`npm run lint` / `npm run render` already pin 0.6.69.
+
+**TTS doctor unhappy.** Structure gates do not need a generated WAV.
+`--dry-run` / existing `.wav.tts.json` sidecars are enough for first
+success. Real speech needs Apple Silicon, a legal Qwen/MLX install, and
+your own `reference.wav` — see [docs/mac-setup.md](docs/mac-setup.md).
+Do not silently switch to Kokoro.
+
+## After first success
+
+Do not start here.
+
+| Want | Read |
+| --- | --- |
+| Teaching project (brief → folders → render) | [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md) |
+| Cookie export details | [examples/cookies/README.md](examples/cookies/README.md) |
+| Mac TTS / extra install notes | [docs/mac-setup.md](docs/mac-setup.md) |
+| Your own ranking short after the demo | [docs/runbook.md](docs/runbook.md) |
+| Why the pipeline is shaped this way | [docs/architecture.md](docs/architecture.md) |
+| Other show shapes, Baidu upload, hard media gates | [docs/beyond-the-demo.md](docs/beyond-the-demo.md) |
+| Production conventions | [CONVENTIONS.md](CONVENTIONS.md) |
+| Secondary doc index | [docs/README.md](docs/README.md) |

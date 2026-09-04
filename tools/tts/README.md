@@ -1,5 +1,8 @@
 # tools/tts — narration doctor / resolve / narrate / verify
 
+Operators start at the root [README](../../README.md). First success uses
+the demo’s existing sidecars; you do not need to generate speech yet.
+
 Public-facing Chinese narration helpers. The Mac-first generation path is
 **Qwen3-TTS Base via MLX**. Model weights and proprietary reference WAVs are
 **not shipped**.

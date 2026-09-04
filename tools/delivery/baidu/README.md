@@ -1,5 +1,6 @@
 # Optional Baidu Netdisk upload
 
+Not part of first success. Start at the root [README](../../../README.md).
 This module is **optional**. The rest of the harness does not depend on it.
 
 It is upload-only. It never ships tokens. Credentials come from environment

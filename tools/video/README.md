@@ -1,8 +1,8 @@
-# tools/video — sourcing, gates, countdown
+# tools/video — command appendix
 
-Runbook from brief to a structured recap. The flagship shape is a **TOP ranking
-countdown (N→1)**. The same contract also supports `narrative` (timeline /
-essay) and `free_exploration` via `project_kind`.
+Operators start at the root [README](../../README.md) and
+[examples/top-ranking-demo/](../../examples/top-ranking-demo/). This page
+lists extra commands. You do not need most of them for first success.
 
 ## Commands
 
@@ -80,5 +80,5 @@ Missing or placeholder jars are a hard stop for `yt_dlp_readonly.py` and
    `amrh-cookie-*` directory outside the repository so yt-dlp cannot rewrite
    the canonical file. Do not run `yt-dlp --cookies all_cookies.txt`.
 
-See [examples/cookies/README.md](../../examples/cookies/README.md) and
-[docs/mac-setup.md](../../docs/mac-setup.md).
+See [examples/cookies/README.md](../../examples/cookies/README.md). Other
+show shapes and Baidu: [docs/beyond-the-demo.md](../../docs/beyond-the-demo.md).
