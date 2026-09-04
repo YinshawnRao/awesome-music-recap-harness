@@ -33,7 +33,7 @@ python3 tools/video/countdown_build.py --project <project> --plan-only
 
 ## 4. 画面、渲染、mux
 
-用 `tools/video/vfill.sh` 加黑边（裁切带铺满宽度）。渲染用 **hyperframes@0.6.69** `--sdr`。把预混好的 `master.wav` 盖到画面上（HyperFrames 会压动态）：
+教学项目优先 `python3 tools/cli.py smoke-e2e`。自己做下一期时：用 `tools/video/vfill.sh` 加黑边（裁切带铺满宽度）。渲染用 **hyperframes@0.6.69** `--sdr`。把预混好的 `master.wav` 盖到画面上（HyperFrames 会压动态）：
 
 ```bash
 ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \

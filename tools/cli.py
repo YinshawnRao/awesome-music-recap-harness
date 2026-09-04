@@ -27,6 +27,8 @@ COMMANDS = {
     "install-cookies": TOOLS / "video" / "install_cookies.py",
     "smoke-download": TOOLS / "video" / "smoke_download.py",
     "placeholder-clips": TOOLS / "video" / "make_placeholder_clips.py",
+    "mix-master": TOOLS / "video" / "mix_master.py",
+    "smoke-e2e": TOOLS / "video" / "smoke_e2e.py",
     "bili-search": TOOLS / "video" / "bili_search.py",
     "baidu-upload": TOOLS / "delivery" / "baidu" / "upload.py",
 }

@@ -143,7 +143,7 @@ def main() -> int:
     parser.add_argument(
         "--build",
         action="store_true",
-        help="reserved: full ffmpeg master.wav + index.html is a follow-up",
+        help="reserved: 成片请用 python3 tools/cli.py smoke-e2e",
     )
     args = parser.parse_args()
     songs_path = args.songs or (args.project / "songs.json")
@@ -162,8 +162,8 @@ def main() -> int:
     )
     if args.build:
         print(
-            "COUNTDOWN BUILD: SKIP — media mux is documented; run --plan-only "
-            "until local clips and narration WAVs exist",
+            "COUNTDOWN BUILD: SKIP — 成片走 python3 tools/cli.py smoke-e2e "
+            "（占位竖屏 + HyperFrames 0.6.69 --sdr → mux）。本命令只写 timeline.json。",
             file=sys.stderr,
         )
         return 2

@@ -38,10 +38,13 @@ examples/top-ranking-demo/
   publishing/xiaohongshu.md
   qa/                      FINAL 骨架落在这里
   package.json             hyperframes@0.6.69 版本钉
+  index.html               P3 竖屏合成（1080×1920，已提交）
+  styles.css / composition.js
+  smoke-timeline.json      P3 烟雾时长（30s）；正式片长仍看 timeline.json
   footage/                 生成器输出 — 合法占位竖屏（gitignore）
   downloads/               你自己建 — yt-dlp 原始输出（gitignore）
   clips/                   加过黑边的竖屏；P1 生成器会写入（gitignore）
-  renders/                 你自己建 — full.mp4 再成 <slug>.mp4（gitignore）
+  renders/                 smoke-e2e 写出 full.mp4 再成 <slug>.mp4（gitignore）
 ```
 
 `footage/`、`downloads/`、`clips/`、`renders/`、`audio/*.wav` 里什么都不随仓库附带。
@@ -110,6 +113,35 @@ VOICE 两种模式：
 
 安装、录音、缺权重时的中文下一步：[docs/mac-setup.md](../../docs/mac-setup.md)、[voices/local/README.md](../../tools/tts/voices/local/README.md)。不要改用 Kokoro。
 
+### P3 — 一条命令出竖屏成片
+
+不需要真 Cookie，也不需要 Qwen。没有旁白 WAV 就铺静音床（加 `--tone` 改轻正弦）：
+
+```bash
+python3 tools/cli.py smoke-e2e
+```
+
+产出（均 gitignore）：
+
+- `master.wav` — 有 `narration/*.wav` 就预混；否则静音 / 轻正弦
+- `renders/full.mp4` — HyperFrames 0.6.69 `--sdr`
+- `renders/top-ranking-demo.mp4` — mux 后的可播放竖屏
+
+**做完：** 能播的竖屏 mp4，画面可以是色条。FINAL 仍是待审骨架。
+
+Linux 没有 Chrome 时会失败并打印中文下一步。只验已提交的合成文件：
+
+```bash
+python3 tools/cli.py smoke-e2e -- --structure-only
+```
+
+两条音轨路径：
+
+| 你有什么 | master.wav | 成片能不能播 |
+| --- | --- | --- |
+| `narration/*.wav`（P2） | 按 `smoke-timeline.json` 预混旁白 | 能，带口播 |
+| 只有 sidecar | 静音床；`--tone` 则轻正弦 | 能，视觉烟雾。不是可发布成片 |
+
 ### 以后：有了真实 URL + 真实 Cookie
 
 1. 把 `SOURCES.md` 里每一行 `example.com` 换成你有权使用的素材。
@@ -124,13 +156,8 @@ VOICE 两种模式：
 
 4. 每条片段用 `vfill.sh`（裁切带铺满宽度）加黑边，输出到 `clips/vert_rank-0N.mp4`。
 5. 生成旁白 WAV：`python3 tools/cli.py smoke-narrate -- --full`（P2；不要 `--dry-run`）。
-6. 进本目录，锁版本渲染再 mux（**P3**）：
-
-   ```bash
-   npm run render
-   ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \
-     -c:v copy -c:a aac -b:a 192k -shortest renders/top-ranking-demo.mp4
-   ```
+6. 成片优先走一条命令：`python3 tools/cli.py smoke-e2e`。
+   分步也可以：`vfill.sh`（真素材才需要加黑边）→ 项目目录 `npm run render` → mux。
 
 `npm run render` 就是 `npx --yes hyperframes@0.6.69 render --output renders/full.mp4 --sdr`。
 
@@ -148,6 +175,6 @@ v1 的 FINAL 只写待审骨架。它不证明画面或 ASR。
 ## 5. 做完
 
 - **P1：** 占位竖屏 + 上面四行结构门禁。
-- **P2 今天：** `audio/smoke.wav` 或 `narration/*.wav` + `VOICE GATE: PASS mode=wav`。
-- **成片文件：** `renders/top-ranking-demo.mp4` + `publishing/xiaohongshu.md`。
-  后面阶段需要你的 Cookie、网络和有授权的素材。
+- **P2：** `audio/smoke.wav` 或 `narration/*.wav` + `VOICE GATE: PASS mode=wav`。
+- **P3 今天：** `renders/top-ranking-demo.mp4`（色条也可以）+ `publishing/xiaohongshu.md`。
+  换成真素材 / 真 Cookie 是后面的事。

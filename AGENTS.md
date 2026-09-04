@@ -34,8 +34,9 @@
    缺 Cookie → 停下载这一步；公开烟雾见 `examples/smoke-download/`。只验结构的门禁可以继续。
 5. 写 master / HTML **之前**，先填好 `project-manifest.json`（schema v2）。
 6. `verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
-7. mux 之后写 `publishing/xiaohongshu.md`，再跑 `verify_publishing.py`。
-8. 跑 `prepare_final_qa.py`。v1 只写待审骨架；不要声称已经做完机器画面 / ASR 审核，也不要伪造人工复核。
+7. 教学项目成片走 `python3 tools/cli.py smoke-e2e`（占位竖屏 + hyperframes@0.6.69 `--sdr` → mux）。没有旁白 WAV 就静音 / 轻正弦床。没有 Chrome 就停渲染、打印中文下一步；结构门禁可以继续。
+8. mux 之后写 `publishing/xiaohongshu.md`，再跑 `verify_publishing.py`。
+9. 跑 `prepare_final_qa.py`。v1 只写待审骨架；不要声称已经做完机器画面 / ASR 审核，也不要伪造人工复核。
 
 ## 恢复
 

@@ -29,7 +29,7 @@ python3 tools/video/make_placeholder_clips.py
 
 `smoke-download` 要么拉下公开样本，要么打印可执行的 Cookie 修复。占位片段生成不联网。
 
-## P2 配音（本阶段）
+## P2 配音 ✅ 已完成
 
 **目标：** 教学项目能出旁白 WAV，VOICE 门禁对真文件变绿。
 
@@ -55,23 +55,39 @@ python3 tools/cli.py smoke-narrate
 
 没有权重时，后两条必须失败并打印中文下一步，而不是堆栈。
 
-## P3 渲染成片 smoke-e2e
+## P3 渲染成片 smoke-e2e（本阶段）
 
-**目标：** 占位片段 + 旁白能走完 HyperFrames 0.6.69 `--sdr` → mux → `renders/<slug>.mp4`。
+**目标：** 占位片段 +（可选）旁白走完 HyperFrames 0.6.69 `--sdr` → mux → `renders/<slug>.mp4`。
 
-预期：一条可播放的竖屏成片（画面可以是色条）。不在 P2 做完整 HTML 渲染。
+做成：
+
+- 教学项目提交竖屏 1080×1920 HTML / CSS / JS（N→1，五条占位，封面 / intro / outro / CTA）
+- 只锁 `hyperframes@0.6.69`；渲染加 `--sdr`，工人数走 `resource_budget.py`
+- 有旁白 WAV 就预混 `master.wav`；没有就静音床或 `--tone` 轻正弦，照样 mux
+- 一条命令：`python3 tools/cli.py smoke-e2e`
+- Linux 没有 Chrome 时失败并打印中文下一步；结构已齐，Mac 可渲
+
+怎么验（Mac，brew + Node 22 + Chrome）：
+
+```bash
+python3 tools/cli.py smoke-e2e
+# 没有 Chrome 的机器：
+python3 tools/cli.py smoke-e2e -- --structure-only
+```
+
+做完：`examples/top-ranking-demo/renders/top-ranking-demo.mp4` 可播放（画面可以是色条）。mp4 不进 git。FINAL 仍是待审骨架。
 
 ## P4 交付与扩展
 
 **目标：** 发布文案、可选网盘、教学项目之外的形态。
 
-预期：小红书文案打磨、`tools/delivery/baidu/` 可选插件、`docs/beyond-the-demo.md` 里的其他 `project_kind`。不在 P2 做。
+预期：小红书文案打磨、`tools/delivery/baidu/` 可选插件、`docs/beyond-the-demo.md` 里的其他 `project_kind`。不在 P3 做。
 
 ## 阶段对照
 
 | 阶段 | 陌生人能证明什么 | 明确不做 |
 | --- | --- | --- |
 | P1 ✅ | Cookie 路径 + 公开下载烟雾 + 本地占位竖屏 | 版权 MV、真配音、成片 |
-| P2（当前） | 真旁白 WAV | 成片渲染 |
-| P3 | 一条可播放的竖屏 mp4 | 网盘、其他形态 |
+| P2 ✅ | 真旁白 WAV | 成片渲染 |
+| P3（当前） | 一条可播放的竖屏 mp4（占位画面也可以） | 网盘、其他形态 |
 | P4 | 能发出去、能换形态 | — |

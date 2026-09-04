@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "kind": "smoke",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "hyperframes": "0.6.69",
+  "duration": 30,
+  "audio_without_wav": "silent",
+  "notes": [
+    "P3 smoke length. Production show times stay in timeline.json / songs.json.",
+    "Cover uses the first-played clip (rank-05 / last place), not rank 1.",
+    "Do not print N→1 or 05→01 on screen."
+  ],
+  "sections": [
+    {
+      "id": "cover",
+      "role": "cover",
+      "start": 0.0,
+      "duration": 2.0,
+      "clip": "clips/vert_rank-05.mp4",
+      "wav": "narration/intro.wav"
+    },
+    {
+      "id": "rank-05",
+      "role": "rank",
+      "rank": 5,
+      "title": "纸灯笼",
+      "performer": "北城",
+      "tag": "先把夜色点亮",
+      "start": 2.0,
+      "duration": 4.0,
+      "clip": "clips/vert_rank-05.mp4",
+      "wav": "narration/rank-05.wav"
+    },
+    {
+      "id": "rank-04",
+      "role": "rank",
+      "rank": 4,
+      "title": "夜渡",
+      "performer": "北城",
+      "tag": "对岸还没有灯",
+      "start": 6.0,
+      "duration": 4.0,
+      "clip": "clips/vert_rank-04.mp4",
+      "wav": "narration/rank-04.wav"
+    },
+    {
+      "id": "rank-03",
+      "role": "rank",
+      "rank": 3,
+      "title": "玻璃港",
+      "performer": "北城",
+      "tag": "倒影比人更清楚",
+      "start": 10.0,
+      "duration": 4.0,
+      "clip": "clips/vert_rank-03.mp4",
+      "wav": "narration/rank-03.wav"
+    },
+    {
+      "id": "rank-02",
+      "role": "rank",
+      "rank": 2,
+      "title": "北窗",
+      "performer": "北城",
+      "tag": "风从旧房间进来",
+      "start": 14.0,
+      "duration": 4.0,
+      "clip": "clips/vert_rank-02.mp4",
+      "wav": "narration/rank-02.wav"
+    },
+    {
+      "id": "rank-01",
+      "role": "rank",
+      "rank": 1,
+      "title": "末班月台",
+      "performer": "北城",
+      "tag": "最后一班也不必赶",
+      "start": 18.0,
+      "duration": 4.0,
+      "clip": "clips/vert_rank-01.mp4",
+      "wav": "narration/rank-01.wav"
+    },
+    {
+      "id": "work-outro",
+      "role": "work_outro",
+      "start": 22.0,
+      "duration": 4.0,
+      "wav": "narration/work-outro.wav"
+    },
+    {
+      "id": "outro-cta",
+      "role": "outro_cta",
+      "start": 26.0,
+      "duration": 4.0,
+      "wav": "narration/outro-cta.wav"
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>北城 被低估的5首现场</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <video
+        id="clip-cover"
+        class="clip"
+        src="./clips/vert_rank-05.mp4"
+        data-start="0"
+        data-duration="2"
+        data-track-index="0"
+        muted
+        playsinline
+      ></video>
+      <video
+        id="clip-rank-05"
+        class="clip"
+        src="./clips/vert_rank-05.mp4"
+        data-start="2"
+        data-duration="4"
+        data-track-index="0"
+        muted
+        playsinline
+      ></video>
+      <video
+        id="clip-rank-04"
+        class="clip"
+        src="./clips/vert_rank-04.mp4"
+        data-start="6"
+        data-duration="4"
+        data-track-index="0"
+        muted
+        playsinline
+      ></video>
+      <video
+        id="clip-rank-03"
+        class="clip"
+        src="./clips/vert_rank-03.mp4"
+        data-start="10"
+        data-duration="4"
+        data-track-index="0"
+        muted
+        playsinline
+      ></video>
+      <video
+        id="clip-rank-02"
+        class="clip"
+        src="./clips/vert_rank-02.mp4"
+        data-start="14"
+        data-duration="4"
+        data-track-index="0"
+        muted
+        playsinline
+      ></video>
+      <video
+        id="clip-rank-01"
+        class="clip"
+        src="./clips/vert_rank-01.mp4"
+        data-start="18"
+        data-duration="4"
+        data-track-index="0"
+        muted
+        playsinline
+      ></video>
+
+      <section
+        id="card-cover"
+        class="clip"
+        data-start="0"
+        data-duration="2"
+        data-track-index="1"
+      >
+        <div class="shade"></div>
+        <div class="card">
+          <p class="artist">北城</p>
+          <p class="theme">被低估的5首现场</p>
+        </div>
+      </section>
+
+      <section
+        id="card-rank-05"
+        class="clip"
+        data-start="2"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="shade"></div>
+        <div class="card">
+          <p class="rank-label">第五</p>
+          <p class="title">纸灯笼</p>
+          <p class="performer">北城</p>
+          <p class="tag">先把夜色点亮</p>
+        </div>
+      </section>
+
+      <section
+        id="card-rank-04"
+        class="clip"
+        data-start="6"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="shade"></div>
+        <div class="card">
+          <p class="rank-label">第四</p>
+          <p class="title">夜渡</p>
+          <p class="performer">北城</p>
+          <p class="tag">对岸还没有灯</p>
+        </div>
+      </section>
+
+      <section
+        id="card-rank-03"
+        class="clip"
+        data-start="10"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="shade"></div>
+        <div class="card">
+          <p class="rank-label">第三</p>
+          <p class="title">玻璃港</p>
+          <p class="performer">北城</p>
+          <p class="tag">倒影比人更清楚</p>
+        </div>
+      </section>
+
+      <section
+        id="card-rank-02"
+        class="clip"
+        data-start="14"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="shade"></div>
+        <div class="card">
+          <p class="rank-label">第二</p>
+          <p class="title">北窗</p>
+          <p class="performer">北城</p>
+          <p class="tag">风从旧房间进来</p>
+        </div>
+      </section>
+
+      <section
+        id="card-rank-01"
+        class="clip"
+        data-start="18"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="shade"></div>
+        <div class="card">
+          <p class="rank-label">第一</p>
+          <p class="title">末班月台</p>
+          <p class="performer">北城</p>
+          <p class="tag">最后一班也不必赶</p>
+        </div>
+      </section>
+
+      <section
+        id="card-outro"
+        class="clip"
+        data-start="22"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="card outro-card">
+          <p class="outro-line">北城的现场不靠口号，靠把一句普通的话唱到夜里还在。</p>
+        </div>
+      </section>
+
+      <section
+        id="card-cta"
+        class="clip"
+        data-start="26"
+        data-duration="4"
+        data-track-index="1"
+      >
+        <div class="card cta-card">
+          <p class="cta-line">你最想为哪一首投票？评论区告诉我。</p>
+        </div>
+      </section>
+    </div>
+
+    <script src="./composition.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      if (!window.__timelines.main) {
+        window.__timelines["main"] = gsap.timeline({ paused: true });
+      }
+    </script>
+  </body>
+</html>
