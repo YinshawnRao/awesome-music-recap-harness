@@ -18,7 +18,7 @@
 
 ## 双平台取材
 
-除非简报指定某一条 URL 为必用，否则 YouTube **和** B 站都要搜。先锁定版本身份（翻唱 vs 原唱），再官方 MV，再干净度、立体声、分辨率。把选择写进 `SOURCES.md` 和 `project-manifest.json`。`example.com` 占位 URL 只给教学项目用。
+除非简报指定某一条 URL 为必用，否则 YouTube **和** B 站都要搜。先锁定版本身份（翻唱 vs 原唱），再官方 MV，再干净度、立体声、分辨率。把选择写进 `SOURCES.md` 和 `project-manifest.json`。`example.com` 占位 URL 只给教学清单用。P1 教学画面用 `make_placeholder_clips.py` 本机生成，不要下载 `example.com`。
 
 ## TOP 榜（旗舰形态）
 

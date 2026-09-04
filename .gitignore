@@ -67,8 +67,10 @@ cookies.txt
 renders/
 downloads/
 clips/
+footage/
 audio/
 raw/
+examples/smoke-download/out/
 *.part
 *.ytdl
 

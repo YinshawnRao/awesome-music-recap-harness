@@ -12,9 +12,10 @@
 ## 目录
 
 - `tools/tts/` — 体检、选声、配音、校验
-- `tools/video/` — Cookie、yt-dlp 封装、vfill、门禁、倒数计划
+- `tools/video/` — Cookie、yt-dlp 封装、vfill、门禁、倒数计划、P1 占位片段 / 烟雾下载
 - `examples/top-ranking-demo/` — TOP 教学项目
 - `examples/cookies/` — Netscape 格式模板（只有假值）
+- `examples/smoke-download/` — 公开 YouTube 下载烟雾
 - `docs/` — 第一次跑通之后的次要材料
 - `tools/delivery/baidu/` — 可选；不属于第一次跑通
 
@@ -25,10 +26,10 @@
 2. 跑 `python3 tools/tts/doctor.py`（在配音齐备之前，只验结构的 PASS 可以接受）。
 3. 根据原始简报解析**一份** `voice-selection.json`。简报没改就不要重跑；教学项目已经有选择。
 4. 真下载之前，仓库根目录必须有 Netscape jar：`all_cookies.txt`（`0600`）。
-   从 `examples/cookies/all_cookies.example.txt` 拷一份，用筛选过的浏览器导出替换占位值，再跑
+   先跑 `bash tools/video/install_cookies.sh`（只拷格式模板），用筛选过的浏览器导出替换占位值，再跑
    `python3 tools/video/check_yt_cookie.py`。唯一允许的 yt-dlp 入口是
    `yt_dlp_readonly.py`（仓库外的临时快照）。永远不要改写 `all_cookies.txt`。
-   缺 Cookie 或还是占位符 → 停下载这一步；只验结构的门禁可以继续。
+   缺 Cookie → 停下载这一步；公开烟雾见 `examples/smoke-download/`。只验结构的门禁可以继续。
 5. 写 master / HTML **之前**，先填好 `project-manifest.json`（schema v2）。
 6. `verify_project.py` 必须打印 `PROJECT CONTRACT: PASS`。
 7. mux 之后写 `publishing/xiaohongshu.md`，再跑 `verify_publishing.py`。

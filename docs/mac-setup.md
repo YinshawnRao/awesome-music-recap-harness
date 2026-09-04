@@ -42,7 +42,8 @@ npx --yes hyperframes@0.6.69 doctor
 
 ```bash
 # 1）从仓库里的格式模板起步（可选，但建议）
-cp examples/cookies/all_cookies.example.txt all_cookies.txt
+bash tools/video/install_cookies.sh
+# 等价于：cp examples/cookies/all_cookies.example.txt all_cookies.txt
 
 # 2）在仓库外筛选真实浏览器导出（源文件和输出都必须在仓库外）
 python3 tools/video/filter_cookie_jar.py /absolute/outside/raw.txt \
