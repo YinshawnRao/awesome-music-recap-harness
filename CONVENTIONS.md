@@ -5,9 +5,11 @@ Reusable rules for anyone running this harness. Tool READMEs hold commands.
 
 ## Git boundary
 
-Commit source, docs, schemas, briefs, and light QA JSON. Do not commit
-downloads, renders, ordinary WAV/MP4, cookies, tokens, or model weights.
-Root `all_cookies.txt` is a user input, not a git asset.
+Commit source, docs, schemas, briefs, light QA JSON, and the **fake**
+Netscape template `examples/cookies/all_cookies.example.txt`. Do not commit
+downloads, renders, ordinary WAV/MP4, the runtime cookie jar, tokens, or
+model weights. Root `all_cookies.txt` is a user-only input (`0600`), not a
+git asset. `.gitignore` ignores `*cookies*.txt` and un-ignores the example.
 
 ## Recap shapes
 

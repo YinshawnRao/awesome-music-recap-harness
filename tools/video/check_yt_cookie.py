@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Static preflight for a YouTube Netscape cookie jar.
+"""Static preflight for the dual-platform Netscape cookie jar.
 
 Does not network, repair, or print cookie values. Passing only means required
-fields exist, file-internal expiry is in the future, and the file is not
-group/other readable.
+YouTube/Google and Bilibili fields exist, file-internal expiry is in the
+future, permissions are user-only, and values are not demo placeholders.
+The committed example jar is format-only; it must fail this check until the
+operator replaces placeholder tokens with a real export.
 """
 
 from __future__ import annotations
@@ -11,6 +13,7 @@ from __future__ import annotations
 import stat
 import sys
 import time
+from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -25,6 +28,11 @@ REQUIRED = [
     "APISID",
     "__Secure-3PSID",
 ]
+REQUIRED_BILIBILI = [
+    "SESSDATA",
+    "bili_jct",
+    "DedeUserID",
+]
 HELPFUL = [
     "__Secure-1PSID",
     "__Secure-1PAPISID",
@@ -34,6 +42,19 @@ HELPFUL = [
 ]
 AUTH_HASH_NAMES = {"SAPISID", "__Secure-3PAPISID", "__Secure-1PAPISID"}
 ALLOWED_DOMAIN_SUFFIXES = ("youtube.com", "google.com", "bilibili.com")
+PLACEHOLDER_MARKERS = (
+    "PLACEHOLDER",
+    "NOT_A_SESSION",
+    "EXAMPLE",
+    "FAKESECRET",
+)
+MISSING_JAR_HINT = (
+    "Cookie file is missing. The full dual-platform yt-dlp pipeline requires "
+    "repo-root all_cookies.txt (mode 0600). Copy "
+    "examples/cookies/all_cookies.example.txt, chmod 0600, then replace "
+    "placeholder values with a real Netscape export. Structure-only gates "
+    "can still run without a jar."
+)
 
 
 def default_cookie_path(repo_root: Path | None = None) -> Path:
@@ -41,7 +62,7 @@ def default_cookie_path(repo_root: Path | None = None) -> Path:
     return root / "all_cookies.txt"
 
 
-def _parse_netscape_line(line: str) -> tuple[str, str, str] | None:
+def _parse_netscape_line(line: str) -> tuple[str, str, str, str] | None:
     if not line.strip():
         return None
     if line.startswith(HTTPONLY_PREFIX):
@@ -51,16 +72,38 @@ def _parse_netscape_line(line: str) -> tuple[str, str, str] | None:
     fields = line.split("\t")
     if len(fields) < 7:
         return None
-    return fields[0], fields[5], fields[4]
+    return fields[0], fields[5], fields[4], fields[6]
+
+
+def _looks_like_placeholder(value: str) -> bool:
+    upper = value.upper()
+    return any(marker in upper for marker in PLACEHOLDER_MARKERS)
+
+
+@dataclass(frozen=True)
+class CookieJarInspection:
+    """Metadata-only view of a Netscape jar. Values are never retained."""
+
+    rows: list[tuple[str, str, str]]
+    placeholder_values: bool
+
+
+def inspect_jar(path: Path | str) -> CookieJarInspection:
+    rows: list[tuple[str, str, str]] = []
+    placeholder_values = False
+    for line in Path(path).read_text(encoding="utf-8", errors="ignore").splitlines():
+        parsed = _parse_netscape_line(line)
+        if parsed is None:
+            continue
+        domain, name, expiry, value = parsed
+        if _looks_like_placeholder(value):
+            placeholder_values = True
+        rows.append((domain, name, expiry))
+    return CookieJarInspection(rows=rows, placeholder_values=placeholder_values)
 
 
 def load(path: Path | str) -> list[tuple[str, str, str]]:
-    rows: list[tuple[str, str, str]] = []
-    for line in Path(path).read_text(encoding="utf-8", errors="ignore").splitlines():
-        row = _parse_netscape_line(line)
-        if row is not None:
-            rows.append(row)
-    return rows
+    return inspect_jar(path).rows
 
 
 def _expiry_epoch(value: str) -> int | None:
@@ -92,9 +135,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     path = Path(args[0]).expanduser() if args else default_cookie_path()
     if not path.is_file():
-        print("Cookie file is missing (public downloads can continue without it)")
+        print(MISSING_JAR_HINT)
         return 2
-    rows = load(path)
+    inspection = inspect_jar(path)
+    rows = inspection.rows
     now = int(time.time())
     domains = {domain for domain, _, _ in rows}
     by_name: dict[str, list[tuple[str, str]]] = {}
@@ -109,7 +153,14 @@ def main(argv: list[str] | None = None) -> int:
         "extra-domain advisory: "
         + ("none" if not unexpected_domains else f"{len(unexpected_domains)} non-target domains")
     )
-    ok = permission_ok
+    if inspection.placeholder_values:
+        print(
+            "placeholder-value advisory: demo tokens present; replace them "
+            "with a real Netscape export before download (values not printed)"
+        )
+    else:
+        print("placeholder-value advisory: none")
+    ok = permission_ok and not inspection.placeholder_values
 
     def check(name: str, required: bool) -> bool:
         entries = by_name.get(name)
@@ -123,8 +174,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  live {name}")
         return True
 
-    print("required:")
+    print("required YouTube/Google:")
     for name in REQUIRED:
+        if not check(name, True):
+            ok = False
+    print("required Bilibili:")
+    for name in REQUIRED_BILIBILI:
         if not check(name, True):
             ok = False
     print("helpful:")

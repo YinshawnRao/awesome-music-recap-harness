@@ -7,7 +7,8 @@ essay) and `free_exploration` via `project_kind`.
 ## Commands
 
 ```bash
-# Cookie-safe download (user-provided jar only; never commit cookies)
+# Cookie-safe download (REQUIRED jar; only allowed yt-dlp consumer)
+python3 tools/video/check_yt_cookie.py
 python3 tools/video/yt_dlp_readonly.py -- "<URL>" --skip-download --print id,title
 
 # Dual-platform search
@@ -48,8 +49,36 @@ ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \
   -c:v copy -c:a aac -b:a 192k -shortest renders/<slug>.mp4
 ```
 
-## Cookies
+## Cookies (required for the full pipeline)
 
-`all_cookies.txt` at the repo root is user-maintained, mode `0600`, never
-committed. Agents and scripts must not rewrite it. Use `yt_dlp_readonly.py`.
-If the jar is missing, continue with public downloads and the other platform.
+The dual-platform download flow **requires** a Netscape jar at repo-root
+`all_cookies.txt` (mode `0600`). Structure-only gates still run without it.
+Missing or placeholder jars are a hard stop for `yt_dlp_readonly.py` and
+`check_yt_cookie.py`.
+
+1. Copy the committed format template, or overwrite it with a filtered export:
+
+   ```bash
+   cp examples/cookies/all_cookies.example.txt all_cookies.txt
+   chmod 0600 all_cookies.txt
+   ```
+
+2. Export a real Netscape file from the browser (YouTube/Google + Bilibili).
+   Filter **outside the repo** (`filter_cookie_jar.py` refuses in-repo paths).
+   You copy the candidate onto `all_cookies.txt`. Tools never write that path.
+
+3. Verify:
+
+   ```bash
+   python3 tools/video/check_yt_cookie.py
+   ```
+
+   The check never prints cookie values. The example file fails on purpose
+   while `PLACEHOLDER_*` tokens remain.
+
+4. Download **only** via `yt_dlp_readonly.py`. It copies the jar to a private
+   `amrh-cookie-*` directory outside the repository so yt-dlp cannot rewrite
+   the canonical file. Do not run `yt-dlp --cookies all_cookies.txt`.
+
+See [examples/cookies/README.md](../../examples/cookies/README.md) and
+[docs/mac-setup.md](../../docs/mac-setup.md).

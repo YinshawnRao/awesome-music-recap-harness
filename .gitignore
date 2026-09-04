@@ -16,11 +16,14 @@ __pycache__/
 dist/
 build/
 
-# Secrets — never commit cookies, tokens, or private config
+# Secrets — never commit the runtime Netscape jar, tokens, or private config
 all_cookies.txt
 cookies.txt
 *cookies*.txt
 *cookies*.json
+# The committed demo jar is format-only (fake values). Keep exceptions last.
+!examples/cookies/*.example.txt
+!examples/cookies/all_cookies.example.txt
 .env
 .env.*
 !.env.example

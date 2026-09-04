@@ -38,4 +38,6 @@ python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 ```
 
 Replace placeholder URLs in `SOURCES.md` with sources you have the right to use
-before any real download or render.
+before any real download or render. Real downloads also need a Netscape jar at
+repo-root `all_cookies.txt` — see `examples/cookies/README.md`. The only
+allowed yt-dlp consumer is `tools/video/yt_dlp_readonly.py`.

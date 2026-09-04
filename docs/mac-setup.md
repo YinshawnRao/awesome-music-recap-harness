@@ -19,6 +19,60 @@ npx --yes hyperframes@0.6.69 doctor
 
 Always pass the pin `0.6.69`. Do not use `@latest`.
 
+## Cookies (required for the full download pipeline)
+
+A Netscape cookie jar is **required** to run the dual-platform YouTube +
+Bilibili yt-dlp flow. Structure-only demo gates still pass without one.
+Do not treat cookies as an optional nicety.
+
+The committed file `examples/cookies/all_cookies.example.txt` is **format
+only**: valid Netscape header and columns, fake `PLACEHOLDER_NOT_A_SESSION_*`
+values. It cannot log anyone in. Root `all_cookies.txt` is gitignored.
+
+### Export from a browser
+
+Use an extension that writes a **Netscape HTTP Cookie File** (tab-separated
+`cookies.txt`). Typical names: “Get cookies.txt LOCALLY”, “cookies.txt”.
+Export while you are signed into YouTube/Google **and** Bilibili. Save the
+raw dump **outside this repository** (for example `~/Downloads/raw-cookies.txt`)
+and `chmod 0600` it immediately.
+
+You need both field families:
+
+| Platform | Required names | Typical domains |
+| --- | --- | --- |
+| YouTube / Google | `LOGIN_INFO`, `SID`, `HSID`, `SSID`, `SAPISID`, `APISID`, `__Secure-3PSID` | `.youtube.com`, `.google.com` |
+| Bilibili | `SESSDATA`, `bili_jct`, `DedeUserID` | `.bilibili.com` |
+
+Do **not** pass `--cookies-from-browser` through this harness. The only
+allowed yt-dlp consumer of the canonical jar is the readonly wrapper.
+
+### Install path
+
+```bash
+# 1) Start from the committed format template (optional but recommended)
+cp examples/cookies/all_cookies.example.txt all_cookies.txt
+
+# 2) Filter a real browser dump outside the repo (source and output must be outside)
+python3 tools/video/filter_cookie_jar.py /absolute/outside/raw.txt \
+  --output /absolute/outside/candidate.txt
+
+# 3) You copy the candidate over the runtime file. Tools never write this path.
+cp /absolute/outside/candidate.txt all_cookies.txt
+chmod 0600 all_cookies.txt
+
+# 4) Static preflight (does not print values; fails on leftover PLACEHOLDER_*)
+python3 tools/video/check_yt_cookie.py
+
+# 5) Only allowed yt-dlp consumer — snapshots the jar outside the repo
+python3 tools/video/yt_dlp_readonly.py -- --skip-download --print id "<URL>"
+```
+
+`yt_dlp_readonly.py` copies `all_cookies.txt` to a private `amrh-cookie-*`
+directory under the system temp folder so yt-dlp cannot rewrite the
+canonical file on exit. Never invoke `yt-dlp --cookies all_cookies.txt`
+directly.
+
 ## Optional Qwen / MLX TTS
 
 On Apple Silicon:
@@ -38,21 +92,6 @@ export AMRH_QWEN_BASE_MODEL=/path/to/Qwen3-TTS-12Hz-0.6B-Base-8bit@REVISION
 
 `metal_preflight.py` checks Metal **before** importing MLX. If Metal is
 missing, the current TTS step fails closed. Do not silently switch to Kokoro.
-
-## Cookies (optional)
-
-Export a Netscape jar from your browser, filter it outside the repo, then
-install it yourself as `all_cookies.txt` with mode `0600`.
-
-```bash
-python3 tools/video/filter_cookie_jar.py /absolute/outside/raw.txt \
-  --output /absolute/outside/candidate.txt
-# You copy candidate → repo-root all_cookies.txt and chmod 600
-python3 tools/video/check_yt_cookie.py
-python3 tools/video/yt_dlp_readonly.py -- --skip-download --print id "<URL>"
-```
-
-The wrapper never lets yt-dlp rewrite the canonical jar.
 
 ## Linux / Kokoro
 

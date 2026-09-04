@@ -1,0 +1,42 @@
+# Netscape HTTP Cookie File
+# This is a PLACEHOLDER demo jar for awesome-music-recap-harness.
+# It is valid Netscape format. Every value is fake. It cannot log anyone in.
+#
+# Install (you do this; tools never write the canonical file):
+#   cp examples/cookies/all_cookies.example.txt all_cookies.txt
+#   chmod 0600 all_cookies.txt
+# Then replace every PLACEHOLDER_* value with a real browser export, or
+# overwrite the file with a filtered candidate produced outside the repo.
+#
+# yt-dlp must consume the jar only via:
+#   python3 tools/video/yt_dlp_readonly.py -- <yt-dlp arguments>
+# The wrapper copies the file outside the repo so yt-dlp cannot rewrite
+# all_cookies.txt on exit.
+#
+# Columns (tab-separated): domain  includeSubdomains  path  secure  expiry  name  value
+# HttpOnly rows start with #HttpOnly_ immediately before the domain.
+# expiry 4102444800 = 2100-01-01 UTC (demo only; not a real session lifetime).
+#
+# ---- YouTube / Google login-state family ----
+# LOGIN_INFO + SID/HSID/SSID/SAPISID/APISID + __Secure-3PSID are the static
+# fields check_yt_cookie.py requires. Several of those live on .google.com.
+#HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	LOGIN_INFO	PLACEHOLDER_NOT_A_SESSION_login_info
+#HttpOnly_.google.com	TRUE	/	TRUE	4102444800	SID	PLACEHOLDER_NOT_A_SESSION_sid
+#HttpOnly_.google.com	TRUE	/	TRUE	4102444800	HSID	PLACEHOLDER_NOT_A_SESSION_hsid
+#HttpOnly_.google.com	TRUE	/	TRUE	4102444800	SSID	PLACEHOLDER_NOT_A_SESSION_ssid
+.google.com	TRUE	/	TRUE	4102444800	SAPISID	PLACEHOLDER_NOT_A_SESSION_sapisid
+.google.com	TRUE	/	TRUE	4102444800	APISID	PLACEHOLDER_NOT_A_SESSION_apisid
+#HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-3PSID	PLACEHOLDER_NOT_A_SESSION_secure_3psid
+# Helpful extras (not required for the static preflight, but common in a real export):
+#HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-1PSID	PLACEHOLDER_NOT_A_SESSION_secure_1psid
+.youtube.com	TRUE	/	TRUE	4102444800	__Secure-1PAPISID	PLACEHOLDER_NOT_A_SESSION_secure_1papisid
+.youtube.com	TRUE	/	TRUE	4102444800	__Secure-3PAPISID	PLACEHOLDER_NOT_A_SESSION_secure_3papisid
+#HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-1PSIDTS	PLACEHOLDER_NOT_A_SESSION_secure_1psidts
+#HttpOnly_.youtube.com	TRUE	/	TRUE	4102444800	__Secure-3PSIDTS	PLACEHOLDER_NOT_A_SESSION_secure_3psidts
+#
+# ---- Bilibili login-state family ----
+# SESSDATA / bili_jct / DedeUserID are what filter_cookie_jar.py expects.
+# Without a real jar, public Bilibili downloads are often capped at 720P.
+#HttpOnly_.bilibili.com	TRUE	/	TRUE	4102444800	SESSDATA	PLACEHOLDER_NOT_A_SESSION_sessdata
+.bilibili.com	TRUE	/	FALSE	4102444800	bili_jct	PLACEHOLDER_NOT_A_SESSION_bili_jct
+.bilibili.com	TRUE	/	FALSE	4102444800	DedeUserID	PLACEHOLDER_EXAMPLE_USER_0

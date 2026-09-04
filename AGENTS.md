@@ -22,15 +22,21 @@ brief is a ranking show.
 - `tools/video/` — cookies, yt-dlp wrapper, vfill, gates, countdown planner
 - `tools/delivery/baidu/` — optional upload
 - `examples/top-ranking-demo/` — placeholder TOP scaffold
-- `docs/` — architecture and Mac setup
+- `examples/cookies/` — Netscape format template (fake values only)
+- `docs/` — architecture, Mac setup, operator runbook
 
 ## Start of a video task
 
 1. Read `CONVENTIONS.md` and `tools/video/README.md`.
 2. Run `python3 tools/tts/doctor.py` (structure-only PASS is OK until voices exist).
 3. Resolve **one** `voice-selection.json` from the original brief.
-4. Use `yt_dlp_readonly.py` for any cookie-backed yt-dlp. Never rewrite
-   `all_cookies.txt`. Missing cookies → continue with public + other platform.
+4. A Netscape jar at repo-root `all_cookies.txt` (`0600`) is **required**
+   before any real download. Copy `examples/cookies/all_cookies.example.txt`,
+   replace placeholder values with a filtered browser export, then
+   `python3 tools/video/check_yt_cookie.py`. The only allowed yt-dlp
+   consumer is `yt_dlp_readonly.py` (temp snapshot outside the repo). Never
+   rewrite `all_cookies.txt`. Missing or placeholder cookies → stop the
+   download step; structure-only gates may continue.
 5. Fill `project-manifest.json` (schema v2) **before** writing master/HTML.
 6. `verify_project.py` must print `PROJECT CONTRACT: PASS`.
 7. After mux, write `publishing/xiaohongshu.md` and run `verify_publishing.py`.
@@ -54,8 +60,9 @@ are `AMRH_ASR_THREADS`, `AMRH_FFMPEG_THREADS`, `AMRH_HYPERFRAMES_WORKERS` (1–4
 
 ## Secrets
 
-Never commit cookies, Baidu tokens, `.env`, or voice masters you do not intend
-to publish. The Baidu module is optional.
+Never commit the runtime jar (`all_cookies.txt`), Baidu tokens, `.env`, or
+voice masters you do not intend to publish. The committed cookie example is
+fake format only. The Baidu module is optional.
 
 ## HyperFrames
 

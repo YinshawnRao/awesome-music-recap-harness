@@ -30,8 +30,10 @@ ALLOWED_MODES = frozenset((0o400, 0o600))
 HELP_TEXT = """Usage:
   python3 tools/video/yt_dlp_readonly.py -- <yt-dlp arguments>
 
-Runs yt-dlp with a private disposable copy of the protected Cookie jar.
-Caller-supplied Cookie and configuration options are rejected.
+This wrapper is the only allowed yt-dlp consumer of repo-root all_cookies.txt.
+It copies the jar to a private temp directory outside the repository so yt-dlp
+cannot rewrite the canonical file. Caller-supplied Cookie and configuration
+options are rejected. The jar is required for the full download pipeline.
 """
 
 
@@ -192,9 +194,11 @@ def run_yt_dlp(
 ) -> int:
     canonical_path = Path(canonical)
     if not canonical_path.is_file():
-        command = [executable, "--ignore-config", "--no-config-locations", *list(arguments)]
-        completed = runner(command, check=False)
-        return int(completed.returncode)
+        raise CookieGuardError(
+            "protected Cookie input is unavailable; copy "
+            "examples/cookies/all_cookies.example.txt to all_cookies.txt, "
+            "chmod 0600, and replace placeholder values with a real export"
+        )
     safe_arguments = _validate_yt_dlp_arguments(arguments, canonical_path)
     with private_cookie_snapshot(
         canonical_path,

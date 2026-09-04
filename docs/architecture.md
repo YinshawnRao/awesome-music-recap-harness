@@ -20,9 +20,13 @@ and simply omits `rank`.
 
 ## Layers
 
-1. **Sourcing** — YouTube and Bilibili in parallel via `yt_dlp_readonly.py`,
-   `bili_search.py`, and the documented `bili_dl.py` 412 fallback. Version
-   identity first, official MV next, then cleanliness / stereo / resolution.
+1. **Sourcing** — YouTube and Bilibili in parallel via `yt_dlp_readonly.py`
+   (the only allowed yt-dlp consumer of repo-root `all_cookies.txt`),
+   `bili_search.py`, and the documented `bili_dl.py` 412 fallback. The
+   Netscape jar is required for the full download pipeline; the wrapper
+   snapshots it outside the repo so yt-dlp cannot rewrite the canonical
+   file. Version identity first, official MV next, then cleanliness /
+   stereo / resolution.
 2. **Picture** — `vfill.sh` letterbox (full-width band). No aggressive
    vertical punch-in unless the user asked and every frame is checked.
 3. **Voice** — parse once (`resolve_voice.py`), generate through `narrate.py`,

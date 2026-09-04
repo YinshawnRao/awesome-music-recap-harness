@@ -4,6 +4,10 @@
 The source must be outside this repository and mode 0600. Only YouTube, Google,
 and Bilibili domains are retained. This tool never writes repository-root
 ``all_cookies.txt``. Cookie values are never printed.
+
+The committed ``examples/cookies/all_cookies.example.txt`` is a format
+template only. Copy a real export outside the repo, filter it here, then
+the operator copies the candidate to ``all_cookies.txt``.
 """
 
 from __future__ import annotations

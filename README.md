@@ -22,13 +22,21 @@ A stranger should be able to:
 5. Optionally upload a finished file to Baidu Netdisk **without** committing tokens.
 
 This repository ships **structure and tools**, not model weights, voice
-masters, cookies, or private shows.
+masters, real session cookies, or private shows. A format-only Netscape
+example lives at `examples/cookies/all_cookies.example.txt`.
 
 ## Quickstart (Mac)
 
 ```bash
 brew install ffmpeg yt-dlp
 # Node >= 22 for HyperFrames
+
+# Required for the full dual-platform download pipeline (not for structure gates)
+cp examples/cookies/all_cookies.example.txt all_cookies.txt
+chmod 0600 all_cookies.txt
+# Replace PLACEHOLDER_* values with a real Netscape export (see docs/mac-setup.md)
+python3 tools/video/check_yt_cookie.py
+
 python3 tools/tts/doctor.py
 python3 tools/tts/resolve_voice.py --list
 
@@ -53,14 +61,15 @@ python3 tools/video/verify_publishing.py --project examples/top-ranking-demo
 python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 ```
 
-More: [docs/mac-setup.md](docs/mac-setup.md), [docs/architecture.md](docs/architecture.md).
+More: [docs/mac-setup.md](docs/mac-setup.md), [docs/runbook.md](docs/runbook.md),
+[docs/architecture.md](docs/architecture.md).
 
 Linux / Kokoro is a **future** path, not required for v1.
 
 ## Architecture in one page
 
 ```text
-YouTube + Bilibili ── yt-dlp readonly wrapper ── clips
+all_cookies.txt (0600) ── yt_dlp_readonly.py snapshot ── YouTube + Bilibili clips
                               │
                               ▼
                      vfill.sh letterbox 1080×1920
@@ -97,17 +106,38 @@ TTS (Qwen/MLX on Mac) ── voice-selection.json ── narration WAVs + sideca
 Structure mode is the default so the demo runs without bundled media.
 `--require-media` / `--require-wav` are the production switches.
 
-## Cookie rule
+## Cookie rule (required for the full pipeline)
 
-Provide your own Netscape jar as repo-root `all_cookies.txt` (`0600`) if a
-site requires login. **Never commit cookies.** All yt-dlp calls go through
-`tools/video/yt_dlp_readonly.py`, which copies the jar outside the repo so
-yt-dlp cannot rewrite the canonical file.
+The dual-platform yt-dlp flow **requires** a Netscape cookie jar. Structure
+gates (`VOICE` / `PROJECT` / `PUBLISHING` / FINAL skeleton) still run without
+one. Downloads do not.
+
+1. Export a Netscape cookie file from your browser (YouTube/Google + Bilibili
+   session). See [docs/mac-setup.md](docs/mac-setup.md) and
+   [examples/cookies/README.md](examples/cookies/README.md).
+2. Filter **outside the repo** with `tools/video/filter_cookie_jar.py`.
+3. Install the candidate yourself:
+
+   ```bash
+   cp examples/cookies/all_cookies.example.txt all_cookies.txt   # format template
+   # or: cp /absolute/outside/candidate.txt all_cookies.txt
+   chmod 0600 all_cookies.txt
+   python3 tools/video/check_yt_cookie.py
+   ```
+
+4. Consume the jar **only** through `tools/video/yt_dlp_readonly.py`. That
+   wrapper copies the file to a private temp directory **outside the
+   repository** so yt-dlp cannot rewrite `all_cookies.txt`.
+
+**Never commit `all_cookies.txt`.** The gitignored runtime file is yours. The
+committed `all_cookies.example.txt` is fake (`PLACEHOLDER_NOT_A_SESSION_*`)
+and is not a login. `check_yt_cookie.py` fails the example on purpose until
+placeholder values are replaced.
 
 ## What is not in this repo
 
 - Personal artist lists or private production shows
-- Real cookies, Baidu tokens, or sandbox renders
+- Real session cookies, Baidu tokens, or sandbox renders
 - Proprietary voice master WAVs (registry stubs + add-your-own docs instead)
 - Model weights
 
