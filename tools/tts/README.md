@@ -1,6 +1,6 @@
 # tools/tts — 旁白体检 / 选声 / 配音 / 校验
 
-请从根目录 [README](../../README.md) 开始。第一次跑通用教学示例已有的 sidecar；现在还不必生成语音。
+请从根目录 [README](../../README.md) 开始。本地 AI Agent 请同时遵守 [AGENTS.md](../../AGENTS.md)。第一次跑通用教学示例已有的 sidecar；现在还不必生成语音。
 
 面向中文口播的辅助工具。Mac 上的生成路径是 **Qwen3-TTS Base + MLX**。模型权重和专有参考 WAV **不随仓库分发**。缺了就失败，并打印中文下一步。**不要改用 Kokoro。**
 
