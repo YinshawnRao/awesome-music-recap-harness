@@ -140,3 +140,17 @@ def test_gitignore_keeps_example_and_ignores_runtime_jar() -> None:
         check=False,
     )
     assert also_ignored.returncode == 0
+
+    footage_ignored = subprocess.run(
+        ["git", "check-ignore", "-q", "--", "examples/top-ranking-demo/footage/rank-05.mp4"],
+        cwd=REPO_ROOT,
+        check=False,
+    )
+    assert footage_ignored.returncode == 0
+
+    smoke_ignored = subprocess.run(
+        ["git", "check-ignore", "-q", "--", "examples/smoke-download/out/jNQXAC9IVRw.mp4"],
+        cwd=REPO_ROOT,
+        check=False,
+    )
+    assert smoke_ignored.returncode == 0

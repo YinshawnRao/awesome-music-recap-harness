@@ -11,7 +11,7 @@
 配音：CV007 低沉纪实
 旁白结构：开头 + 每首短转场 + 作品 outro + 固定 CTA
 每首：序号 / 歌手 /《歌名》
-  素材：只有 PLACEHOLDER URL — 换成你自己有授权的素材
+  素材：P1 用本机生成的合法占位竖屏；SOURCES.md 里的 example.com 以后再换
   旁白：名次 + 歌名 + 一个判断；实际 WAV ≤8s
 结尾文案：只写作品 outro；固定 CTA 由 tools/video/outro_cta.py 追加
 ```

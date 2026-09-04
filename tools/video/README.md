@@ -6,6 +6,11 @@
 ## 命令
 
 ```bash
+# Cookie 最短安装 + 公开下载烟雾 + 教学占位竖屏（P1）
+bash tools/video/install_cookies.sh
+python3 tools/cli.py smoke-download
+python3 tools/video/make_placeholder_clips.py
+
 # 安全下载（必须有 jar；唯一允许的 yt-dlp 入口）
 python3 tools/video/check_yt_cookie.py
 python3 tools/video/yt_dlp_readonly.py -- "<URL>" --skip-download --print id,title
@@ -54,8 +59,7 @@ ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \
 1. 拷仓库里的格式模板，或用筛选过的导出整份覆盖：
 
    ```bash
-   cp examples/cookies/all_cookies.example.txt all_cookies.txt
-   chmod 0600 all_cookies.txt
+   bash tools/video/install_cookies.sh
    ```
 
 2. 从浏览器导出真实 Netscape 文件（YouTube/Google + B 站）。

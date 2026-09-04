@@ -4,6 +4,8 @@
 
 这是一份**能跟着做完的指南**，不是内部实现说明书。先看本页和 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。协议：**MIT**。v1 **以 Mac 为主**。
 
+四期开箱即用：[ROADMAP.md](ROADMAP.md)。**本仓库现在是 P1：素材闭环能跑。**
+
 ## 适合谁
 
 你要做一份榜单盘点（TOP / 倒数揭晓，播放顺序 **N→1**），手头有一台装了 Homebrew 的 Mac。第一天不必把所有工具都学完。
@@ -15,7 +17,7 @@
 - 四道门禁，用来确认结构是否站得住
 - 明确的「做完」产物：`renders/<slug>.mp4` + 小红书文案
 
-素材、模型权重、配音母带、**真实 Cookie 都不随仓库分发**。
+素材、模型权重、配音母带、**真实 Cookie 都不随仓库分发**。P1 用本机生成的合法占位竖屏，不附带版权 MV。
 
 ## 1. 安装（Mac，直接复制）
 
@@ -33,21 +35,19 @@ python3 tools/tts/doctor.py
 
 HyperFrames **必须锁 0.6.69**。不要用 `@latest`。
 
-## 2. Cookie（完整流程必做）
+## 2. Cookie（最短路径）
 
-仓库根目录没有 `all_cookies.txt`（权限 `0600`），下载不会开始。§3 的结构走查不需要真实登录。
+仓库根目录没有 `all_cookies.txt`（权限 `0600`），`yt_dlp_readonly.py` 不会开始下载。§4 的结构走查不需要真实登录。
 
 ```bash
-cp examples/cookies/all_cookies.example.txt all_cookies.txt
-chmod 0600 all_cookies.txt
+bash tools/video/install_cookies.sh
 ```
 
-示例文件是**假的**（`PLACEHOLDER_NOT_A_SESSION_*`），不能当登录态用。
+这一步只拷**假的**格式模板（`PLACEHOLDER_NOT_A_SESSION_*`），并打印下一步。不要提交 `all_cookies.txt`。
 
-**从浏览器导出一份真实的 Netscape Cookie 文件**：同一浏览器配置里同时登录 YouTube/Google **和** B 站。用 `cookies.txt` 导出插件（例如 “Get cookies.txt LOCALLY”）。原始导出**先存到仓库外面**，再自己覆盖运行时文件：
+**从浏览器导出一份真实的 Netscape Cookie 文件**（同一配置里登录 YouTube/Google **和** B 站）。原始导出先存到仓库外，再覆盖：
 
 ```bash
-# 原始导出和筛选结果都必须放在仓库外
 python3 tools/video/filter_cookie_jar.py "$HOME/Downloads/raw-cookies.txt" \
   --output "$HOME/Downloads/candidate-cookies.txt"
 cp "$HOME/Downloads/candidate-cookies.txt" all_cookies.txt
@@ -55,11 +55,21 @@ chmod 0600 all_cookies.txt
 python3 tools/video/check_yt_cookie.py
 ```
 
-`check_yt_cookie.py` 从不打印 Cookie 值。占位符还在时它会**失败**——在装上真实导出之前，这是正常的。永远不要提交 `all_cookies.txt`。唯一允许调用 yt-dlp 的入口是 `tools/video/yt_dlp_readonly.py`（它会把 jar 拷到仓库外的临时快照，避免 yt-dlp 改写原文件）。
+公开 YouTube 样本在部分网络可以不登录就下；**B 站和完整教学下载仍必须换成真实导出**。下载只走 `tools/video/yt_dlp_readonly.py`。更细的说明：[examples/cookies/README.md](examples/cookies/README.md)。
 
-更细的导出说明：[examples/cookies/README.md](examples/cookies/README.md)。
+## 3. P1 素材闭环（brew 装好就能跑）
 
-## 3. 第一次跑通 — TOP 教学项目
+```bash
+# 公开 YouTube 烟雾（Me at the zoo / jNQXAC9IVRw）。缺 jar 会打印怎么装。
+python3 tools/cli.py smoke-download
+
+# 给教学项目生成五条合法占位竖屏（不联网、不是版权 MV）
+python3 tools/video/make_placeholder_clips.py
+```
+
+烟雾输出：`examples/smoke-download/out/`（gitignore）。占位片段：`examples/top-ranking-demo/footage/` 和 `clips/vert_rank-0N.mp4`。为什么用这条公开视频、Cookie 缺了会怎样：见 [examples/smoke-download/README.md](examples/smoke-download/README.md)。阶段边界：[ROADMAP.md](ROADMAP.md)。
+
+## 4. 第一次跑通 — TOP 教学项目
 
 在仓库根目录执行。教学项目已经带好选题简报、配音选择、清单、旁白 sidecar 和小红书文案。你现在要确认的是**结构能走通**：
 
@@ -85,16 +95,16 @@ FINAL VIDEO QA: PASS skeleton pending_machine_qa
 
 目录说明、选题简报、以及后面的下载 / 渲染步骤，见 [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md)。
 
-## 4. 「做完」长什么样
+## 5. 「做完」长什么样
 
 | 阶段 | 你手上有什么 | 门禁 |
 | --- | --- | --- |
-| **今天第一次跑通** | 结构 + 倒数计划，没有随仓库附带的成片 | VOICE、PROJECT、PUBLISHING、FINAL 骨架全部 **PASS** |
+| **P1 今天** | Cookie 路径 + 公开下载烟雾 + 五条占位竖屏 + 结构门禁 | VOICE、PROJECT、PUBLISHING、FINAL 骨架全部 **PASS** |
 | **真正的盘点成片** | `examples/top-ranking-demo/renders/top-ranking-demo.mp4` 和 `publishing/xiaohongshu.md` | 还是这四道门禁；mux 之后再过发布门禁 |
 
-真 mp4 需要：**你自己有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com` 占位）、**真实** Cookie、旁白 WAV，以及一份 HyperFrames 成片。完整下载取决于你的 Cookie 和网络。教学项目不附带片段。
+真 mp4 需要：**你自己有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com`）、**真实** Cookie、旁白 WAV，以及一份 HyperFrames 成片。P1 先用占位片段，不要去下 `example.com`。
 
-素材齐了之后再渲染：
+素材齐了之后再渲染（P3）：
 
 ```bash
 # 下载只能走只读封装
@@ -108,9 +118,9 @@ ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
 
 分目录的完整命令：见 [教学项目 README](examples/top-ranking-demo/README.md)。
 
-## 5. 常见问题（前 5 条）
+## 6. 常见问题（前 5 条）
 
-**Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先拷示例，导出真实 Netscape 文件，`chmod 0600`，再跑 `python3 tools/video/check_yt_cookie.py`。不要自己跑 `yt-dlp --cookies`。
+**Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自己跑 `yt-dlp --cookies`。
 
 **找不到 `ffmpeg`。** `brew install ffmpeg`，新开一个终端。`which ffmpeg` 应指向 Homebrew 路径。
 
@@ -118,16 +128,18 @@ ffmpeg -i examples/top-ranking-demo/renders/full.mp4 \
 
 **HyperFrames 版本。** 只用 `npx --yes hyperframes@0.6.69 ...`。裸写 `npx hyperframes` 或 `@latest` 都不对。教学项目目录里的 `npm run lint` / `npm run render` 已经锁死 0.6.69。
 
-**TTS 体检不绿。** 结构门禁不需要生成 WAV。`--dry-run` / 已有的 `.wav.tts.json` sidecar 就够第一次跑通。真配音需要 Apple Silicon、合法的 Qwen/MLX 安装，以及你自己的 `reference.wav`——见 [docs/mac-setup.md](docs/mac-setup.md)。不要悄悄改用 Kokoro。
+**TTS 体检不绿。** 结构门禁不需要生成 WAV。`--dry-run` / 已有的 `.wav.tts.json` sidecar 就够第一次跑通。真配音是 **P2**，需要 Apple Silicon、合法的 Qwen/MLX 安装，以及你自己的 `reference.wav`——见 [docs/mac-setup.md](docs/mac-setup.md)。不要悄悄改用 Kokoro。
 
 ## 第一次跑通之后
 
-不要从这里起步。
+不要从这里起步。P2–P4 见 [ROADMAP.md](ROADMAP.md)。
 
 | 你想做什么 | 看哪篇 |
 | --- | --- |
+| 开箱即用四期 | [ROADMAP.md](ROADMAP.md) |
 | 教学项目（简报 → 目录 → 成片） | [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md) |
 | Cookie 导出细节 | [examples/cookies/README.md](examples/cookies/README.md) |
+| 公开下载烟雾 | [examples/smoke-download/README.md](examples/smoke-download/README.md) |
 | Mac TTS / 额外安装 | [docs/mac-setup.md](docs/mac-setup.md) |
 | 自己做下一期盘点 | [docs/runbook.md](docs/runbook.md) |
 | 流水线为什么这样分层 | [docs/architecture.md](docs/architecture.md) |

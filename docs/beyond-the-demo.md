@@ -16,7 +16,8 @@
 
 ## 硬素材门禁
 
-默认是结构模式，这样教学项目不附带片段也能跑。
+默认是结构模式，这样教学项目不附带片段也能跑。P1 可用
+`python3 tools/video/make_placeholder_clips.py` 生成本地合法占位竖屏；那不是版权 MV，也不能代替 `--require-media` 要的真 WAV。
 
 ```bash
 python3 tools/video/verify_project.py --project examples/top-ranking-demo --require-media

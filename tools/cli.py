@@ -21,6 +21,9 @@ COMMANDS = {
     "countdown-plan": TOOLS / "video" / "countdown_build.py",
     "yt-dlp": TOOLS / "video" / "yt_dlp_readonly.py",
     "cookie-check": TOOLS / "video" / "check_yt_cookie.py",
+    "install-cookies": TOOLS / "video" / "install_cookies.py",
+    "smoke-download": TOOLS / "video" / "smoke_download.py",
+    "placeholder-clips": TOOLS / "video" / "make_placeholder_clips.py",
     "bili-search": TOOLS / "video" / "bili_search.py",
     "baidu-upload": TOOLS / "delivery" / "baidu" / "upload.py",
 }
