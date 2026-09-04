@@ -2,11 +2,13 @@
 
 完整双平台下载必须有仓库根目录 `all_cookies.txt`（`0600`）。仓库里的 `all_cookies.example.txt` 是**假的**格式模板（`PLACEHOLDER_NOT_A_SESSION_*`），不能登录。永远不要提交运行时 jar。
 
+推荐用 Chrome 扩展 [Get cookies.txt LOCALLY](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 在本机写出 Netscape `cookies.txt`。
+
 ```bash
 # 1. 拷模板（不覆盖已有的真实 jar）
 bash tools/video/install_cookies.sh
 
-# 2. 同一浏览器配置登录 YouTube/Google + B 站，导出 Netscape cookies.txt
+# 2. 同一浏览器配置登录 YouTube/Google + B 站，用 Get cookies.txt LOCALLY 导出
 #    原始文件先放仓库外，chmod 0600
 
 # 3. 仓库外筛选，再自行覆盖

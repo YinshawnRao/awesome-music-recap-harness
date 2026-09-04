@@ -77,6 +77,7 @@ ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a \
    ```
 
 2. 从浏览器导出真实 Netscape 文件（YouTube/Google + B 站）。
+   推荐 Chrome 扩展 [Get cookies.txt LOCALLY](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc)。
    筛选必须在**仓库外**（`filter_cookie_jar.py` 拒绝仓库内路径）。
    你自己把候选文件拷到 `all_cookies.txt`。工具从不写这个路径。
 

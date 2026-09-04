@@ -29,7 +29,7 @@ npx --yes hyperframes@0.6.69 doctor
 
 ### 从浏览器导出
 
-用能写出 **Netscape HTTP Cookie File**（制表符分隔的 `cookies.txt`）的插件。常见名字：「Get cookies.txt LOCALLY」「cookies.txt」。导出时，同一配置里要同时登录 YouTube/Google **和** B 站。原始文件**先存到本仓库外面**（例如 `~/Downloads/raw-cookies.txt`），立刻 `chmod 0600`。
+推荐用 Chrome 扩展 [Get cookies.txt LOCALLY](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 在本机写出 **Netscape HTTP Cookie File**（制表符分隔的 `cookies.txt`）。导出时，同一配置里须同时登录 YouTube/Google **和** B 站。原始文件**先存到本仓库外面**（例如 `~/Downloads/raw-cookies.txt`），立刻 `chmod 0600`。
 
 两组字段都要有：
 
