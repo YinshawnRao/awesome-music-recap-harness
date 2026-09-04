@@ -1,6 +1,6 @@
 # 配音输出（不进 git）
 
-`python3 tools/cli.py smoke-narrate` 的一句烟雾写在这里：
+`python3 tools/cli.py smoke-narrate` 的单句试生成写在这里：
 
 ```text
 examples/top-ranking-demo/audio/smoke.wav

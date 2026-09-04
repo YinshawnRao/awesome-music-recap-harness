@@ -1,39 +1,39 @@
 # awesome-music-recap-harness
 
-做竖屏音乐盘点短视频的工作台：选歌、从 YouTube + B 站取材、配音、合成、发小红书。
+面向中文创作者的开源音乐盘点工作台：选题、YouTube 与 B 站取材、旁白配音、竖屏短视频合成，以及发布文案校验。
 
-这是一份**复制就能跟着做完**的指南，不是内部实现说明书。先看本页和 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。协议：**MIT**。成片渲染和真配音 **以 Mac 为主**。
+本页是可复现操作入口，不是内部实现说明。请先读本页与 [`examples/top-ranking-demo/`](examples/top-ranking-demo/)。协议：**MIT**。成片渲染与真配音以 **Mac** 为主。
 
 [![结构门禁](https://github.com/YinshawnRao/awesome-music-recap-harness/actions/workflows/structure-gates.yml/badge.svg)](https://github.com/YinshawnRao/awesome-music-recap-harness/actions/workflows/structure-gates.yml)
 
 ## 当前能力
 
-clone 之后，你可以：
+克隆仓库后，本机可以完成：
 
-- **取材**：装 Cookie、公开 YouTube 烟雾下载、给教学项目生五条合法占位竖屏
-- **配音（可选）**：Apple Silicon + 自录参考 + 自备 Qwen 权重，出真旁白 WAV
-- **成片**：一条命令 `smoke-e2e` 渲出竖屏 mp4（没配音就静音床，画面可以是色条）
-- **发布**：小红书文案门禁；可选把成片传到百度网盘（凭证在仓库外）
-- **换形态**：榜单（N→1）是旗舰可跑通路径；编年 / 叙事看 [`examples/narrative-eras-demo/`](examples/narrative-eras-demo/)
+- **取材**：安装 Cookie、对公开 YouTube 样本做连通性验证（冒烟测试）、为教学示例生成本机合法占位竖屏
+- **配音（可选）**：Apple Silicon + 自录参考音 + 自备 Qwen 权重，生成旁白 WAV
+- **成片**：`smoke-e2e` 渲染竖屏 mp4（无旁白时使用静音床；画面可为色条占位）
+- **发布**：小红书文案门禁校验；可选将成片上传至百度网盘（凭证不进仓库）
+- **其他形态**：榜单倒数揭晓是默认可复现路径（按名次从低到高播放：末位先播，首位最后）；编年 / 叙事见 [`examples/narrative-eras-demo/`](examples/narrative-eras-demo/)
 
-素材、模型权重、配音母带、**真实 Cookie 都不随仓库分发**。教学画面用本机生成的合法占位竖屏，不附带版权 MV。
+素材、模型权重、配音母带与**真实 Cookie 均不随仓库分发**。教学画面使用本机生成的合法占位竖屏，不附带版权 MV。
 
-| 在 GitHub Actions 里会跑 | 仍要本机 Mac |
+| GitHub Actions 覆盖 | 仍须本机 Mac |
 | --- | --- |
 | `pytest`、四道结构门禁、`smoke-e2e --structure-only`、叙事脚手架门禁、百度 `--dry-run` | Chrome 渲染、Qwen 真配音、真实 Cookie 下载、可播放成片 |
 
-## 适合谁
+## 适用场景
 
-你要做一份榜单盘点（TOP / 倒数揭晓，播放顺序 **N→1**），手头有一台装了 Homebrew 的 Mac。第一天不必把所有工具都学完。只要结构、不渲染：Linux 也行。
+用于制作榜单盘点竖屏短视频：按名次从低到高揭晓（末位先播，首位最后），并具备一台已安装 Homebrew 的 Mac。首次使用不必掌握全部工具。仅校验结构、不渲染时，Linux 亦可。
 
-## 你会得到什么
+## 交付物
 
-- 教学项目：虚构艺人 **北城**、五首带标签的占位歌（不是真实版权歌单）
-- 安全的 Cookie 下载路径（要渲成真成片，必须有真实 Cookie）
-- 四道门禁，用来确认结构是否站得住
-- 明确的「做完」产物：`renders/<slug>.mp4` + 小红书文案
+- 教学示例：虚构艺人 **北城**、五首带标签的占位曲目（非真实版权歌单）
+- 受控的 Cookie 下载路径（渲染真实成片须使用真实 Cookie）
+- 四道门禁，用于确认项目结构完整
+- 明确的完成产物：`renders/<slug>.mp4` 与小红书文案
 
-## 1. 安装（Mac，直接复制）
+## 1. 安装（Mac）
 
 ```bash
 brew install ffmpeg yt-dlp
@@ -47,19 +47,19 @@ npx --yes hyperframes@0.6.69 doctor
 python3 tools/tts/doctor.py
 ```
 
-HyperFrames **必须锁 0.6.69**。不要用 `@latest`。
+HyperFrames **必须锁定 0.6.69**。不要使用 `@latest`。
 
-只要结构门禁、不渲染：装 `python3` 和 `ffmpeg` 即可，不必装 Chrome / Qwen。
+仅做结构门禁、不渲染时，安装 `python3` 与 `ffmpeg` 即可，不必安装 Chrome 或 Qwen。
 
-## 2. Cookie（最短路径）
+## 2. Cookie
 
-仓库根目录没有 `all_cookies.txt`（权限 `0600`），`yt_dlp_readonly.py` 不会开始下载。§6 的结构走查不需要真实登录。
+仓库根目录若没有权限为 `0600` 的 `all_cookies.txt`，`yt_dlp_readonly.py` 不会开始下载。§6 的结构走查不需要真实登录。
 
 ```bash
 bash tools/video/install_cookies.sh
 ```
 
-这一步只拷**假的**格式模板（`PLACEHOLDER_NOT_A_SESSION_*`），并打印下一步。不要提交 `all_cookies.txt`。
+这一步只拷贝**假的**格式模板（`PLACEHOLDER_NOT_A_SESSION_*`），并打印下一步。不要提交 `all_cookies.txt`。
 
 **从浏览器导出一份真实的 Netscape Cookie 文件**（同一配置里登录 YouTube/Google **和** B 站）。原始导出先存到仓库外，再覆盖：
 
@@ -71,23 +71,23 @@ chmod 0600 all_cookies.txt
 python3 tools/video/check_yt_cookie.py
 ```
 
-公开 YouTube 样本在部分网络可以不登录就下；**B 站和完整教学下载仍必须换成真实导出**。下载只走 `tools/video/yt_dlp_readonly.py`。更细的说明：[examples/cookies/README.md](examples/cookies/README.md)。
+公开 YouTube 样本在部分网络可以不登录就下载；**B 站和完整教学下载仍必须换成真实导出**。下载只走 `tools/video/yt_dlp_readonly.py`。更细的说明：[examples/cookies/README.md](examples/cookies/README.md)。
 
-## 3. 占位竖屏 / 公开烟雾
+## 3. 占位竖屏与下载连通性
 
 ```bash
-# 公开 YouTube 烟雾（Me at the zoo / jNQXAC9IVRw）。缺 jar 会打印怎么装。
+# 公开 YouTube 连通性验证（Me at the zoo / jNQXAC9IVRw）。缺 jar 会打印安装步骤。
 python3 tools/cli.py smoke-download
 
-# 给教学项目生成五条合法占位竖屏（不联网、不是版权 MV）
+# 为教学示例生成五条合法占位竖屏（不联网、不是版权 MV）
 python3 tools/video/make_placeholder_clips.py
 ```
 
-烟雾输出：`examples/smoke-download/out/`（gitignore）。占位片段：`examples/top-ranking-demo/footage/` 和 `clips/vert_rank-0N.mp4`。为什么用这条公开视频、Cookie 缺了会怎样：见 [examples/smoke-download/README.md](examples/smoke-download/README.md)。
+连通性验证输出：`examples/smoke-download/out/`（gitignore）。占位片段：`examples/top-ranking-demo/footage/` 和 `clips/vert_rank-0N.mp4`。选用这条公开视频的原因、以及 Cookie 缺失时的行为：见 [examples/smoke-download/README.md](examples/smoke-download/README.md)。
 
 ## 4. 配音（可选）
 
-结构门禁不需要这一节。要**真的 WAV**，在 M 系列 Mac 上按顺序复制。权重和你的声音都不随仓库分发。
+结构门禁不需要这一节。要生成**真实 WAV**，在 M 系列 Mac 上按顺序执行。权重与参考音均不随仓库分发。
 
 ```bash
 # 1）建独立 Qwen 解释器（不下载权重）
@@ -101,18 +101,18 @@ export AMRH_QWEN_BASE_MODEL="$HOME/amrh-models/Qwen3-TTS-12Hz-0.6B-Base-8bit"
 # 3）自录约 10 秒单声道 WAV，装进教学声槽 CV007（gitignore）
 python3 tools/tts/install_reference.py ~/Desktop/reference.wav
 
-# 4）缺任何一项都会用中文告诉你下一步；不会改用 Kokoro
+# 4）缺任何一项都会用中文说明下一步；不会改用 Kokoro
 python3 tools/tts/setup_check.py
 python3 tools/cli.py smoke-narrate
 ```
 
-一句烟雾：`examples/top-ranking-demo/audio/smoke.wav`。整批教学旁白：
+单句试生成：`examples/top-ranking-demo/audio/smoke.wav`。整批教学旁白：
 
 ```bash
 python3 tools/cli.py smoke-narrate -- --full
 ```
 
-录音要点和路径：[tools/tts/voices/local/README.md](tools/tts/voices/local/README.md)。完整复制步骤：[docs/mac-setup.md](docs/mac-setup.md)。
+录音要点和路径：[tools/tts/voices/local/README.md](tools/tts/voices/local/README.md)。完整步骤：[docs/mac-setup.md](docs/mac-setup.md)。
 
 ## 5. 一条命令出片
 
@@ -124,9 +124,9 @@ python3 tools/cli.py smoke-e2e
 
 它会：没有占位竖屏就生成本机色条 → 有旁白 WAV 就预混 `master.wav`，没有就铺静音床（加 `--tone` 改轻正弦）→ `hyperframes@0.6.69 render --sdr` → mux 到 `examples/top-ranking-demo/renders/top-ranking-demo.mp4`（gitignore）→ 再跑结构门禁。
 
-**做完长什么样：** 一条可播放的竖屏 mp4。画面可以是色条。没有真配音也能出片（视觉烟雾 / 静音床），不要把它当成可发布成片。
+**完成状态：** 一条可播放的竖屏 mp4。画面可为色条占位。无真配音亦可出片（静音床或轻正弦），该结果仅用于验证渲染闭环，不可作为发布成片。
 
-Linux CI 常常没有 Chrome：命令会失败，并用中文写出下一步。合成文件（HTML / CSS / JS / `package.json`）已经提交，请到 Mac 上渲。
+Linux CI 常常没有 Chrome：命令会失败，并用中文写出下一步。合成文件（HTML / CSS / JS / `package.json`）已经提交，请到 Mac 上渲染。
 
 只要结构、不渲染（CI 也跑这一条）：
 
@@ -134,9 +134,9 @@ Linux CI 常常没有 Chrome：命令会失败，并用中文写出下一步。�
 python3 tools/cli.py smoke-e2e -- --structure-only
 ```
 
-## 6. 成片路径 — TOP 教学项目
+## 6. 教学示例：榜单倒数揭晓
 
-在仓库根目录执行。教学项目已经带好选题简报、配音选择、清单、旁白 sidecar 和小红书文案。你现在要确认的是**结构能走通**：
+在仓库根目录执行。教学示例已经带好选题简报、配音选择、清单、旁白 sidecar 和小红书文案。此步确认**结构可走通**：
 
 ```bash
 python3 tools/tts/verify_voice_usage.py \
@@ -149,7 +149,7 @@ python3 tools/video/verify_publishing.py --project examples/top-ranking-demo
 python3 tools/video/prepare_final_qa.py --project examples/top-ranking-demo
 ```
 
-预期输出（工具原文就是英文）：
+预期输出（工具原文为英文，须与下列字面一致）：
 
 ```text
 VOICE GATE: PASS mode=structure
@@ -158,50 +158,50 @@ PUBLISHING COPY: PASS
 FINAL VIDEO QA: PASS skeleton pending_machine_qa
 ```
 
-目录说明、选题简报、以及后面的下载 / 渲染步骤，见 [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md)。
+目录说明、选题简报，以及后续的下载 / 渲染步骤，见 [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md)。
 
-## 7. 「做完」长什么样
+## 7. 完成标准
 
-| 你手上有什么 | 说明 |
+| 本机状态 | 说明 |
 | --- | --- |
 | 占位竖屏 + 四道结构门禁 PASS | 不需要 Cookie / Qwen / Chrome |
-| 自录参考 + 合法 Qwen 权重 → 真旁白 WAV | `setup_check` / `smoke-narrate`；齐了之后 `VOICE GATE: PASS mode=wav` |
-| `renders/top-ranking-demo.mp4`（占位竖屏也可以） | `smoke-e2e`；FINAL 仍是待审骨架，不证明画面 / ASR |
+| 自录参考 + 合法 Qwen 权重 → 真旁白 WAV | `setup_check` / `smoke-narrate`；齐备之后 `VOICE GATE: PASS mode=wav` |
+| `renders/top-ranking-demo.mp4`（占位竖屏亦可） | `smoke-e2e`；FINAL 仍是待审骨架，不证明画面 / ASR |
 | 小红书文案 | `publishing/xiaohongshu.md` 已过门禁 |
-| 真正的盘点成片 | 换成你有权使用的素材 + 真 Cookie + 真 WAV + 同一条 mux |
+| 真正的盘点成片 | 换成有权使用的素材 + 真 Cookie + 真 WAV + 同一条 mux |
 
-真版权成片需要：**你自己有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com`）、**真实** Cookie、旁白 WAV。先用占位片段证明渲染闭环，不要去下 `example.com`。
+真版权成片需要：**本机有权使用的**素材 URL（替换 `SOURCES.md` 里的 `example.com`）、**真实** Cookie、旁白 WAV。先用占位片段证明渲染闭环，不要去下载 `example.com`。
 
-分目录的完整命令：见 [教学项目 README](examples/top-ranking-demo/README.md)。
+分目录的完整命令：见 [教学示例 README](examples/top-ranking-demo/README.md)。
 
-## 8. 常见问题（前 5 条）
+## 8. 常见问题
 
-**Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自己跑 `yt-dlp --cookies`。
+**Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自行执行 `yt-dlp --cookies`。
 
 **找不到 `ffmpeg`。** `brew install ffmpeg`，新开一个终端。`which ffmpeg` 应指向 Homebrew 路径。
 
 **`node -v` 低于 22。** HyperFrames 0.6.69 需要 Node 22+。用 Homebrew / fnm / nvm 升级后执行 `hash -r`，再看 `node -v`。
 
-**HyperFrames 版本。** 只用 `npx --yes hyperframes@0.6.69 ...`。裸写 `npx hyperframes` 或 `@latest` 都不对。教学项目目录里的 `npm run lint` / `npm run render` 已经锁死 0.6.69。
+**HyperFrames 版本。** 只用 `npx --yes hyperframes@0.6.69 ...`。裸写 `npx hyperframes` 或 `@latest` 都不对。教学示例目录里的 `npm run lint` / `npm run render` 已经锁定 0.6.69。
 
-**TTS 体检不绿 / 真配音失败。** 结构门禁看 `VOICE GATE: PASS mode=structure`（sidecar 即可）。真 WAV 看 `python3 tools/tts/setup_check.py`：缺 Apple Silicon、缺 `AMRH_QWEN_PYTHON` / `AMRH_QWEN_BASE_MODEL`、缺自录参考，都会用中文写出下一步。不要改用 Kokoro。见 [docs/mac-setup.md](docs/mac-setup.md)。
+**TTS 体检未通过 / 真配音失败。** 结构门禁看 `VOICE GATE: PASS mode=structure`（sidecar 即可）。真 WAV 看 `python3 tools/tts/setup_check.py`：缺 Apple Silicon、缺 `AMRH_QWEN_PYTHON` / `AMRH_QWEN_BASE_MODEL`、缺自录参考，都会用中文写出下一步。不要改用 Kokoro。见 [docs/mac-setup.md](docs/mac-setup.md)。
 
-## 第一次跑通之后
+## 延伸阅读
 
-不要从这里起步。旗舰路径仍是 TOP 教学项目。
+下列文档供第一次跑通之后查阅。默认可复现路径仍是 TOP 教学示例。
 
-| 你想做什么 | 看哪篇 |
+| 目的 | 文档 |
 | --- | --- |
-| 教学项目（简报 → 目录 → 成片） | [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md) |
+| 教学示例（简报 → 目录 → 成片） | [examples/top-ranking-demo/README.md](examples/top-ranking-demo/README.md) |
 | 编年 / 叙事脚手架（不是榜单） | [examples/narrative-eras-demo/README.md](examples/narrative-eras-demo/README.md) |
 | 小红书文案规则 | [docs/publishing.md](docs/publishing.md) |
 | 可选：百度网盘上传 | [tools/delivery/baidu/README.md](tools/delivery/baidu/README.md) |
 | Cookie 导出细节 | [examples/cookies/README.md](examples/cookies/README.md) |
-| 公开下载烟雾 | [examples/smoke-download/README.md](examples/smoke-download/README.md) |
+| 公开下载连通性验证 | [examples/smoke-download/README.md](examples/smoke-download/README.md) |
 | 本地参考 WAV（gitignore） | [tools/tts/voices/local/README.md](tools/tts/voices/local/README.md) |
 | Mac TTS / 额外安装 | [docs/mac-setup.md](docs/mac-setup.md) |
-| 自己做下一期盘点 | [docs/runbook.md](docs/runbook.md) |
-| 流水线为什么这样分层 | [docs/architecture.md](docs/architecture.md) |
+| 制作下一期盘点 | [docs/runbook.md](docs/runbook.md) |
+| 流水线分层说明 | [docs/architecture.md](docs/architecture.md) |
 | 其他节目形态、硬素材门禁 | [docs/beyond-the-demo.md](docs/beyond-the-demo.md) |
 | CI 和本机分别做什么 | [docs/ci.md](docs/ci.md) |
 | 制作红线 | [CONVENTIONS.md](CONVENTIONS.md) |

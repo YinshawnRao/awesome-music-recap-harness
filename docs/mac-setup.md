@@ -1,6 +1,6 @@
 # Mac 安装（附录）
 
-最短可复制路径在根目录 [README](../README.md)。本页把 **配音**写成可以照着敲的步骤。v1 **以 Mac / Apple Silicon 为主**。
+可复现安装步骤见根目录 [README](../README.md)。本页把 **配音**写成可以按序执行的命令。v1 **以 Mac / Apple Silicon 为主**。
 
 仓库**不附带** Qwen 权重、也不附带任何人的参考 WAV。缺了就失败，并打印中文下一步。**不要改用 Kokoro。**
 
@@ -23,7 +23,7 @@ npx --yes hyperframes@0.6.69 doctor
 
 ## Cookie（完整下载流水线必做）
 
-双平台 YouTube + B 站的 yt-dlp 流程**必须**有 Netscape Cookie 文件。只验结构的教学门禁没有它也能过。不要把 Cookie 当成可有可无的锦上添花。
+双平台 YouTube + B 站的 yt-dlp 流程**必须**有 Netscape Cookie 文件。只验结构的教学门禁没有它也能过。Cookie 是完整下载流水线的硬前置条件，不是可选项。
 
 仓库里的 `examples/cookies/all_cookies.example.txt` **只保证格式**：合法 Netscape 表头和列，值全是假的 `PLACEHOLDER_NOT_A_SESSION_*`。它不能登录任何人。根目录 `all_cookies.txt` 已被 gitignore。
 
@@ -51,7 +51,7 @@ bash tools/video/install_cookies.sh
 python3 tools/video/filter_cookie_jar.py /absolute/outside/raw.txt \
   --output /absolute/outside/candidate.txt
 
-# 3）你自己把候选文件拷到运行时路径。工具从不写这个路径。
+# 3）将候选文件拷到运行时路径。工具从不写这个路径。
 cp /absolute/outside/candidate.txt all_cookies.txt
 chmod 0600 all_cookies.txt
 
@@ -79,7 +79,7 @@ python3 tools/tts/metal_preflight.py
 
 不是 `Darwin arm64` 就停。不要改用 Kokoro。
 
-### 2. 建 Qwen 解释器（复制即可）
+### 2. 建 Qwen 解释器
 
 ```bash
 bash tools/tts/bootstrap_mac.sh
@@ -113,7 +113,7 @@ export AMRH_QWEN_PYTHON="$PWD/tools/tts/qwen.venv/bin/python"
 
 钉死 revision（写在 `tools/tts/config.json`）：`50f45ef0047cde7e84c2ef04326acb8ada2436a7`
 
-大约 2GB。请你自己从 Hugging Face 合法取得，不要把权重提交进 git。
+大约 2GB。请从 Hugging Face 合法取得，不要把权重提交进 git。
 
 ```bash
 python3 -m pip install -U huggingface_hub
@@ -131,7 +131,7 @@ export AMRH_QWEN_BASE_MODEL="$HOME/amrh-models/Qwen3-TTS-12Hz-0.6B-Base-8bit"
 
 ### 4. 自录约 10 秒 `reference.wav`
 
-教学项目用 **CV007**。详细要点：[tools/tts/voices/local/README.md](../tools/tts/voices/local/README.md)。
+教学示例用 **CV007**。详细要点：[tools/tts/voices/local/README.md](../tools/tts/voices/local/README.md)。
 
 - 安静房间，单声道 16-bit PCM WAV
 - 目标约 10 秒（8–15 秒）
@@ -175,7 +175,7 @@ python3 tools/cli.py smoke-narrate
 # 写出 examples/top-ranking-demo/audio/smoke.wav
 
 python3 tools/cli.py smoke-narrate -- --full
-# 再跑教学项目 narration-request.json → narration/*.wav
+# 再跑教学示例 narration-request.json → narration/*.wav
 ```
 
 不要加 `--dry-run`。空跑 sidecar 只给第一次结构走查用。

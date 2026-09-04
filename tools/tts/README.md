@@ -1,6 +1,6 @@
 # tools/tts — 旁白体检 / 选声 / 配音 / 校验
 
-操作者从根目录 [README](../../README.md) 开始。第一次跑通用教学项目已有的 sidecar；现在还不必生成语音。
+请从根目录 [README](../../README.md) 开始。第一次跑通用教学示例已有的 sidecar；现在还不必生成语音。
 
 面向中文口播的辅助工具。Mac 上的生成路径是 **Qwen3-TTS Base + MLX**。模型权重和专有参考 WAV **不随仓库分发**。缺了就失败，并打印中文下一步。**不要改用 Kokoro。**
 
@@ -42,7 +42,7 @@ Mac 复制步骤：[docs/mac-setup.md](../../docs/mac-setup.md)。
 | 结构 | 只有 sidecar | `verify_voice_usage.py` → `PASS mode=structure` |
 | 真 WAV | 每个 sidecar 旁边都有 `.wav` | 加 `--require-wav` → `PASS mode=wav` |
 
-教学项目一句烟雾写在 `examples/top-ranking-demo/audio/`（gitignore）。整批写在 `narration/*.wav`。
+教学示例的单句试生成写在 `examples/top-ranking-demo/audio/`（gitignore）。整批写在 `narration/*.wav`。
 
 ## 选声
 
