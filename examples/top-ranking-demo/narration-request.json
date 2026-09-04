@@ -1,0 +1,44 @@
+{
+  "blocks": [
+    {
+      "id": "intro",
+      "text": "有些现场不是热搜推出来的，是听过的人自己留下来的。今天只讲北城那些被低估的舞台。",
+      "output": "narration/intro.wav"
+    },
+    {
+      "id": "rank-05",
+      "text": "第五名，《纸灯笼》。先把夜色点亮。",
+      "output": "narration/rank-05.wav"
+    },
+    {
+      "id": "rank-04",
+      "text": "第四名，《夜渡》。对岸还没有灯。",
+      "output": "narration/rank-04.wav"
+    },
+    {
+      "id": "rank-03",
+      "text": "第三名，《玻璃港》。倒影比人更清楚。",
+      "output": "narration/rank-03.wav"
+    },
+    {
+      "id": "rank-02",
+      "text": "第二名，《北窗》。风从旧房间进来。",
+      "output": "narration/rank-02.wav"
+    },
+    {
+      "id": "rank-01",
+      "text": "第一名，《末班月台》。最后一班也不必赶。",
+      "output": "narration/rank-01.wav"
+    },
+    {
+      "id": "work-outro",
+      "text": "北城的现场不靠口号，靠把一句普通的话唱到夜里还在。",
+      "output": "narration/work-outro.wav"
+    },
+    {
+      "id": "outro-cta",
+      "text": "你最想为哪一首投票？评论区告诉我。记得点赞、收藏、关注我，下一期，可能就盘到你单曲循环过的那一首。",
+      "output": "narration/outro-cta.wav"
+    }
+  ]
+}

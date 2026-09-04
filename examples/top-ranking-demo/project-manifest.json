@@ -1,0 +1,370 @@
+{
+  "schema_version": 2,
+  "project_kind": "top_ranking",
+  "voice_selection": "voice-selection.json",
+  "cover": {
+    "text": "北城 被低估的5首现场",
+    "disclosed_item_ids": []
+  },
+  "narration_sequence": [
+    {
+      "id": "intro",
+      "role": "intro",
+      "text": "有些现场不是热搜推出来的，是听过的人自己留下来的。今天只讲北城那些被低估的舞台。",
+      "disclosed_item_ids": [],
+      "wav": "narration/intro.wav",
+      "sidecar": "narration/intro.wav.tts.json"
+    },
+    {
+      "id": "transition-rank-05",
+      "role": "transition",
+      "item_id": "rank-05",
+      "text": "第五名，《纸灯笼》。先把夜色点亮。",
+      "wav": "narration/rank-05.wav",
+      "sidecar": "narration/rank-05.wav.tts.json"
+    },
+    {
+      "id": "transition-rank-04",
+      "role": "transition",
+      "item_id": "rank-04",
+      "text": "第四名，《夜渡》。对岸还没有灯。",
+      "wav": "narration/rank-04.wav",
+      "sidecar": "narration/rank-04.wav.tts.json"
+    },
+    {
+      "id": "transition-rank-03",
+      "role": "transition",
+      "item_id": "rank-03",
+      "text": "第三名，《玻璃港》。倒影比人更清楚。",
+      "wav": "narration/rank-03.wav",
+      "sidecar": "narration/rank-03.wav.tts.json"
+    },
+    {
+      "id": "transition-rank-02",
+      "role": "transition",
+      "item_id": "rank-02",
+      "text": "第二名，《北窗》。风从旧房间进来。",
+      "wav": "narration/rank-02.wav",
+      "sidecar": "narration/rank-02.wav.tts.json"
+    },
+    {
+      "id": "transition-rank-01",
+      "role": "transition",
+      "item_id": "rank-01",
+      "text": "第一名，《末班月台》。最后一班也不必赶。",
+      "wav": "narration/rank-01.wav",
+      "sidecar": "narration/rank-01.wav.tts.json"
+    },
+    {
+      "id": "work-outro",
+      "role": "work_outro",
+      "text": "北城的现场不靠口号，靠把一句普通的话唱到夜里还在。",
+      "wav": "narration/work-outro.wav",
+      "sidecar": "narration/work-outro.wav.tts.json"
+    },
+    {
+      "id": "outro-cta",
+      "role": "outro_cta",
+      "text": "你最想为哪一首投票？评论区告诉我。记得点赞、收藏、关注我，下一期，可能就盘到你单曲循环过的那一首。",
+      "wav": "narration/outro-cta.wav",
+      "sidecar": "narration/outro-cta.wav.tts.json"
+    }
+  ],
+  "items": [
+    {
+      "id": "rank-05",
+      "rank": 5,
+      "title": "纸灯笼",
+      "performer": "北城",
+      "clip": "clips/vert_rank-05.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "北城",
+          "original_artist": "北城"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 纸灯笼 official MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-lantern",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 纸灯笼 官方 MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-lantern",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "youtube",
+          "url": "https://example.com/placeholder/yt-lantern",
+          "decision_reason": "Placeholder lock for the scaffold; official MV wins once a real pair exists"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_mv",
+          "fallback_reason": null
+        }
+      }
+    },
+    {
+      "id": "rank-04",
+      "rank": 4,
+      "title": "夜渡",
+      "performer": "北城",
+      "clip": "clips/vert_rank-04.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "北城",
+          "original_artist": "北城"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 夜渡 official MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-ferry",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 夜渡 官方 MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-ferry",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "youtube",
+          "url": "https://example.com/placeholder/yt-ferry",
+          "decision_reason": "Placeholder lock for the scaffold"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_mv",
+          "fallback_reason": null
+        }
+      }
+    },
+    {
+      "id": "rank-03",
+      "rank": 3,
+      "title": "玻璃港",
+      "performer": "北城",
+      "clip": "clips/vert_rank-03.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "北城",
+          "original_artist": "北城"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 玻璃港 official MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-harbor",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 玻璃港 官方 MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-harbor",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "bilibili",
+          "url": "https://example.com/placeholder/bv-harbor",
+          "decision_reason": "Placeholder lock; compare stereo vs 4K mono on real sources"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_mv",
+          "fallback_reason": null
+        }
+      }
+    },
+    {
+      "id": "rank-02",
+      "rank": 2,
+      "title": "北窗",
+      "performer": "北城",
+      "clip": "clips/vert_rank-02.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "北城",
+          "original_artist": "北城"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 北窗 official MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-window",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 北窗 官方 MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-window",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "youtube",
+          "url": "https://example.com/placeholder/yt-window",
+          "decision_reason": "Placeholder lock for the scaffold"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_mv",
+          "fallback_reason": null
+        }
+      }
+    },
+    {
+      "id": "rank-01",
+      "rank": 1,
+      "title": "末班月台",
+      "performer": "北城",
+      "clip": "clips/vert_rank-01.mp4",
+      "audio_mode": "vocal",
+      "sources": {
+        "target_version": {
+          "kind": "original",
+          "performer": "北城",
+          "original_artist": "北城"
+        },
+        "platforms": {
+          "youtube": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 末班月台 official MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/yt-platform",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          },
+          "bilibili": {
+            "searched": true,
+            "search_queries": ["PLACEHOLDER 北城 末班月台 官方 MV"],
+            "candidates": [
+              {
+                "url": "https://example.com/placeholder/bv-platform",
+                "performer": "北城",
+                "version_kind": "original",
+                "asset_type": "mv",
+                "official": true,
+                "usable": false,
+                "reject_reason": "Sample placeholder URL, not a real download"
+              }
+            ],
+            "no_usable_reason": "Demo scaffold; replace with a licensed source"
+          }
+        },
+        "selection": {
+          "platform": "youtube",
+          "url": "https://example.com/placeholder/yt-platform",
+          "decision_reason": "Placeholder lock for the scaffold; finale stays last"
+        },
+        "cover_fallback": { "used": false },
+        "official_choice": {
+          "selected_tier": "official_mv",
+          "fallback_reason": null
+        }
+      }
+    }
+  ]
+}

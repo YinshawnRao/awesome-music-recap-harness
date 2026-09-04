@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "北城的现场不靠口号，靠把一句普通的话唱到夜里还在。",
+  "text": "北城的现场不靠口号，靠把一句普通的话唱到夜里还在。",
+  "text_sha256": "105f16cd325b340cad2e13993ab477b2a7d3fde5ff89ea272f08b9552bcaea93",
+  "normalized_text_sha256": "105f16cd325b340cad2e13993ab477b2a7d3fde5ff89ea272f08b9552bcaea93",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "work-outro.wav"
+}

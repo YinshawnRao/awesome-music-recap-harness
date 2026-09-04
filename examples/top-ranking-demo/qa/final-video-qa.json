@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "pending_machine_qa",
+  "project_kind": "top_ranking",
+  "assets": {
+    "final": {
+      "path": "renders/<slug>.mp4"
+    },
+    "render": {
+      "path": "renders/full.mp4"
+    },
+    "master": {
+      "path": "master.wav"
+    }
+  },
+  "checks": {
+    "expected_video_codec": "h264",
+    "silence_hard_fail_sec": 1.5,
+    "loudness_lufs": [
+      -20,
+      -10
+    ],
+    "true_peak_dbtp_max": -0.1
+  },
+  "reviews": {
+    "visual_frames": "pending_human_review",
+    "leakage": "pending_human_review",
+    "release_safety": "pending_human_review"
+  },
+  "notes": [
+    "v1 writes a skeleton only. Do not claim machine understanding of frames.",
+    "Never forge reviewer_kind=human.",
+    "Full Whisper/ffmpeg diagnostics are a documented follow-up."
+  ],
+  "missing_inputs": [],
+  "authoring_manifest": {
+    "path": "project-manifest.json"
+  }
+}

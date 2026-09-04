@@ -1,0 +1,60 @@
+{
+  "slug": "top-ranking-demo",
+  "show_default": 25,
+  "intro_seconds": 6,
+  "outro_seconds": 8,
+  "cta_seconds": 10,
+  "audio_dir": "narration",
+  "songs": [
+    {
+      "id": "rank-05",
+      "rank": 5,
+      "title": "纸灯笼",
+      "performer": "北城",
+      "tag": "先把夜色点亮",
+      "clip": "clips/vert_rank-05.mp4",
+      "transition_seconds": 5,
+      "show_seconds": 26
+    },
+    {
+      "id": "rank-04",
+      "rank": 4,
+      "title": "夜渡",
+      "performer": "北城",
+      "tag": "对岸还没有灯",
+      "clip": "clips/vert_rank-04.mp4",
+      "transition_seconds": 5,
+      "show_seconds": 27
+    },
+    {
+      "id": "rank-03",
+      "rank": 3,
+      "title": "玻璃港",
+      "performer": "北城",
+      "tag": "倒影比人更清楚",
+      "clip": "clips/vert_rank-03.mp4",
+      "transition_seconds": 5,
+      "show_seconds": 28
+    },
+    {
+      "id": "rank-02",
+      "rank": 2,
+      "title": "北窗",
+      "performer": "北城",
+      "tag": "风从旧房间进来",
+      "clip": "clips/vert_rank-02.mp4",
+      "transition_seconds": 5,
+      "show_seconds": 29
+    },
+    {
+      "id": "rank-01",
+      "rank": 1,
+      "title": "末班月台",
+      "performer": "北城",
+      "tag": "最后一班也不必赶",
+      "clip": "clips/vert_rank-01.mp4",
+      "transition_seconds": 5.5,
+      "show_seconds": 32
+    }
+  ]
+}

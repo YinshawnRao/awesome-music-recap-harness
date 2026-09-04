@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0.0",
+  "id_namespace": "CV",
+  "numbering_policy": "IDs are permanent and must never be reordered or reused",
+  "reference_text": "你好，我是本期的声音候选。今天我们一起听听，这种角色声线放进视频解说，会是什么感觉。",
+  "voices": [
+    {
+      "id": "CV001",
+      "slug": "calm-narrator",
+      "name": "沉稳旁白",
+      "group": "female",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["calm-narrator", "calm_narrator", "沉稳女声"],
+      "description": "Stub slot: calm, even-paced female narrator. Add your own licensed reference WAV.",
+      "decision_profile": {
+        "emotion_tags": ["沉稳", "克制", "清晰", "中性"],
+        "best_for": ["标准盘点", "冷静解说", "信息密度高的榜单"],
+        "avoid_for": ["夸张喜剧", "纯卖萌"]
+      },
+      "reference_audio": "CV001-calm-narrator/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV002",
+      "slug": "warm-storyteller",
+      "name": "温情讲述",
+      "group": "female",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["warm-storyteller", "warm_storyteller", "温情女声"],
+      "description": "Stub slot: warm storytelling female voice.",
+      "decision_profile": {
+        "emotion_tags": ["温暖", "怀旧", "陪伴", "感性"],
+        "best_for": ["回忆向叙事", "人物时间线", "抒情盘点"],
+        "avoid_for": ["硬核攻击性", "高速吐槽"]
+      },
+      "reference_audio": "CV002-warm-storyteller/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV003",
+      "slug": "bright-host",
+      "name": "明亮主持",
+      "group": "female",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["bright-host", "bright_host", "明亮女声"],
+      "description": "Stub slot: bright, energetic female host.",
+      "decision_profile": {
+        "emotion_tags": ["明亮", "轻快", "热情"],
+        "best_for": ["流行热榜", "轻松盘点", "节日特辑"],
+        "avoid_for": ["沉重纪实", "冷峻悬疑"]
+      },
+      "reference_audio": "CV003-bright-host/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV004",
+      "slug": "cool-analyst",
+      "name": "冷静分析",
+      "group": "female",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["cool-analyst", "cool_analyst", "冷静女声"],
+      "description": "Stub slot: cool, analytical female voice.",
+      "decision_profile": {
+        "emotion_tags": ["清冷", "理性", "高级"],
+        "best_for": ["审美评论", "冷色叙事", "克制榜单"],
+        "avoid_for": ["纯粹卖萌", "夸张喜剧"]
+      },
+      "reference_audio": "CV004-cool-analyst/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV005",
+      "slug": "gentle-guide",
+      "name": "轻柔导览",
+      "group": "female",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["gentle-guide", "gentle_guide", "轻柔女声"],
+      "description": "Stub slot: gentle, slower guide voice.",
+      "decision_profile": {
+        "emotion_tags": ["轻柔", "舒缓", "导览"],
+        "best_for": ["专辑巡礼", "安静器乐", "深夜向"],
+        "avoid_for": ["高能体育", "强节奏吐槽"]
+      },
+      "reference_audio": "CV005-gentle-guide/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV006",
+      "slug": "steady-host",
+      "name": "稳健主持",
+      "group": "male",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["steady-host", "steady_host", "稳健男声"],
+      "description": "Stub slot: steady male host.",
+      "decision_profile": {
+        "emotion_tags": ["稳健", "清晰", "中性"],
+        "best_for": ["标准 TOP 倒数", "新闻感盘点"],
+        "avoid_for": ["幼态卖萌"]
+      },
+      "reference_audio": "CV006-steady-host/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV007",
+      "slug": "deep-documentarian",
+      "name": "低沉纪实",
+      "group": "male",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["deep-documentarian", "deep_documentarian", "纪实男声"],
+      "description": "Stub slot: deep documentary male voice.",
+      "decision_profile": {
+        "emotion_tags": ["低沉", "纪实", "分量"],
+        "best_for": ["人物传记时间线", "时代重量", "长篇叙事"],
+        "avoid_for": ["轻喜剧", "偶像应援"]
+      },
+      "reference_audio": "CV007-deep-documentarian/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV008",
+      "slug": "energetic-host",
+      "name": "热血主持",
+      "group": "male",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["energetic-host", "energetic_host", "热血男声"],
+      "description": "Stub slot: energetic male host.",
+      "decision_profile": {
+        "emotion_tags": ["热血", "推动", "明亮"],
+        "best_for": ["最燃榜", "现场高光", "体育感节奏"],
+        "avoid_for": ["悼念", "极静叙事"]
+      },
+      "reference_audio": "CV008-energetic-host/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV009",
+      "slug": "night-radio",
+      "name": "夜谈电台",
+      "group": "male",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["night-radio", "night_radio", "电台男声"],
+      "description": "Stub slot: late-night radio male voice.",
+      "decision_profile": {
+        "emotion_tags": ["松弛", "夜谈", "亲密"],
+        "best_for": ["遗珠盘点", "深夜怀旧", "私密叙事"],
+        "avoid_for": ["高分贝热榜"]
+      },
+      "reference_audio": "CV009-night-radio/reference.wav",
+      "examples": {}
+    },
+    {
+      "id": "CV010",
+      "slug": "archival-voice",
+      "name": "档案解说",
+      "group": "male",
+      "engine": "qwen3-tts-base-mlx",
+      "enabled": true,
+      "aliases": ["archival-voice", "archival_voice", "档案男声"],
+      "description": "Stub slot: archival, slightly formal male voice.",
+      "decision_profile": {
+        "emotion_tags": ["正式", "档案", "克制"],
+        "best_for": ["编年时间线", "资料向科普"],
+        "avoid_for": ["夸张综艺"]
+      },
+      "reference_audio": "CV010-archival-voice/reference.wav",
+      "examples": {}
+    }
+  ]
+}

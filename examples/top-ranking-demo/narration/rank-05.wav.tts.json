@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "第五名，《纸灯笼》。先把夜色点亮。",
+  "text": "第五名，《纸灯笼》。先把夜色点亮。",
+  "text_sha256": "82af6bcec0bc5dcf4cffcca070479e50773a575f3c3f8e429a91c639375033c8",
+  "normalized_text_sha256": "82af6bcec0bc5dcf4cffcca070479e50773a575f3c3f8e429a91c639375033c8",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "rank-05.wav"
+}

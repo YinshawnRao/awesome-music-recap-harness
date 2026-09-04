@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "project_kind": "top_ranking",
+  "playback_order": "N→1",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "hyperframes": "0.6.69",
+  "intro": {
+    "start": 0.0,
+    "voice_end": 6.3
+  },
+  "blocks": [
+    {
+      "id": "rank-05",
+      "rank": 5,
+      "title": "纸灯笼",
+      "performer": "北城",
+      "tag": "先把夜色点亮",
+      "clip": "clips/vert_rank-05.mp4",
+      "start": 7.5,
+      "narr_start": 7.5,
+      "narr_end": 12.5,
+      "full_start": 13.7,
+      "end": 39.7,
+      "show_seconds": 26.0,
+      "voice_seconds": 5.0
+    },
+    {
+      "id": "rank-04",
+      "rank": 4,
+      "title": "夜渡",
+      "performer": "北城",
+      "tag": "对岸还没有灯",
+      "clip": "clips/vert_rank-04.mp4",
+      "start": 39.7,
+      "narr_start": 39.7,
+      "narr_end": 44.7,
+      "full_start": 45.9,
+      "end": 72.9,
+      "show_seconds": 27.0,
+      "voice_seconds": 5.0
+    },
+    {
+      "id": "rank-03",
+      "rank": 3,
+      "title": "玻璃港",
+      "performer": "北城",
+      "tag": "倒影比人更清楚",
+      "clip": "clips/vert_rank-03.mp4",
+      "start": 72.9,
+      "narr_start": 72.9,
+      "narr_end": 77.9,
+      "full_start": 79.1,
+      "end": 107.1,
+      "show_seconds": 28.0,
+      "voice_seconds": 5.0
+    },
+    {
+      "id": "rank-02",
+      "rank": 2,
+      "title": "北窗",
+      "performer": "北城",
+      "tag": "风从旧房间进来",
+      "clip": "clips/vert_rank-02.mp4",
+      "start": 107.1,
+      "narr_start": 107.1,
+      "narr_end": 112.1,
+      "full_start": 113.3,
+      "end": 142.3,
+      "show_seconds": 29.0,
+      "voice_seconds": 5.0
+    },
+    {
+      "id": "rank-01",
+      "rank": 1,
+      "title": "末班月台",
+      "performer": "北城",
+      "tag": "最后一班也不必赶",
+      "clip": "clips/vert_rank-01.mp4",
+      "start": 142.3,
+      "narr_start": 142.3,
+      "narr_end": 147.8,
+      "full_start": 149.0,
+      "end": 181.0,
+      "show_seconds": 32.0,
+      "voice_seconds": 5.5
+    }
+  ],
+  "outro": {
+    "start": 181.0,
+    "work_outro_end": 189.3,
+    "cta_start": 190.3,
+    "cta_end": 200.3,
+    "end": 202.9,
+    "cta_text": "你最想为哪一首投票？评论区告诉我。记得点赞、收藏、关注我，下一期，可能就盘到你单曲循环过的那一首。"
+  },
+  "total_seconds": 202.9,
+  "mux": {
+    "render": "renders/full.mp4",
+    "master": "master.wav",
+    "final": "renders/<slug>.mp4",
+    "command": "ffmpeg -i renders/full.mp4 -i master.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest renders/<slug>.mp4"
+  },
+  "notes": [
+    "Cover uses the first-played song (last place), not rank 1.",
+    "Do not print N→1 on the cover or intro.",
+    "HyperFrames render must pass --sdr and run via resource_budget.py."
+  ]
+}

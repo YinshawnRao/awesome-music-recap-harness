@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "resolved_voice_id": "CV007",
+  "resolved_voice_name": "低沉纪实",
+  "engine": "qwen3-tts-base-mlx",
+  "source_text": "第四名，《夜渡》。对岸还没有灯。",
+  "text": "第四名，《夜渡》。对岸还没有灯。",
+  "text_sha256": "7c9556e22d282b84efb32890ccd4b8a8dac91c0cd1a9a752b4bf247ce13b35d3",
+  "normalized_text_sha256": "7c9556e22d282b84efb32890ccd4b8a8dac91c0cd1a9a752b4bf247ce13b35d3",
+  "sample_rate_hz": 24000,
+  "dry_run": true,
+  "output": "rank-04.wav"
+}
