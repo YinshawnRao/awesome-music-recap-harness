@@ -79,7 +79,7 @@ bash tools/video/install_cookies.sh
 
 这一步只拷贝**假的**格式模板（`PLACEHOLDER_NOT_A_SESSION_*`），并打印下一步。不要提交 `all_cookies.txt`。
 
-**从浏览器导出一份真实的 Netscape Cookie 文件**（同一配置里登录 YouTube/Google **和** B 站）。原始导出先存到仓库外，再覆盖：
+推荐用 Chrome 扩展 [Get cookies.txt LOCALLY](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 在本机导出 **Netscape HTTP Cookie File**（制表符分隔的 `cookies.txt`）。同一浏览器配置里须同时登录 YouTube/Google **和** B 站。原始导出先存到仓库外，再覆盖：
 
 ```bash
 python3 tools/video/filter_cookie_jar.py "$HOME/Downloads/raw-cookies.txt" \
@@ -194,7 +194,7 @@ FINAL VIDEO QA: PASS skeleton pending_machine_qa
 
 ## 8. 常见问题
 
-**Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自行执行 `yt-dlp --cookies`。
+**Cookie 检查失败。** 缺 `all_cookies.txt`、权限不是 `0600`、还留着 `PLACEHOLDER_*`，或导出里没有 YouTube/Google + B 站字段。先跑 `bash tools/video/install_cookies.sh`，用 [Get cookies.txt LOCALLY](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 导出真实 Netscape 文件，再跑 `python3 tools/video/check_yt_cookie.py`。不要自行执行 `yt-dlp --cookies`。
 
 **找不到 `ffmpeg`。** `brew install ffmpeg`，新开一个终端。`which ffmpeg` 应指向 Homebrew 路径。
 
